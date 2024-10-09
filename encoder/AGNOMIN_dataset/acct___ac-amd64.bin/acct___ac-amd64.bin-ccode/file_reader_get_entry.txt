@@ -1,0 +1,96 @@
+
+char * file_reader_get_entry(file_rd_info *fri)
+
+{
+  int iVar1;
+  size_t sVar2;
+  FILE *__stream;
+  __off_t _Var3;
+  size_t sVar4;
+  char *pcVar5;
+  __off_t _Var6;
+  
+  sVar2 = fri->recs_left;
+  if (sVar2 != 0) {
+LAB_00402670:
+    iVar1 = fri->backwards;
+joined_r0x004026fd:
+    if (iVar1 == 0) {
+      fri->recs_left = sVar2 - 1;
+      pcVar5 = (char *)((long)fri->record_size * (fri->recs_read - sVar2) + (long)fri->buffer);
+    }
+    else {
+      fri->recs_left = sVar2 - 1;
+      pcVar5 = (char *)((sVar2 - 1) * (long)fri->record_size + (long)fri->buffer);
+    }
+    fri->rec_number = fri->rec_number + 1;
+    return pcVar5;
+  }
+  __stream = fri->fp;
+  if (__stream == (FILE *)0x0) goto LAB_00402588;
+  if (fri->backwards != 0) goto LAB_004025d0;
+  do {
+    sVar2 = fread(fri->buffer,(long)fri->record_size,(long)fri->buffered_records,(FILE *)__stream);
+    iVar1 = (int)sVar2;
+    sVar2 = SEXT48(iVar1);
+    if (iVar1 == -1) {
+      fatal("get_entry: couldn\'t read from file");
+    }
+    else {
+      if (iVar1 != 0) {
+        iVar1 = fri->backwards;
+        fri->recs_read = sVar2;
+        fri->recs_left = sVar2;
+        goto joined_r0x004026fd;
+      }
+    }
+    while( true ) {
+      fclose((FILE *)fri->fp);
+      do {
+        fri->fp = (FILE *)0x0;
+        fri->the_files = fri->the_files->next;
+LAB_00402588:
+        if (fri->the_files == (file_list *)0x0) {
+          return (char *)0x0;
+        }
+        __stream = file_open(fri->the_files->name,0);
+        fri->fp = __stream;
+      } while (__stream == (FILE *)0x0);
+      iVar1 = fri->backwards;
+      if (iVar1 != 0) {
+        fseek((FILE *)__stream,0,2);
+        iVar1 = fri->backwards;
+        __stream = fri->fp;
+      }
+      fri->rec_number = 0;
+      fri->name = fri->the_files->name;
+      if (iVar1 == 0) break;
+LAB_004025d0:
+      _Var3 = ftello((FILE *)__stream);
+      if (0 < _Var3) {
+        sVar4 = _Var3 / (long)fri->record_size;
+        sVar2 = (long)fri->buffered_records;
+        if ((long)sVar4 <= (long)fri->buffered_records) {
+          sVar2 = sVar4;
+        }
+        fseek((FILE *)fri->fp,(long)-fri->record_size * sVar2,1);
+        if (debugging_enabled != 0) {
+          _Var6 = ftello((FILE *)fri->fp);
+          __fprintf_chk(stdout,1,"Did seek in file %ld --> %ld\n",_Var3,_Var6);
+        }
+        sVar4 = fread(fri->buffer,(long)fri->record_size,sVar2,(FILE *)fri->fp);
+        if (sVar4 == 0xffffffffffffffff) {
+          fatal("get_entry: couldn\'t read from file");
+        }
+        if (debugging_enabled != 0) {
+          __fprintf_chk(stdout,1,"Got %ld records from file\n",sVar2);
+        }
+        fseek((FILE *)fri->fp,(long)-fri->record_size * sVar2,1);
+        fri->recs_read = sVar2;
+        fri->recs_left = sVar2;
+        goto LAB_00402670;
+      }
+    }
+  } while( true );
+}
+

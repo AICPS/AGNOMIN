@@ -1,0 +1,15 @@
+_init, 00400370
+FUN_00400390, 00400390
+__libc_start_main, 004003a0
+__gmon_start__, 004003b0
+main, 004003c0
+_start, 004003ff
+deregister_tm_clones, 00400430
+register_tm_clones, 00400470
+__do_global_dtors_aux, 004004b0
+frame_dummy, 004004d0
+__libc_csu_init, 00400500
+__libc_csu_fini, 00400570
+_fini, 00400574
+__libc_start_main, 00601000
+__gmon_start__, 00601008

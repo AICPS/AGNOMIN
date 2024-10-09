@@ -1,0 +1,77 @@
+
+void plot_abscissa_log_subsubtick(Multigrapher *multigrapher,double xval)
+
+{
+  int *piVar1;
+  double dVar2;
+  grid_type gVar3;
+  double dVar4;
+  double _a;
+  char labelbuf [2048];
+  
+  dVar4 = (multigrapher->x_trans).input_max;
+  dVar2 = (multigrapher->x_trans).input_min;
+  pl_fontname_r(multigrapher->plotter);
+  pl_ffontsize_r();
+  dVar4 = (dVar4 - dVar2) * 1e-06;
+  if (xval < (multigrapher->x_trans).input_min - dVar4) {
+    return;
+  }
+  if (dVar4 + (multigrapher->x_trans).input_max < xval) {
+    return;
+  }
+  if ((multigrapher->x_axis).user_specified_subsubticks != false) {
+    pow(10.0,xval);
+    print_tick_label();
+    if ((multigrapher->y_axis).switch_axis_end == false) {
+      pl_fmove_r(multigrapher->plotter);
+      pl_alabel_r(multigrapher->plotter,99,0x74);
+      piVar1 = &(multigrapher->x_axis).labelled_ticks;
+      *piVar1 = *piVar1 + 1;
+    }
+    else {
+      pl_fmove_r(multigrapher->plotter);
+      pl_alabel_r(multigrapher->plotter,99,0x62);
+      piVar1 = &(multigrapher->x_axis).labelled_ticks;
+      *piVar1 = *piVar1 + 1;
+    }
+  }
+  gVar3 = multigrapher->grid_spec;
+  if (gVar3 != AXES_AND_BOX) {
+    if (gVar3 < AXES_AND_BOX_AND_GRID) {
+      if (gVar3 != AXES) {
+        return;
+      }
+      goto LAB_004076b0;
+    }
+    if (gVar3 != AXES_AND_BOX_AND_GRID) {
+      if (gVar3 != AXES_AT_ORIGIN) {
+        return;
+      }
+      goto LAB_004076b0;
+    }
+    pl_linemod_r(multigrapher->plotter,"dotted");
+    pl_fmove_r(multigrapher->plotter);
+    pl_fcont_r(multigrapher->plotter);
+    pl_linemod_r(multigrapher->plotter);
+  }
+  if ((multigrapher->y_axis).switch_axis_end == false) {
+    pl_fmove_r(multigrapher->plotter);
+    pl_fcont_r();
+  }
+  else {
+    pl_fmove_r(multigrapher->plotter);
+    pl_fcont_r();
+  }
+LAB_004076b0:
+  if ((multigrapher->y_axis).switch_axis_end == false) {
+    pl_fmove_r(multigrapher->plotter);
+    pl_fcont_r(multigrapher->plotter);
+  }
+  else {
+    pl_fmove_r(multigrapher->plotter);
+    pl_fcont_r(multigrapher->plotter);
+  }
+  return;
+}
+

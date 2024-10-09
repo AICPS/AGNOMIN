@@ -1,0 +1,27 @@
+
+undefined4 __aeabi_ldivmod(longlong *param_1,int param_2,int param_3,int param_4)
+
+{
+  undefined4 uVar1;
+  undefined4 in_lr;
+  longlong lVar2;
+  longlong in_stack_fffffff8;
+  
+  if (param_4 != 0 || param_3 != 0) {
+    lVar2 = __gnu_ldivmod_helper(CONCAT44(in_lr,&stack0xfffffff8),in_stack_fffffff8,param_1);
+    return (int)lVar2;
+  }
+  if (param_2 < 0) {
+    param_2 = -0x80000000;
+    param_1 = (longlong *)0x0;
+  }
+  else {
+    if (param_2 != 0 || param_1 != (longlong *)0x0) {
+      param_2 = 0x7fffffff;
+      param_1 = (longlong *)0xffffffff;
+    }
+  }
+  uVar1 = __aeabi_idiv0(param_1,param_2);
+  return uVar1;
+}
+

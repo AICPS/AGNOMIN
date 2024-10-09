@@ -1,0 +1,23 @@
+
+void file_reader_add_file(file_rd_info *fri,char *name)
+
+{
+  file_list *pfVar1;
+  file_list *pfVar2;
+  file_list *pfVar3;
+  
+  pfVar3 = (file_list *)xmalloc(0x10);
+  pfVar1 = fri->the_files;
+  pfVar3->name = name;
+  pfVar3->next = (file_list *)0x0;
+  if (pfVar1 != (file_list *)0x0) {
+    for (pfVar2 = pfVar1->next; pfVar2 != (file_list *)0x0; pfVar2 = pfVar2->next) {
+      pfVar1 = pfVar2;
+    }
+    pfVar1->next = pfVar3;
+    return;
+  }
+  fri->the_files = pfVar3;
+  return;
+}
+

@@ -1,0 +1,38 @@
+
+void log_everyone_out(time_t the_time,int update_time_flag,int change_login_flag,char *debug_str)
+
+{
+  int iVar1;
+  hashtab_elem *he;
+  char *name;
+  hashtab_order ho;
+  
+  iVar1 = __stack_chk_guard;
+  he = hashtab_first(login_table,&ho);
+  do {
+    while( true ) {
+      if (he == (hashtab_elem *)0x0) {
+        if (iVar1 != __stack_chk_guard) {
+                    /* WARNING: Subroutine does not return */
+          __stack_chk_fail();
+        }
+        return;
+      }
+      name = (char *)hashtab_get_value(he);
+      if (update_time_flag != 0) break;
+      if (change_login_flag == 0) goto LAB_00011754;
+      *(time_t *)(name + 0x20) = the_time;
+LAB_00011714:
+      he = hashtab_next(&ho);
+    }
+    update_user_time(name,the_time - *(int *)(name + 0x20),debug_str);
+    if (change_login_flag != 0) {
+      *(time_t *)(name + 0x20) = the_time;
+      goto LAB_00011714;
+    }
+LAB_00011754:
+    hashtab_delete(he);
+    he = hashtab_next(&ho);
+  } while( true );
+}
+

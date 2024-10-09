@@ -1,0 +1,10 @@
+
+int gnu_getopt(int argc,char **argv,char *optstring)
+
+{
+  int iVar1;
+  
+  iVar1 = _getopt_internal(argc,argv,optstring,(option *)0x0,(int *)0x0,0);
+  return iVar1;
+}
+

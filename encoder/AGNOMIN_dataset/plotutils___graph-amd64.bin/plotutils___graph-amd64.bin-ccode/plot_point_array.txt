@@ -1,0 +1,18 @@
+
+void plot_point_array(Multigrapher *multigrapher,Point *p,int length)
+
+{
+  Point *point;
+  Point *pPVar1;
+  
+  if (0 < length) {
+    point = p;
+    do {
+      pPVar1 = point + 1;
+      plot_point(multigrapher,point);
+      point = pPVar1;
+    } while (pPVar1 != p + (ulong)(length - 1) + 1);
+  }
+  return;
+}
+

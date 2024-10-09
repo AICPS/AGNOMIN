@@ -1,0 +1,170 @@
+
+int clip_line(double *x0_p,double *y0_p,double *x1_p,double *y1_p,double x_min_clip,
+             double x_max_clip,double y_min_clip,double y_max_clip,bool spec_min_x,bool spec_min_y,
+             bool spec_max_x,bool spec_max_y)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  bool bVar5;
+  double in_d0;
+  double in_d1;
+  double in_d2;
+  double dVar6;
+  double in_d3;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  
+  dVar8 = *x0_p;
+  dVar9 = *y0_p;
+  dVar10 = *x1_p;
+  dVar11 = *y1_p;
+  if ((x_max_clip._0_4_ == 0) || (x_max_clip._0_4_ < 1)) {
+    uVar3 = x_min_clip._0_4_;
+    if (x_min_clip._0_4_ != 0) {
+      if ((int)x_min_clip._0_4_ < 0) {
+        uVar3 = 8;
+      }
+      else {
+        uVar3 = 0;
+      }
+    }
+  }
+  else {
+    uVar3 = 4;
+  }
+  if ((x_max_clip._4_4_ == 0) || ((longlong)x_max_clip < 0x100000000)) {
+    if ((x_min_clip._4_4_ != 0) && ((longlong)x_min_clip < 0)) {
+      uVar3 = uVar3 | 2;
+    }
+  }
+  else {
+    uVar3 = uVar3 | 1;
+  }
+  if ((x_max_clip._0_4_ == 0) || (x_max_clip._0_4_ < 1)) {
+    uVar4 = x_min_clip._0_4_;
+    if (x_min_clip._0_4_ != 0) {
+      if ((int)x_min_clip._0_4_ < 0) {
+        uVar4 = 8;
+      }
+      else {
+        uVar4 = 0;
+      }
+    }
+  }
+  else {
+    uVar4 = 4;
+  }
+  if ((x_max_clip._4_4_ == 0) || ((longlong)x_max_clip < 0x100000000)) {
+    if ((x_min_clip._4_4_ != 0) && ((longlong)x_min_clip < 0)) {
+      uVar4 = uVar4 | 2;
+    }
+  }
+  else {
+    uVar4 = uVar4 | 1;
+  }
+  while( true ) {
+    bVar5 = (uVar4 | uVar3) == 0;
+    if (bVar5) {
+      if (bVar5) {
+        iVar1 = 1;
+      }
+      else {
+        iVar1 = 7;
+      }
+      *x0_p = dVar8;
+      *y0_p = dVar9;
+      *x1_p = dVar10;
+      *y1_p = dVar11;
+      return iVar1;
+    }
+    if ((uVar4 & uVar3) != 0) break;
+    uVar2 = uVar3;
+    if (uVar3 == 0) {
+      uVar2 = uVar4;
+    }
+    if ((uVar2 & 4) == 0) {
+      if ((uVar2 & 8) == 0) {
+        bVar5 = (uVar2 & 1) != 0;
+        if (bVar5) {
+          dVar6 = in_d3 - dVar9;
+        }
+        else {
+          dVar6 = in_d2 - dVar9;
+        }
+        dVar7 = in_d3;
+        if (!bVar5) {
+          dVar7 = in_d2;
+        }
+        dVar6 = ((dVar10 - dVar8) * dVar6) / (dVar11 - dVar9) + dVar8;
+      }
+      else {
+        dVar7 = ((dVar11 - dVar9) * (in_d0 - dVar8)) / (dVar10 - dVar8) + dVar9;
+        dVar6 = in_d0;
+      }
+    }
+    else {
+      dVar7 = ((dVar11 - dVar9) * (in_d1 - dVar8)) / (dVar10 - dVar8) + dVar9;
+      dVar6 = in_d1;
+    }
+    if (uVar3 == uVar2) {
+      if ((x_max_clip._0_4_ == 0) || (x_max_clip._0_4_ < 1)) {
+        uVar3 = x_min_clip._0_4_;
+        if (x_min_clip._0_4_ != 0) {
+          if ((int)x_min_clip._0_4_ < 0) {
+            uVar3 = 8;
+          }
+          else {
+            uVar3 = 0;
+          }
+        }
+      }
+      else {
+        uVar3 = 4;
+      }
+      dVar8 = dVar6;
+      dVar9 = dVar7;
+      if ((x_max_clip._4_4_ == 0) || ((longlong)x_max_clip < 0x100000000)) {
+        if ((x_min_clip._4_4_ != 0) && ((longlong)x_min_clip < 0)) {
+          uVar3 = uVar3 | 2;
+        }
+      }
+      else {
+        uVar3 = uVar3 | 1;
+      }
+    }
+    else {
+      if ((x_max_clip._0_4_ == 0) || (x_max_clip._0_4_ < 1)) {
+        uVar4 = x_min_clip._0_4_;
+        if (x_min_clip._0_4_ != 0) {
+          if ((int)x_min_clip._0_4_ < 0) {
+            uVar4 = 8;
+          }
+          else {
+            uVar4 = 0;
+          }
+        }
+      }
+      else {
+        uVar4 = 4;
+      }
+      dVar10 = dVar6;
+      dVar11 = dVar7;
+      if ((x_max_clip._4_4_ == 0) || ((longlong)x_max_clip < 0x100000000)) {
+        if ((x_min_clip._4_4_ != 0) && ((longlong)x_min_clip < 0)) {
+          uVar4 = uVar4 | 2;
+        }
+      }
+      else {
+        uVar4 = uVar4 | 1;
+      }
+    }
+  }
+  return 0;
+}
+

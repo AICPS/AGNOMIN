@@ -1,0 +1,252 @@
+
+void plot_ordinate_log_subsubtick(Multigrapher *multigrapher,double yval)
+
+{
+  double dVar1;
+  double dVar2;
+  uint uVar3;
+  double dVar4;
+  double dVar5;
+  undefined4 *in_EAX;
+  float10 fVar6;
+  double dVar7;
+  undefined8 uVar8;
+  undefined4 in_stack_fffff7c4;
+  double local_82c;
+  double local_824;
+  double local_814;
+  char labelbuf [2048];
+  
+  dVar5 = (double)CONCAT44(yval._0_4_,multigrapher);
+  dVar7 = *(double *)(in_EAX + 0x19);
+  dVar1 = *(double *)(in_EAX + 0x17);
+  local_824 = *(double *)(in_EAX + 0x15) * *(double *)(in_EAX + 0xf);
+  dVar2 = *(double *)(in_EAX + 0x28) * *(double *)(in_EAX + 0x22);
+  if (local_824 < dVar2) {
+    local_814 = *(double *)(in_EAX + 100) * local_824;
+  }
+  else {
+    local_814 = *(double *)(in_EAX + 100) * dVar2;
+    if (dVar2 <= local_824) {
+      local_824 = dVar2;
+    }
+  }
+  dVar2 = *(double *)(in_EAX + 0x66);
+  pl_fontname_r(*in_EAX,in_EAX[0x45]);
+  dVar4 = *(double *)(in_EAX + 0x15) * *(double *)(in_EAX + 0xf);
+  if (*(double *)(in_EAX + 0x28) * *(double *)(in_EAX + 0x22) <= dVar4) {
+    dVar4 = *(double *)(in_EAX + 0x28) * *(double *)(in_EAX + 0x22);
+  }
+  pl_ffontsize_r(*in_EAX,SUB84(dVar4 * *(double *)(in_EAX + 0x46),0),
+                 (int)((ulonglong)(dVar4 * *(double *)(in_EAX + 0x46)) >> 0x20));
+  dVar7 = (dVar7 - dVar1) * 1e-06;
+  if (dVar5 < *(double *)(in_EAX + 0x17) - dVar7) {
+    return;
+  }
+  if (dVar7 + *(double *)(in_EAX + 0x19) < dVar5) {
+    return;
+  }
+  if (in_EAX[0x54] != 0) {
+    dVar7 = pow(10.0,(double)CONCAT44(yval._0_4_,multigrapher));
+    print_tick_label(SUB84(dVar7,0),(Axis *)((ulonglong)dVar7 >> 0x20),(Transform *)multigrapher,
+                     (double)CONCAT44(in_stack_fffff7c4,yval._0_4_));
+    if (in_EAX[0x40] == 0) {
+      dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+      if (in_EAX[0x1d] != 0) {
+        dVar7 = 1.0 - dVar7;
+      }
+      dVar7 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+              *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+      if (local_814 < 0.0) {
+        dVar1 = 1.75;
+      }
+      else {
+        dVar1 = 0.75;
+      }
+      pl_fmove_r(*in_EAX,(*(double *)(in_EAX + 0x11) +
+                         (((*(double *)(in_EAX + 0x3c) - *(double *)(in_EAX + 4)) /
+                          *(double *)(in_EAX + 8)) * *(double *)(in_EAX + 0xf) +
+                         *(double *)(in_EAX + 0xb)) * *(double *)(in_EAX + 0x15)) -
+                         (ABS(local_814) * dVar1 + *(double *)(in_EAX + 0x6a)),SUB84(dVar7,0),
+                 (int)((ulonglong)dVar7 >> 0x20));
+      fVar6 = (float10)pl_flabelwidth_r(*in_EAX,labelbuf);
+      uVar8 = 0x6300000072;
+    }
+    else {
+      dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+      if (in_EAX[0x1d] != 0) {
+        dVar7 = 1.0 - dVar7;
+      }
+      dVar7 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+              *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+      if (local_814 < 0.0) {
+        dVar1 = 1.75;
+      }
+      else {
+        dVar1 = 0.75;
+      }
+      pl_fmove_r(*in_EAX,ABS(local_814) * dVar1 + *(double *)(in_EAX + 0x6a) +
+                         (((*(double *)(in_EAX + 0x3e) - *(double *)(in_EAX + 4)) /
+                          *(double *)(in_EAX + 8)) * *(double *)(in_EAX + 0xf) +
+                         *(double *)(in_EAX + 0xb)) * *(double *)(in_EAX + 0x15) +
+                         *(double *)(in_EAX + 0x11),SUB84(dVar7,0),(int)((ulonglong)dVar7 >> 0x20));
+      fVar6 = (float10)pl_flabelwidth_r(*in_EAX,labelbuf);
+      uVar8 = 0x630000006c;
+    }
+    local_82c = (double)fVar6;
+    pl_alabel_r(*in_EAX,uVar8,labelbuf);
+    dVar7 = *(double *)(in_EAX + 0x5d);
+    if (dVar7 <= local_82c) {
+      dVar7 = local_82c;
+    }
+    *(double *)(in_EAX + 0x5d) = dVar7;
+    in_EAX[0x5f] = in_EAX[0x5f] + 1;
+  }
+  uVar3 = in_EAX[0x60];
+  local_824 = local_824 * dVar2;
+  if (uVar3 != 2) {
+    if (uVar3 < 3) {
+      if (uVar3 != 1) {
+        return;
+      }
+      goto LAB_0804f780;
+    }
+    if (uVar3 != 3) {
+      if (uVar3 != 4) {
+        return;
+      }
+      goto LAB_0804f780;
+    }
+    pl_linemod_r(*in_EAX,"dotted");
+    dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+    if (in_EAX[0x1d] != 0) {
+      dVar7 = 1.0 - dVar7;
+    }
+    dVar7 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+            *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+    pl_fmove_r(*in_EAX,(*(double *)(in_EAX + 0xf) * 0.0 + *(double *)(in_EAX + 0xb)) *
+                       *(double *)(in_EAX + 0x15) + *(double *)(in_EAX + 0x11),SUB84(dVar7,0),
+               (int)((ulonglong)dVar7 >> 0x20));
+    dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+    if (in_EAX[0x1d] != 0) {
+      dVar7 = 1.0 - dVar7;
+    }
+    dVar7 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+            *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+    pl_fcont_r(*in_EAX,(*(double *)(in_EAX + 0xb) + *(double *)(in_EAX + 0xf)) *
+                       *(double *)(in_EAX + 0x15) + *(double *)(in_EAX + 0x11),SUB84(dVar7,0),
+               (int)((ulonglong)dVar7 >> 0x20));
+    pl_linemod_r(*in_EAX,"solid");
+  }
+  if (in_EAX[0x40] == 0) {
+    dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+    if (in_EAX[0x1d] != 0) {
+      dVar7 = 1.0 - dVar7;
+    }
+    dVar7 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+            *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+    pl_fmove_r(*in_EAX,(((*(double *)(in_EAX + 0x3e) - *(double *)(in_EAX + 4)) /
+                        *(double *)(in_EAX + 8)) * *(double *)(in_EAX + 0xf) +
+                       *(double *)(in_EAX + 0xb)) * *(double *)(in_EAX + 0x15) +
+                       *(double *)(in_EAX + 0x11),SUB84(dVar7,0),(int)((ulonglong)dVar7 >> 0x20));
+    dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+    if (in_EAX[0x1d] != 0) {
+      dVar7 = 1.0 - dVar7;
+    }
+    dVar1 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+            *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+    dVar7 = *(double *)(in_EAX + 0x6a);
+    if (local_824 <= 0.0) {
+      dVar7 = -dVar7;
+    }
+    pl_fcont_r(*in_EAX,(*(double *)(in_EAX + 0x11) +
+                       (((*(double *)(in_EAX + 0x3e) - *(double *)(in_EAX + 4)) /
+                        *(double *)(in_EAX + 8)) * *(double *)(in_EAX + 0xf) +
+                       *(double *)(in_EAX + 0xb)) * *(double *)(in_EAX + 0x15)) -
+                       (dVar7 + local_824),SUB84(dVar1,0),(int)((ulonglong)dVar1 >> 0x20));
+  }
+  else {
+    dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+    if (in_EAX[0x1d] != 0) {
+      dVar7 = 1.0 - dVar7;
+    }
+    dVar7 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+            *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+    pl_fmove_r(*in_EAX,(((*(double *)(in_EAX + 0x3c) - *(double *)(in_EAX + 4)) /
+                        *(double *)(in_EAX + 8)) * *(double *)(in_EAX + 0xf) +
+                       *(double *)(in_EAX + 0xb)) * *(double *)(in_EAX + 0x15) +
+                       *(double *)(in_EAX + 0x11),SUB84(dVar7,0),(int)((ulonglong)dVar7 >> 0x20));
+    dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+    if (in_EAX[0x1d] != 0) {
+      dVar7 = 1.0 - dVar7;
+    }
+    dVar1 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+            *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+    dVar7 = *(double *)(in_EAX + 0x6a);
+    if (local_824 <= 0.0) {
+      dVar7 = -dVar7;
+    }
+    pl_fcont_r(*in_EAX,dVar7 + local_824 +
+                       (((*(double *)(in_EAX + 0x3c) - *(double *)(in_EAX + 4)) /
+                        *(double *)(in_EAX + 8)) * *(double *)(in_EAX + 0xf) +
+                       *(double *)(in_EAX + 0xb)) * *(double *)(in_EAX + 0x15) +
+                       *(double *)(in_EAX + 0x11),SUB84(dVar1,0),(int)((ulonglong)dVar1 >> 0x20));
+  }
+LAB_0804f780:
+  if (in_EAX[0x40] == 0) {
+    dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+    if (in_EAX[0x1d] != 0) {
+      dVar7 = 1.0 - dVar7;
+    }
+    dVar7 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+            *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+    pl_fmove_r(*in_EAX,(((*(double *)(in_EAX + 0x3c) - *(double *)(in_EAX + 4)) /
+                        *(double *)(in_EAX + 8)) * *(double *)(in_EAX + 0xf) +
+                       *(double *)(in_EAX + 0xb)) * *(double *)(in_EAX + 0x15) +
+                       *(double *)(in_EAX + 0x11),SUB84(dVar7,0),(int)((ulonglong)dVar7 >> 0x20));
+    dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+    if (in_EAX[0x1d] != 0) {
+      dVar7 = 1.0 - dVar7;
+    }
+    dVar1 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+            *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+    dVar7 = *(double *)(in_EAX + 0x6a);
+    if (local_824 <= 0.0) {
+      dVar7 = -dVar7;
+    }
+    pl_fcont_r(*in_EAX,(((*(double *)(in_EAX + 0x3c) - *(double *)(in_EAX + 4)) /
+                        *(double *)(in_EAX + 8)) * *(double *)(in_EAX + 0xf) +
+                       *(double *)(in_EAX + 0xb)) * *(double *)(in_EAX + 0x15) +
+                       *(double *)(in_EAX + 0x11) + local_824 + dVar7,SUB84(dVar1,0),
+               (int)((ulonglong)dVar1 >> 0x20));
+  }
+  else {
+    dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+    if (in_EAX[0x1d] != 0) {
+      dVar7 = 1.0 - dVar7;
+    }
+    dVar7 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+            *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+    pl_fmove_r(*in_EAX,(((*(double *)(in_EAX + 0x3e) - *(double *)(in_EAX + 4)) /
+                        *(double *)(in_EAX + 8)) * *(double *)(in_EAX + 0xf) +
+                       *(double *)(in_EAX + 0xb)) * *(double *)(in_EAX + 0x15) +
+                       *(double *)(in_EAX + 0x11),SUB84(dVar7,0),(int)((ulonglong)dVar7 >> 0x20));
+    dVar7 = (dVar5 - *(double *)(in_EAX + 0x17)) / *(double *)(in_EAX + 0x1b);
+    if (in_EAX[0x1d] != 0) {
+      dVar7 = 1.0 - dVar7;
+    }
+    dVar1 = (dVar7 * *(double *)(in_EAX + 0x22) + *(double *)(in_EAX + 0x1e)) *
+            *(double *)(in_EAX + 0x28) + *(double *)(in_EAX + 0x24);
+    dVar7 = *(double *)(in_EAX + 0x6a);
+    if (*(double *)(in_EAX + 100) <= 0.0) {
+      dVar7 = -dVar7;
+    }
+    pl_fcont_r(*in_EAX,(*(double *)(in_EAX + 0x11) +
+                       (((*(double *)(in_EAX + 0x3e) - *(double *)(in_EAX + 4)) /
+                        *(double *)(in_EAX + 8)) * *(double *)(in_EAX + 0xf) +
+                       *(double *)(in_EAX + 0xb)) * *(double *)(in_EAX + 0x15)) -
+                       (dVar7 + local_824),SUB84(dVar1,0),(int)((ulonglong)dVar1 >> 0x20));
+  }
+  return;
+}
+

@@ -1,0 +1,15 @@
+
+void * xmalloc(size_t length)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = malloc(length);
+  if (pvVar1 != (void *)0x0) {
+    return pvVar1;
+  }
+  perror("out of memory");
+                    /* WARNING: Subroutine does not return */
+  exit(1);
+}
+

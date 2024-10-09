@@ -1,0 +1,30 @@
+
+Reader * new_reader(FILE *input,data_type format_type,bool auto_abscissa,double delta_x,
+                   double abscissa,bool transpose_axes,int log_axis,bool auto_bump,int symbol,
+                   double symbol_size,char *symbol_font_name,int linemode,double line_width,
+                   double fill_fraction,bool use_color)
+
+{
+  Reader *pRVar1;
+  
+  pRVar1 = (Reader *)xmalloc(0x5c);
+  pRVar1->need_break = true;
+  pRVar1->delta_x = delta_x;
+  pRVar1->input = input;
+  pRVar1->format_type = format_type;
+  pRVar1->initial_abscissa = abscissa;
+  pRVar1->abscissa = abscissa;
+  pRVar1->auto_abscissa = auto_abscissa;
+  pRVar1->transpose_axes = transpose_axes;
+  pRVar1->symbol_size = symbol_size;
+  pRVar1->log_axis = log_axis;
+  pRVar1->line_width = line_width;
+  pRVar1->auto_bump = auto_bump;
+  pRVar1->fill_fraction = fill_fraction;
+  pRVar1->symbol = symbol;
+  pRVar1->symbol_font_name = symbol_font_name;
+  pRVar1->linemode = linemode;
+  pRVar1->use_color = use_color;
+  return pRVar1;
+}
+

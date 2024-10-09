@@ -1,0 +1,20 @@
+
+/* WARNING: Removing unreachable block (ram,0x0001045c) */
+
+void __libc_csu_init(int argc,char **argv,char **envp)
+
+{
+  int iVar1;
+  code **ppcVar2;
+  
+  _init((EVP_PKEY_CTX *)argc);
+  iVar1 = 0;
+  ppcVar2 = (code **)&__frame_dummy_init_array_entry;
+  do {
+    iVar1 = iVar1 + 1;
+    (**ppcVar2)(argc,argv,envp);
+    ppcVar2 = ppcVar2 + 1;
+  } while (iVar1 != 1);
+  return;
+}
+

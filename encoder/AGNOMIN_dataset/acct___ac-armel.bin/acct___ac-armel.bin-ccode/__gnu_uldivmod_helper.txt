@@ -1,0 +1,23 @@
+
+ulonglong __gnu_uldivmod_helper(ulonglong a,ulonglong b,ulonglong *remainder)
+
+{
+  longlong lVar1;
+  int in_r1;
+  undefined4 in_r2;
+  ulonglong *puVar2;
+  undefined4 in_r3;
+  undefined4 unaff_r4;
+  undefined4 unaff_r5;
+  undefined4 unaff_r6;
+  UDItype UVar3;
+  
+  UVar3 = __udivdi3(CONCAT44(unaff_r4,in_r3),CONCAT44(unaff_r6,unaff_r5));
+  lVar1 = UVar3 * CONCAT44(in_r3,in_r2);
+  puVar2 = (ulonglong *)lVar1;
+  *(ulonglong **)a = (ulonglong *)((int)remainder - (int)puVar2);
+  ((ulonglong **)a)[1] =
+       (ulonglong *)(in_r1 - ((int)((ulonglong)lVar1 >> 0x20) + (uint)(remainder < puVar2)));
+  return (ulonglong)UVar3;
+}
+

@@ -1,0 +1,14 @@
+
+void open_file_for_reading(char *filename,FILE **input)
+
+{
+  int *piVar1;
+  char *pcVar2;
+  
+  piVar1 = __errno_location();
+  pcVar2 = strerror(*piVar1);
+  fprintf(stderr,"%s: %s: %s\n",progname,filename,pcVar2);
+                    /* WARNING: Subroutine does not return */
+  exit(1);
+}
+

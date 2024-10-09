@@ -1,0 +1,53 @@
+
+time_t midnight_after_me(time_t now_time)
+
+{
+  tm *ptVar1;
+  tm *ptVar2;
+  time_t tVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  tm *ptVar7;
+  tm *ptVar8;
+  tm *ptVar9;
+  time_t local_44;
+  tm temp_tm;
+  int local_14;
+  
+  local_14 = __stack_chk_guard;
+  local_44 = now_time;
+  ptVar2 = localtime(&local_44);
+  ptVar1 = &temp_tm;
+  ptVar9 = ptVar2;
+  do {
+    ptVar8 = ptVar9;
+    ptVar7 = ptVar1;
+    ptVar9 = (tm *)&ptVar8->tm_mon;
+    iVar4 = ptVar8->tm_min;
+    iVar5 = ptVar8->tm_hour;
+    iVar6 = ptVar8->tm_mday;
+    ptVar7->tm_sec = ptVar8->tm_sec;
+    ptVar7->tm_min = iVar4;
+    ptVar7->tm_hour = iVar5;
+    ptVar7->tm_mday = iVar6;
+    ptVar1 = (tm *)&ptVar7->tm_mon;
+  } while (ptVar9 != (tm *)&ptVar2->tm_isdst);
+  iVar5 = ptVar8->tm_wday;
+  iVar4 = ptVar8->tm_year;
+  ((tm *)&ptVar7->tm_mon)->tm_sec = ptVar9->tm_sec;
+  ptVar7->tm_year = iVar4;
+  ptVar7->tm_wday = iVar5;
+  temp_tm.tm_sec = 0;
+  temp_tm.tm_min = 0;
+  temp_tm.tm_mday = temp_tm.tm_mday + 1;
+  temp_tm.tm_hour = 0;
+  temp_tm.tm_isdst = -1;
+  tVar3 = rpl_mktime(&temp_tm);
+  if (local_14 == __stack_chk_guard) {
+    return tVar3;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+

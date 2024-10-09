@@ -1,0 +1,10 @@
+
+int rpl_getopt_long_only(int argc,char **argv,char *options,rpl_option *long_options,int *opt_index)
+
+{
+  int iVar1;
+  
+  iVar1 = rpl_getopt_internal(argc,argv,options,long_options,opt_index,1,0);
+  return iVar1;
+}
+

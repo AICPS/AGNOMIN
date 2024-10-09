@@ -1,0 +1,16 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+void __regparm3 pcregrep_exit(int rc)
+
+{
+  if (resource_error != 0) {
+    __fprintf_chk(stderr,1,
+                  "pcregrep: Error %d, %d or %d means that a resource limit was exceeded.\n",
+                  0xfffffff8,0xffffffeb,0xffffffe5,rc,rc);
+    fwrite("pcregrep: Check your regex for nested unlimited loops.\n",1,0x37,stderr);
+  }
+                    /* WARNING: Subroutine does not return */
+  exit(rc);
+}
+

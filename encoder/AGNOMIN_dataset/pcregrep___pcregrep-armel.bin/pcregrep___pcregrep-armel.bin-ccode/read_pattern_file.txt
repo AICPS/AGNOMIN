@@ -1,0 +1,82 @@
+
+BOOL read_pattern_file(char *name,patstr **patptr,patstr **patlastptr,int popts)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  byte *pbVar3;
+  int *piVar4;
+  ushort **ppuVar5;
+  char *pcVar6;
+  size_t sVar7;
+  patstr *ppVar8;
+  BOOL BVar9;
+  int count;
+  byte *pbVar10;
+  FILE *local_2048;
+  char buffer [8202];
+  
+  iVar1 = __stack_chk_guard;
+  if ((*name == '-') && (name[1] == '\0')) {
+    local_2048 = stdin;
+    name = stdin_name;
+  }
+  else {
+    local_2048 = fopen(name,"r");
+    uVar2 = stderr;
+    if (local_2048 == (FILE *)0x0) {
+      piVar4 = __errno_location();
+      pcVar6 = strerror(*piVar4);
+      __fprintf_chk(uVar2,1,"pcregrep: Failed to open %s: %s\n",name,pcVar6);
+      goto LAB_00011bb0;
+    }
+  }
+  count = 0;
+  while( true ) {
+    pcVar6 = fgets(buffer,0x200a,local_2048);
+    if (pcVar6 == (char *)0x0) break;
+    sVar7 = strlen(buffer);
+    pbVar3 = (byte *)(buffer + sVar7);
+    do {
+      pbVar10 = pbVar3;
+      if (pbVar10 <= buffer) break;
+      ppuVar5 = __ctype_b_loc();
+      pbVar3 = pbVar10 + -1;
+    } while (((*ppuVar5)[pbVar10[-1]] & 0x2000) != 0);
+    count = count + 1;
+    *pbVar10 = 0;
+    if (buffer[0] != 0) {
+      ppVar8 = add_pattern(buffer,*patlastptr);
+      *patlastptr = ppVar8;
+      if (ppVar8 == (patstr *)0x0) {
+LAB_00011b20:
+        local_2048 = (FILE *)0x0;
+        goto LAB_00011bb0;
+      }
+      if (*patptr == (patstr *)0x0) {
+        *patptr = ppVar8;
+      }
+      while( true ) {
+        BVar9 = compile_pattern(*patlastptr,pcre_options,popts,1,name,count);
+        if (BVar9 == 0) goto LAB_00011b20;
+        (*patlastptr)->string = (char *)0x0;
+        if ((*patlastptr)->next == (patstr *)0x0) break;
+        *patlastptr = (*patlastptr)->next;
+      }
+    }
+  }
+  if (local_2048 == stdin) {
+    local_2048 = (FILE *)0x1;
+  }
+  else {
+    fclose(local_2048);
+    local_2048 = (FILE *)0x1;
+  }
+LAB_00011bb0:
+  if (iVar1 == __stack_chk_guard) {
+    return (BOOL)local_2048;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+

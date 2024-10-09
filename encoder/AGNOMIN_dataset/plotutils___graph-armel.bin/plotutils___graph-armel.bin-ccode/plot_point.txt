@@ -1,0 +1,762 @@
+
+/* WARNING: Heritage AFTER dead removal. Example location: s1 : 0x0001a7dc */
+/* WARNING: Restarted to delay deadcode elimination for space: register */
+
+void plot_point(Multigrapher *multigrapher,Point *point)
+
+{
+  outcode oVar1;
+  outcode oVar2;
+  plPlotter *ppVar3;
+  Point *tolerant;
+  bool tolerant_00;
+  bool extraout_r1;
+  bool extraout_r1_00;
+  Point *extraout_r1_01;
+  bool extraout_r1_02;
+  int iVar4;
+  uint uVar5;
+  bool bVar6;
+  uint uVar7;
+  bool bVar8;
+  undefined uVar9;
+  char cVar10;
+  undefined uVar11;
+  bool bVar12;
+  undefined uVar13;
+  undefined4 uVar14;
+  undefined8 extraout_d0;
+  undefined8 uVar15;
+  double dVar16;
+  undefined8 extraout_d0_00;
+  undefined8 extraout_d0_01;
+  double extraout_d3;
+  double extraout_d4;
+  double extraout_d4_00;
+  double extraout_d4_01;
+  double extraout_d4_02;
+  double extraout_d5;
+  double extraout_d5_00;
+  double extraout_d5_01;
+  double dVar17;
+  double extraout_d6;
+  double extraout_d6_00;
+  double dVar18;
+  double dVar19;
+  double extraout_d6_01;
+  double extraout_d6_02;
+  double x;
+  double dVar20;
+  double unaff_d8;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double in_stack_ffffff80;
+  double y;
+  double local_70;
+  
+  if ((point->pendown == false) ||
+     (tolerant = point, multigrapher->first_point_of_polyline != false)) {
+    uVar7 = point->linemode;
+    if (point->use_color == false) {
+      uVar11 = (int)uVar7 < 0;
+      uVar13 = uVar7 == 0;
+      uVar9 = 1;
+      cVar10 = '\0';
+      if (0 < (int)uVar7) {
+        pl_linemod_r(multigrapher->plotter,linemodes[(int)(uVar7 - 1) % 5]);
+      }
+      pl_colorname_r(multigrapher->plotter,multigrapher->frame_color);
+    }
+    else {
+      uVar11 = (int)uVar7 < 0;
+      uVar13 = uVar7 == 0;
+      uVar9 = 1;
+      cVar10 = '\0';
+      if ((int)uVar7 < 1) {
+        if (!(bool)uVar13) {
+          uVar7 = ~uVar7 & 3;
+        }
+      }
+      else {
+        iVar4 = uVar7 - 1;
+        uVar7 = iVar4 % 5;
+        pl_linemod_r(multigrapher->plotter,linemodes[(iVar4 / 5) % 5]);
+      }
+      pl_colorname_r(multigrapher->plotter,colorstyle[uVar7]);
+    }
+    uVar14 = pl_flinewidth_r(SUB84(point->line_width * 4096.0,0),multigrapher->plotter);
+    if ((bool)uVar11) {
+      iVar4 = 0;
+    }
+    else {
+      dVar25 = (1.0 - point->fill_fraction) * 65534.0;
+      if (uVar11 == cVar10) {
+        iVar4 = -0x80000000;
+      }
+      else {
+        if (!(bool)uVar9 || (bool)uVar13) {
+          iVar4 = -0x7ffffffe;
+        }
+        else {
+          if (!(bool)uVar13 && uVar11 == cVar10) {
+            dVar25 = dVar25 + 0.5;
+          }
+          if ((bool)uVar13 || uVar11 != cVar10) {
+            dVar25 = dVar25 - 0.5;
+          }
+          iVar4 = SUB84(ROUND(dVar25),0) + 1;
+        }
+      }
+    }
+    pl_filltype_r(uVar14,multigrapher->plotter,iVar4);
+    bVar8 = multigrapher->first_point_of_polyline;
+    tolerant = extraout_r1_01;
+    if (bVar8 == false) goto LAB_0001a348;
+    dVar25 = point->x;
+    dVar24 = point->y;
+    dVar20 = dVar25;
+    local_70 = dVar24;
+  }
+  else {
+LAB_0001a348:
+    dVar24 = point->y;
+    dVar25 = point->x;
+    bVar8 = false;
+    dVar20 = multigrapher->oldpoint_x;
+    local_70 = multigrapher->oldpoint_y;
+  }
+  multigrapher->oldpoint_x = dVar25;
+  multigrapher->oldpoint_y = dVar24;
+  y = dVar20;
+  oVar1 = compute_outcode(multigrapher,in_stack_ffffff80,dVar20,(bool)tolerant);
+  oVar2 = compute_outcode(multigrapher,in_stack_ffffff80,y,tolerant_00);
+  x = (multigrapher->y_trans).input_min;
+  dVar23 = (multigrapher->x_trans).input_min;
+  bVar6 = extraout_r1;
+  dVar17 = extraout_d4;
+  dVar19 = extraout_d5;
+  dVar18 = extraout_d6;
+  dVar21 = dVar24;
+  dVar16 = dVar25;
+  uVar15 = extraout_d0;
+  while (bVar12 = (oVar2 | oVar1) == 0, dVar22 = dVar16, !bVar12) {
+    while( true ) {
+      if ((oVar2 & oVar1) != 0) {
+        dVar25 = dVar25 - dVar23;
+        dVar20 = (multigrapher->x_trans).input_range;
+        bVar12 = (multigrapher->x_trans).reverse == false;
+        if (!bVar12) {
+          dVar25 = dVar25 / dVar20;
+          dVar19 = 1.0;
+        }
+        if (bVar12) {
+          dVar25 = dVar25 / dVar20;
+        }
+        if (!bVar12) {
+          dVar25 = dVar19 - dVar25;
+        }
+        bVar12 = (multigrapher->y_trans).reverse != false;
+        if (bVar12) {
+          dVar19 = (multigrapher->y_trans).input_range;
+        }
+        dVar25 = (multigrapher->x_trans).output_min +
+                 ((multigrapher->x_trans).squeezed_min +
+                 dVar25 * (multigrapher->x_trans).squeezed_range) *
+                 (multigrapher->x_trans).output_range;
+        dVar24 = dVar24 - x;
+        if (bVar12) {
+          dVar20 = 1.0;
+          dVar24 = dVar24 / dVar19;
+        }
+        else {
+          dVar20 = (multigrapher->y_trans).input_range;
+        }
+        if (bVar12) {
+          dVar24 = dVar20 - dVar24;
+        }
+        else {
+          dVar24 = dVar24 / dVar20;
+        }
+        pl_fmove_r(SUB84(dVar25,0),(int)((ulonglong)dVar25 >> 0x20),
+                   SUB84((multigrapher->y_trans).output_min +
+                         ((multigrapher->y_trans).squeezed_min +
+                         dVar24 * (multigrapher->y_trans).squeezed_range) *
+                         (multigrapher->y_trans).output_range,0),multigrapher->plotter);
+        multigrapher->first_point_of_polyline = false;
+        return;
+      }
+      uVar7 = oVar1;
+      if (oVar1 == 0) {
+        uVar7 = oVar2;
+      }
+      if ((uVar7 & 4) == 0) {
+        if ((uVar7 & 8) == 0) {
+          bVar12 = (uVar7 & 1) == 0;
+          if (bVar12) {
+            unaff_d8 = x;
+          }
+          if (bVar12) {
+            dVar18 = dVar22 - dVar20;
+            dVar19 = unaff_d8 - local_70;
+          }
+          else {
+            unaff_d8 = (multigrapher->y_trans).input_max;
+            dVar19 = dVar22 - dVar20;
+            dVar18 = unaff_d8 - local_70;
+          }
+          dVar16 = dVar20 + (dVar18 * dVar19) / (dVar21 - local_70);
+        }
+        else {
+          unaff_d8 = local_70 + ((dVar21 - local_70) * (dVar23 - dVar20)) / (dVar22 - dVar20);
+          dVar16 = dVar23;
+        }
+      }
+      else {
+        dVar16 = (multigrapher->x_trans).input_max;
+        unaff_d8 = local_70 + ((dVar21 - local_70) * (dVar16 - dVar20)) / (dVar22 - dVar20);
+      }
+      if (oVar1 == uVar7) break;
+      oVar2 = compute_outcode(multigrapher,x,y,bVar6);
+      bVar12 = (oVar2 | oVar1) == 0;
+      bVar6 = extraout_r1_00;
+      dVar17 = extraout_d4_00;
+      dVar19 = extraout_d5_00;
+      dVar18 = extraout_d6_00;
+      dVar21 = unaff_d8;
+      dVar22 = dVar16;
+      uVar15 = extraout_d0_00;
+      if (bVar12) goto LAB_0001a418;
+    }
+    oVar1 = compute_outcode(multigrapher,x,y,bVar6);
+    bVar6 = extraout_r1_02;
+    dVar17 = extraout_d4_01;
+    dVar19 = extraout_d5_01;
+    dVar18 = extraout_d6_01;
+    dVar20 = dVar16;
+    local_70 = unaff_d8;
+    dVar16 = dVar22;
+    uVar15 = extraout_d0_01;
+  }
+LAB_0001a418:
+  if (bVar12) {
+    uVar7 = 0;
+  }
+  else {
+    uVar7 = 7;
+  }
+  if ((point->pendown == false) || (point->linemode < 1)) {
+    bVar12 = (multigrapher->x_trans).reverse != false;
+    if (bVar12) {
+      dVar18 = (multigrapher->x_trans).input_range;
+    }
+    if (bVar12) {
+      dVar18 = (dVar25 - dVar23) / dVar18;
+      dVar20 = 1.0;
+    }
+    else {
+      dVar20 = (multigrapher->x_trans).input_range;
+    }
+    if (bVar12) {
+      dVar20 = dVar20 - dVar18;
+    }
+    else {
+      dVar20 = (dVar25 - dVar23) / dVar20;
+    }
+    bVar12 = (multigrapher->y_trans).reverse != false;
+    dVar20 = (multigrapher->x_trans).squeezed_min + dVar20 * (multigrapher->x_trans).squeezed_range;
+    dVar25 = (multigrapher->x_trans).output_min + dVar20 * (multigrapher->x_trans).output_range;
+    if (bVar12) {
+      dVar20 = (multigrapher->y_trans).input_range;
+    }
+    if (bVar12) {
+      dVar20 = 1.0 - (dVar24 - x) / dVar20;
+    }
+    else {
+      dVar20 = (dVar24 - x) / (multigrapher->y_trans).input_range;
+    }
+    uVar14 = pl_fmove_r(SUB84(dVar25,0),(int)((ulonglong)dVar25 >> 0x20),
+                        SUB84((multigrapher->y_trans).output_min +
+                              ((multigrapher->y_trans).squeezed_min +
+                              dVar20 * (multigrapher->y_trans).squeezed_range) *
+                              (multigrapher->y_trans).output_range,0),multigrapher->plotter);
+LAB_0001a4fc:
+    multigrapher->first_point_of_polyline = false;
+    if ((uVar7 & 4) != 0) {
+      return;
+    }
+  }
+  else {
+    uVar14 = (undefined4)((ulonglong)uVar15 >> 0x20);
+    if (multigrapher->clip_mode == 0) {
+      bVar6 = (multigrapher->x_trans).reverse;
+      ppVar3 = multigrapher->plotter;
+      if ((uVar7 & 6) == 0) {
+        if (bVar8 != false) goto LAB_0001ac20;
+        dVar25 = (multigrapher->y_trans).output_min;
+        bVar12 = (multigrapher->y_trans).reverse == false;
+        dVar20 = (multigrapher->y_trans).squeezed_min;
+        dVar24 = dVar24 - x;
+        if (bVar12) {
+          x = dVar24 / (multigrapher->y_trans).input_range;
+        }
+        else {
+          x = 1.0;
+        }
+        if (!bVar12) {
+          x = x - dVar24 / (multigrapher->y_trans).input_range;
+        }
+LAB_0001ad28:
+        uVar14 = pl_fcont_r((int)uVar15,uVar14,
+                            SUB84(dVar25 + (dVar20 + x * (multigrapher->y_trans).squeezed_range) *
+                                           (multigrapher->y_trans).output_range,0),ppVar3);
+      }
+      else {
+        bVar12 = bVar6 != false;
+        if (bVar12) {
+          dVar23 = dVar25 - dVar23;
+        }
+        if (bVar12) {
+          dVar18 = (multigrapher->x_trans).input_range;
+        }
+        else {
+          dVar19 = dVar25 - dVar23;
+        }
+        if (bVar12) {
+          dVar23 = dVar23 / dVar18;
+          dVar19 = 1.0;
+        }
+        else {
+          dVar23 = (multigrapher->x_trans).input_range;
+        }
+        if (bVar12) {
+          dVar19 = dVar19 - dVar23;
+        }
+        else {
+          dVar19 = dVar19 / dVar23;
+        }
+        bVar12 = (multigrapher->y_trans).reverse != false;
+        dVar25 = dVar19 * (multigrapher->x_trans).squeezed_range;
+        if (bVar12) {
+          dVar19 = (multigrapher->y_trans).input_range;
+        }
+        dVar25 = (multigrapher->x_trans).output_min +
+                 ((multigrapher->x_trans).squeezed_min + dVar25) *
+                 (multigrapher->x_trans).output_range;
+        if (bVar12) {
+          dVar20 = 1.0 - (dVar24 - x) / dVar19;
+        }
+        else {
+          dVar20 = (dVar24 - x) / (multigrapher->y_trans).input_range;
+        }
+        uVar14 = pl_fmove_r(SUB84(dVar25,0),(int)((ulonglong)dVar25 >> 0x20),
+                            SUB84((multigrapher->y_trans).output_min +
+                                  ((multigrapher->y_trans).squeezed_min +
+                                  dVar20 * (multigrapher->y_trans).squeezed_range) *
+                                  (multigrapher->y_trans).output_range,0),ppVar3);
+      }
+      goto LAB_0001a4fc;
+    }
+    if (multigrapher->clip_mode != 2) {
+      ppVar3 = multigrapher->plotter;
+      bVar6 = (multigrapher->x_trans).reverse;
+      if ((uVar7 & 6) != 6) {
+        if ((uVar7 & 2) == 0) {
+          if (bVar8 == false) {
+            dVar25 = (multigrapher->y_trans).output_min;
+            bVar12 = (multigrapher->y_trans).reverse == false;
+            dVar20 = (multigrapher->y_trans).squeezed_min;
+            dVar21 = dVar21 - x;
+            if (!bVar12) {
+              x = 1.0;
+            }
+            if (bVar12) {
+              x = dVar21 / (multigrapher->y_trans).input_range;
+            }
+            if (!bVar12) {
+              x = x - dVar21 / (multigrapher->y_trans).input_range;
+            }
+            goto LAB_0001ad28;
+          }
+        }
+        else {
+          if (bVar8 == false) {
+            bVar12 = bVar6 != false;
+            if (bVar12) {
+              dVar19 = (multigrapher->x_trans).input_range;
+            }
+            if (bVar12) {
+              dVar19 = (dVar20 - dVar23) / dVar19;
+              dVar25 = 1.0;
+            }
+            else {
+              dVar25 = (multigrapher->x_trans).input_range;
+            }
+            if (bVar12) {
+              dVar25 = dVar25 - dVar19;
+            }
+            else {
+              dVar25 = (dVar20 - dVar23) / dVar25;
+            }
+            bVar12 = (multigrapher->y_trans).reverse == false;
+            if (bVar12) {
+              dVar20 = (local_70 - x) / (multigrapher->y_trans).input_range;
+            }
+            else {
+              dVar20 = 1.0;
+            }
+            if (!bVar12) {
+              dVar20 = dVar20 - (local_70 - x) / (multigrapher->y_trans).input_range;
+            }
+            pl_fmove_r(SUB84((multigrapher->x_trans).output_min +
+                             ((multigrapher->x_trans).squeezed_min +
+                             dVar25 * (multigrapher->x_trans).squeezed_range) *
+                             (multigrapher->x_trans).output_range,0),uVar14,
+                       SUB84((multigrapher->y_trans).output_min +
+                             ((multigrapher->y_trans).squeezed_min +
+                             dVar20 * (multigrapher->y_trans).squeezed_range) *
+                             (multigrapher->y_trans).output_range,0));
+            if ((multigrapher->x_trans).reverse == false) {
+              dVar25 = (point->x - (multigrapher->x_trans).input_min) /
+                       (multigrapher->x_trans).input_range;
+            }
+            else {
+              dVar25 = 1.0 - (point->x - (multigrapher->x_trans).input_min) /
+                             (multigrapher->x_trans).input_range;
+            }
+            bVar12 = (multigrapher->y_trans).reverse != false;
+            dVar20 = extraout_d3;
+            if (bVar12) {
+              dVar20 = 1.0;
+            }
+            dVar25 = (multigrapher->x_trans).output_min +
+                     ((multigrapher->x_trans).squeezed_min +
+                     dVar25 * (multigrapher->x_trans).squeezed_range) *
+                     (multigrapher->x_trans).output_range;
+            dVar24 = (point->y - (multigrapher->y_trans).input_min) /
+                     (multigrapher->y_trans).input_range;
+            if (bVar12) {
+              dVar24 = dVar20 - dVar24;
+            }
+            uVar14 = pl_fcont_r(SUB84(dVar25,0),(int)((ulonglong)dVar25 >> 0x20),
+                                SUB84((multigrapher->y_trans).output_min +
+                                      ((multigrapher->y_trans).squeezed_min +
+                                      dVar24 * (multigrapher->y_trans).squeezed_range) *
+                                      (multigrapher->y_trans).output_range,0),multigrapher->plotter)
+            ;
+            goto LAB_0001a4fc;
+          }
+        }
+      }
+LAB_0001ac20:
+      bVar12 = bVar6 != false;
+      if (bVar12) {
+        dVar19 = (multigrapher->x_trans).input_range;
+      }
+      if (bVar12) {
+        dVar19 = (dVar25 - dVar23) / dVar19;
+        dVar20 = 1.0;
+      }
+      else {
+        dVar20 = (multigrapher->x_trans).input_range;
+      }
+      if (bVar12) {
+        dVar20 = dVar20 - dVar19;
+      }
+      else {
+        dVar20 = (dVar25 - dVar23) / dVar20;
+      }
+      bVar12 = (multigrapher->y_trans).reverse == false;
+      if (bVar12) {
+        dVar25 = (dVar24 - x) / (multigrapher->y_trans).input_range;
+      }
+      else {
+        dVar25 = 1.0;
+      }
+      if (!bVar12) {
+        dVar25 = dVar25 - (dVar24 - x) / (multigrapher->y_trans).input_range;
+      }
+      uVar14 = pl_fmove_r(SUB84((multigrapher->x_trans).output_min +
+                                ((multigrapher->x_trans).squeezed_min +
+                                dVar20 * (multigrapher->x_trans).squeezed_range) *
+                                (multigrapher->x_trans).output_range,0),uVar14,
+                          SUB84((multigrapher->y_trans).output_min +
+                                ((multigrapher->y_trans).squeezed_min +
+                                dVar25 * (multigrapher->y_trans).squeezed_range) *
+                                (multigrapher->y_trans).output_range,0));
+      goto LAB_0001a4fc;
+    }
+    uVar5 = (uVar7 << 0x1e) >> 0x1f;
+    if (bVar8 != false) {
+      uVar5 = 1;
+    }
+    if (uVar5 != 0) {
+      bVar12 = (multigrapher->x_trans).reverse != false;
+      if (bVar12) {
+        dVar19 = (multigrapher->x_trans).input_range;
+      }
+      if (bVar12) {
+        dVar19 = (dVar20 - dVar23) / dVar19;
+        dVar25 = 1.0;
+      }
+      else {
+        dVar25 = (multigrapher->x_trans).input_range;
+      }
+      if (bVar12) {
+        dVar25 = dVar25 - dVar19;
+      }
+      else {
+        dVar25 = (dVar20 - dVar23) / dVar25;
+      }
+      bVar12 = (multigrapher->y_trans).reverse != false;
+      dVar20 = (multigrapher->x_trans).squeezed_range;
+      dVar25 = dVar25 * dVar20;
+      if (bVar12) {
+        dVar20 = 1.0;
+      }
+      dVar25 = (multigrapher->x_trans).output_min +
+               ((multigrapher->x_trans).squeezed_min + dVar25) *
+               (multigrapher->x_trans).output_range;
+      dVar24 = (multigrapher->y_trans).input_range;
+      if (bVar12) {
+        dVar24 = dVar20 - (local_70 - x) / dVar24;
+      }
+      else {
+        dVar24 = (local_70 - x) / dVar24;
+      }
+      pl_fmove_r(SUB84(dVar25,0),(int)((ulonglong)dVar25 >> 0x20),
+                 SUB84((multigrapher->y_trans).output_min +
+                       ((multigrapher->y_trans).squeezed_min +
+                       dVar24 * (multigrapher->y_trans).squeezed_range) *
+                       (multigrapher->y_trans).output_range,0),multigrapher->plotter);
+      dVar23 = (multigrapher->x_trans).input_min;
+      x = (multigrapher->y_trans).input_min;
+      dVar17 = extraout_d4_02;
+      dVar18 = extraout_d6_02;
+    }
+    bVar12 = (multigrapher->x_trans).reverse != false;
+    if (bVar12) {
+      dVar18 = (multigrapher->x_trans).input_range;
+    }
+    if (bVar12) {
+      dVar18 = (dVar16 - dVar23) / dVar18;
+      dVar17 = 1.0;
+    }
+    else {
+      dVar18 = (multigrapher->x_trans).input_range;
+    }
+    if (bVar12) {
+      dVar18 = dVar17 - dVar18;
+    }
+    else {
+      dVar18 = (dVar16 - dVar23) / dVar18;
+    }
+    bVar12 = (multigrapher->y_trans).reverse != false;
+    dVar20 = (multigrapher->x_trans).squeezed_min + dVar18 * (multigrapher->x_trans).squeezed_range;
+    dVar25 = (multigrapher->x_trans).output_min + dVar20 * (multigrapher->x_trans).output_range;
+    if (bVar12) {
+      dVar20 = (multigrapher->y_trans).input_range;
+    }
+    if (bVar12) {
+      dVar20 = 1.0 - (dVar21 - x) / dVar20;
+    }
+    else {
+      dVar20 = (dVar21 - x) / (multigrapher->y_trans).input_range;
+    }
+    uVar14 = pl_fcont_r(SUB84(dVar25,0),(int)((ulonglong)dVar25 >> 0x20),
+                        SUB84((multigrapher->y_trans).output_min +
+                              ((multigrapher->y_trans).squeezed_min +
+                              dVar20 * (multigrapher->y_trans).squeezed_range) *
+                              (multigrapher->y_trans).output_range,0),multigrapher->plotter);
+    if ((uVar7 & 4) != 0) {
+      if ((multigrapher->x_trans).reverse == false) {
+        dVar25 = (point->x - (multigrapher->x_trans).input_min) /
+                 (multigrapher->x_trans).input_range;
+      }
+      else {
+        dVar25 = 1.0 - (point->x - (multigrapher->x_trans).input_min) /
+                       (multigrapher->x_trans).input_range;
+      }
+      dVar25 = (multigrapher->x_trans).output_min +
+               ((multigrapher->x_trans).squeezed_min +
+               dVar25 * (multigrapher->x_trans).squeezed_range) *
+               (multigrapher->x_trans).output_range;
+      if ((multigrapher->y_trans).reverse == false) {
+        dVar20 = (point->y - (multigrapher->y_trans).input_min) /
+                 (multigrapher->y_trans).input_range;
+      }
+      else {
+        dVar20 = 1.0 - (point->y - (multigrapher->y_trans).input_min) /
+                       (multigrapher->y_trans).input_range;
+      }
+      pl_fmove_r(SUB84(dVar25,0),(int)((ulonglong)dVar25 >> 0x20),
+                 SUB84((multigrapher->y_trans).output_min +
+                       ((multigrapher->y_trans).squeezed_min +
+                       dVar20 * (multigrapher->y_trans).squeezed_range) *
+                       (multigrapher->y_trans).output_range,0),multigrapher->plotter);
+      multigrapher->first_point_of_polyline = false;
+      return;
+    }
+    multigrapher->first_point_of_polyline = false;
+  }
+  iVar4 = point->symbol;
+  if (0x1f < iVar4) {
+    pl_savestate_r(uVar14,multigrapher->plotter);
+    plot_errorbar(multigrapher,point);
+    pl_fontname_r(multigrapher->plotter,point->symbol_font_name);
+LAB_0001a540:
+    bVar12 = (multigrapher->x_trans).reverse != false;
+    dVar25 = (multigrapher->x_trans).input_min;
+    dVar20 = (multigrapher->x_trans).input_range;
+    if (bVar12) {
+      dVar25 = point->x - dVar25;
+      dVar24 = 1.0;
+    }
+    else {
+      dVar24 = point->x - dVar25;
+    }
+    if (bVar12) {
+      dVar20 = dVar25 / dVar20;
+    }
+    dVar18 = (multigrapher->y_trans).input_min;
+    dVar25 = (multigrapher->x_trans).output_range;
+    bVar8 = (multigrapher->y_trans).reverse;
+    if (bVar12) {
+      dVar24 = dVar24 - dVar20;
+    }
+    else {
+      dVar24 = dVar24 / dVar20;
+    }
+    dVar23 = (multigrapher->x_trans).squeezed_range;
+    dVar20 = point->y - dVar18;
+    if (bVar8 != false) {
+      dVar18 = 1.0;
+    }
+    dVar24 = (multigrapher->x_trans).output_min +
+             ((multigrapher->x_trans).squeezed_min + dVar24 * dVar23) * dVar25;
+    dVar20 = dVar20 / (multigrapher->y_trans).input_range;
+    dVar19 = (multigrapher->y_trans).output_range;
+    if (bVar8 != false) {
+      dVar20 = dVar18 - dVar20;
+    }
+    dVar18 = (multigrapher->y_trans).squeezed_range;
+    dVar25 = dVar23 * dVar25;
+    if (-1 < (int)bVar8) {
+      dVar25 = dVar18 * dVar19;
+    }
+    dVar25 = dVar25 * point->symbol_size;
+    dVar18 = (multigrapher->y_trans).squeezed_min + dVar20 * dVar18;
+    dVar20 = (multigrapher->y_trans).output_min + dVar18 * dVar19;
+    uVar14 = pl_fmarker_r(SUB84(dVar24,0),(int)((ulonglong)dVar24 >> 0x20),SUB84(dVar20,0),
+                          (int)((ulonglong)dVar20 >> 0x20),SUB84(dVar25,0),
+                          (int)((ulonglong)dVar25 >> 0x20),SUB84(dVar18,0),multigrapher->plotter,
+                          point->symbol);
+    pl_restorestate_r(uVar14,multigrapher->plotter);
+    return;
+  }
+  if (iVar4 < 1) {
+    if ((iVar4 != 0) || (point->linemode != 0)) {
+      plot_errorbar(multigrapher,point);
+      return;
+    }
+    plot_errorbar(multigrapher,point);
+    ppVar3 = multigrapher->plotter;
+    if ((multigrapher->x_trans).reverse == false) {
+      dVar25 = (point->x - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+    }
+    else {
+      dVar25 = 1.0 - (point->x - (multigrapher->x_trans).input_min) /
+                     (multigrapher->x_trans).input_range;
+    }
+    dVar23 = (multigrapher->x_trans).squeezed_range;
+    dVar24 = (multigrapher->y_trans).input_min;
+    iVar4 = 1;
+    dVar20 = (multigrapher->x_trans).output_range;
+    dVar18 = point->y - dVar24;
+    bVar8 = (multigrapher->y_trans).reverse;
+    if (bVar8 != false) {
+      dVar24 = 1.0;
+    }
+    dVar25 = (multigrapher->x_trans).output_min +
+             ((multigrapher->x_trans).squeezed_min + dVar25 * dVar23) * dVar20;
+    dVar18 = dVar18 / (multigrapher->y_trans).input_range;
+    dVar19 = (multigrapher->y_trans).output_range;
+    if (bVar8 != false) {
+      dVar18 = dVar24 - dVar18;
+    }
+    dVar24 = (multigrapher->y_trans).squeezed_range;
+    dVar20 = dVar23 * dVar20;
+    if (-1 < (int)bVar8) {
+      dVar20 = dVar24 * dVar19;
+    }
+    dVar20 = dVar20 * point->symbol_size;
+    dVar18 = (multigrapher->y_trans).output_min +
+             ((multigrapher->y_trans).squeezed_min + dVar18 * dVar24) * dVar19;
+  }
+  else {
+    if (0 < point->linemode) {
+      pl_savestate_r(uVar14,multigrapher->plotter);
+      plot_errorbar(multigrapher,point);
+      goto LAB_0001a540;
+    }
+    plot_errorbar(multigrapher,point);
+    ppVar3 = multigrapher->plotter;
+    bVar12 = (multigrapher->x_trans).reverse != false;
+    dVar25 = (multigrapher->x_trans).input_min;
+    dVar20 = (multigrapher->x_trans).input_range;
+    if (bVar12) {
+      dVar25 = point->x - dVar25;
+      dVar24 = 1.0;
+    }
+    else {
+      dVar24 = point->x - dVar25;
+    }
+    if (bVar12) {
+      dVar20 = dVar25 / dVar20;
+    }
+    dVar23 = (multigrapher->y_trans).input_min;
+    bVar8 = (multigrapher->y_trans).reverse;
+    dVar19 = (multigrapher->y_trans).input_range;
+    dVar18 = (multigrapher->x_trans).output_range;
+    iVar4 = point->symbol;
+    if (bVar12) {
+      dVar24 = dVar24 - dVar20;
+    }
+    else {
+      dVar24 = dVar24 / dVar20;
+    }
+    bVar12 = bVar8 == false;
+    dVar16 = (multigrapher->x_trans).squeezed_range;
+    dVar20 = point->y - dVar23;
+    if (!bVar12) {
+      dVar23 = 1.0;
+    }
+    if (!bVar12) {
+      dVar19 = dVar20 / dVar19;
+    }
+    dVar25 = (multigrapher->x_trans).output_min +
+             ((multigrapher->x_trans).squeezed_min + dVar24 * dVar16) * dVar18;
+    if (bVar12) {
+      dVar19 = dVar20 / dVar19;
+    }
+    dVar17 = (multigrapher->y_trans).output_range;
+    if (!bVar12) {
+      dVar19 = dVar23 - dVar19;
+    }
+    dVar24 = (multigrapher->y_trans).squeezed_range;
+    dVar20 = dVar16 * dVar18;
+    if (-1 < (int)bVar8) {
+      dVar20 = dVar24 * dVar17;
+    }
+    dVar20 = dVar20 * point->symbol_size;
+    dVar18 = (multigrapher->y_trans).output_min +
+             ((multigrapher->y_trans).squeezed_min + dVar19 * dVar24) * dVar17;
+  }
+  pl_fmarker_r(SUB84(dVar25,0),(int)((ulonglong)dVar25 >> 0x20),SUB84(dVar18,0),
+               (int)((ulonglong)dVar18 >> 0x20),SUB84(dVar20,0),(int)((ulonglong)dVar20 >> 0x20),
+               SUB84(dVar24,0),ppVar3,iVar4);
+  return;
+}
+

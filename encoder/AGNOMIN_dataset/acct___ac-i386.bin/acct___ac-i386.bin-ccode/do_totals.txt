@@ -1,0 +1,52 @@
+
+void do_totals(time_t *next_midnight,time_t current_time,int update_time_flag,int change_login_flag,
+              char *debug_str)
+
+{
+  int iVar1;
+  time_t now_time;
+  int iVar2;
+  tm *ptVar3;
+  int in_GS_OFFSET;
+  char *pcVar4;
+  char *pcVar5;
+  char *pcVar6;
+  time_t temp_time;
+  char month_day_string [256];
+  
+  iVar1 = *(int *)(in_GS_OFFSET + 0x14);
+  iVar2 = *next_midnight;
+  while (iVar2 < current_time) {
+    pcVar6 = debug_str;
+    log_everyone_out(iVar2,update_time_flag,change_login_flag,debug_str);
+    now_time = current_time;
+    if (print_midnight_totals != 0) {
+      temp_time = *next_midnight + -10;
+      ptVar3 = localtime(&temp_time);
+      if (print_year == 0) {
+        iVar2 = ptVar3->tm_mday;
+        pcVar5 = months[ptVar3->tm_mon];
+        pcVar4 = "%s %2d";
+      }
+      else {
+        pcVar6 = (char *)(ptVar3->tm_year + 0x76c);
+        iVar2 = ptVar3->tm_mday;
+        pcVar5 = months[ptVar3->tm_mon];
+        pcVar4 = "%s %2d %4d";
+      }
+      __snprintf_chk(month_day_string,0x100,1,0x100,pcVar4,pcVar5,iVar2,pcVar6);
+      do_statistics(month_day_string);
+      if ((print_midnight_totals != 0) && (print_all_days != 0)) {
+        now_time = *next_midnight;
+      }
+    }
+    iVar2 = midnight_after_me(now_time);
+    *next_midnight = iVar2;
+  }
+  if (iVar1 == *(int *)(in_GS_OFFSET + 0x14)) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+

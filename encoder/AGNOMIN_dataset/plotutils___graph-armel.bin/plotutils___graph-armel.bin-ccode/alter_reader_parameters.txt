@@ -1,0 +1,51 @@
+
+void alter_reader_parameters
+               (Reader *reader,FILE *input,data_type format_type,bool auto_abscissa,double delta_x,
+               double abscissa,int symbol,double symbol_size,char *symbol_font_name,int linemode,
+               double line_width,double fill_fraction,bool use_color,bool new_symbol,
+               bool new_symbol_size,bool new_symbol_font_name,bool new_linemode,bool new_line_width,
+               bool new_fill_fraction,bool new_use_color)
+
+{
+  bool bVar1;
+  double in_d0;
+  double in_d1;
+  double in_d2;
+  double in_d3;
+  double in_d4;
+  
+  reader->need_break = true;
+  if (symbol != 0) {
+    reader->symbol = delta_x._0_4_;
+  }
+  reader->input = input;
+  if (symbol_size._0_4_ != 0) {
+    reader->symbol_size = in_d2;
+  }
+  reader->format_type = format_type;
+  reader->auto_abscissa = auto_abscissa;
+  if (symbol_size._4_4_ != 0) {
+    reader->symbol_font_name = delta_x._4_4_;
+  }
+  bVar1 = symbol_font_name != (char *)0x0;
+  reader->delta_x = in_d0;
+  if (bVar1) {
+    symbol_font_name = abscissa._0_4_;
+  }
+  reader->initial_abscissa = in_d1;
+  if (bVar1) {
+    reader->linemode = (int)symbol_font_name;
+  }
+  reader->abscissa = in_d1;
+  if (linemode != 0) {
+    reader->line_width = in_d3;
+  }
+  if (line_width._0_4_ != 0) {
+    reader->fill_fraction = in_d4;
+  }
+  if (line_width._4_4_ != 0) {
+    reader->use_color = abscissa._4_4_;
+  }
+  return;
+}
+

@@ -1,0 +1,10 @@
+
+int rpl_getopt(int argc,char **argv,char *optstring)
+
+{
+  int iVar1;
+  
+  iVar1 = rpl_getopt_internal(argc,argv,optstring,(rpl_option *)0x0,(int *)0x0,0,1);
+  return iVar1;
+}
+

@@ -1,0 +1,24 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+int usage(int rc)
+
+{
+  int __c;
+  option_item *poVar1;
+  
+  fwrite("Usage: pcregrep [-",1,0x12,stderr);
+  poVar1 = optionlist;
+  __c = optionlist[0].one_char;
+  while (__c != 0) {
+    if (0 < __c) {
+      fputc(__c,stderr);
+    }
+    __c = poVar1[1].one_char;
+    poVar1 = poVar1 + 1;
+  }
+  fwrite("] [long options] [pattern] [files]\n",1,0x23,stderr);
+  fwrite("Type `pcregrep --help\' for more information and the long options.\n",1,0x42,stderr);
+  return 2;
+}
+

@@ -1,0 +1,11 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+/* WARNING: Removing unreachable block (ram,0x00012cce) */
+/* WARNING: Removing unreachable block (ram,0x00012cd8) */
+
+void register_tm_clones(void)
+
+{
+  return;
+}
+

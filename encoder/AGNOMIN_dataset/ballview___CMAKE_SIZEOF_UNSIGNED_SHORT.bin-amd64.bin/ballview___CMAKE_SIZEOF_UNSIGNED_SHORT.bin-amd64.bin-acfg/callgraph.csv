@@ -1,0 +1,11 @@
+outgoing, _init, __gmon_start__
+outgoing, _init, __gmon_start__
+outgoing, _start, main
+outgoing, _start, __libc_start_main
+outgoing, _start, __libc_csu_fini
+outgoing, _start, __libc_csu_init
+outgoing, __do_global_dtors_aux, deregister_tm_clones
+outgoing, frame_dummy, register_tm_clones
+outgoing, __libc_csu_init, _init
+outgoing, __libc_csu_init, __do_global_dtors_aux
+outgoing, __libc_csu_init, frame_dummy

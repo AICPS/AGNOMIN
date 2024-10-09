@@ -1,0 +1,23 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+int __regparm3 handle_option(int letter,int options)
+
+{
+  int iVar1;
+  char s [4];
+  
+  if (letter + 0x10U < 0x89) {
+                    /* WARNING: Could not recover jumptable at 0x0001503a. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    iVar1 = (*(code *)((int)&_GLOBAL_OFFSET_TABLE_ + *(int *)(&DAT_00016940 + (letter + 0x10U) * 4))
+            )();
+    return iVar1;
+  }
+  iVar1 = stderr;
+  __fprintf_chk(stderr,1,"pcregrep: Unknown option -%c\n",letter);
+  iVar1 = usage(iVar1);
+                    /* WARNING: Subroutine does not return */
+  pcregrep_exit(iVar1);
+}
+

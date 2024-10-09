@@ -1,0 +1,12 @@
+
+/* WARNING: Function: __i686.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+void _start(void)
+
+{
+  __libc_start_main(main);
+  do {
+                    /* WARNING: Do nothing block with infinite loop */
+  } while( true );
+}
+

@@ -1,0 +1,20 @@
+
+int grep_or_recurse(char *pathname,BOOL dir_recurse,BOOL only_one_at_top)
+
+{
+  int iVar1;
+  int in_ECX;
+  char *printname;
+  
+  if ((*pathname == '-') && (pathname[1] == '\0')) {
+    printname = stdin_name;
+    if ((filenames < 2) && ((only_one_at_top != 0 || (filenames != 1)))) {
+      printname = (char *)0x0;
+    }
+    iVar1 = pcregrep(stdin,stdin_name,printname,in_ECX);
+    return iVar1;
+  }
+  iVar1 = grep_or_recurse(pathname,dir_recurse,only_one_at_top);
+  return iVar1;
+}
+

@@ -1,0 +1,12 @@
+
+void display_version(char *progname,char *written,char *copyright)
+
+{
+  fprintf(stdout,"%s (%s) %s\n",progname,"GNU plotutils",&DAT_08057b4b);
+  fprintf(stdout,"%s\n",copyright);
+  fwrite("This is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+         ,1,0x97,stdout);
+  fprintf(stdout,"%s\n");
+  return;
+}
+

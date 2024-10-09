@@ -1,0 +1,11 @@
+
+void __do_global_dtors_aux(void)
+
+{
+  if (completed_6670 == '\0') {
+    deregister_tm_clones();
+    completed_6670 = '\x01';
+  }
+  return;
+}
+

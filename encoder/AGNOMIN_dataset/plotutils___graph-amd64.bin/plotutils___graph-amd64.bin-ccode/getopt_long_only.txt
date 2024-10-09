@@ -1,0 +1,10 @@
+
+int getopt_long_only(int argc,char **argv,char *options,option *long_options,int *opt_index)
+
+{
+  int iVar1;
+  
+  iVar1 = _getopt_internal(argc,argv,options,long_options,opt_index,1);
+  return iVar1;
+}
+

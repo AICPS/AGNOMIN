@@ -1,0 +1,58 @@
+
+FILE * file_open(char *file_name,int write_flag)
+
+{
+  long lVar1;
+  FILE *pFVar2;
+  size_t sVar3;
+  undefined *puVar4;
+  char *__modes;
+  long in_FS_OFFSET;
+  undefined8 uStack64;
+  undefined auStack56 [8];
+  long local_30 [2];
+  
+  local_30[0] = *(long *)(in_FS_OFFSET + 0x28);
+  if (file_name == (char *)0x0) {
+    uStack64 = 0x402396;
+    fatal("file_open: FILE_NAME is NULL");
+    pFVar2 = (FILE *)__printf_chk(1,"\nThe system\'s default login accounting file is %s.\n",
+                                  "/var/log/wtmp");
+    return pFVar2;
+  }
+  if ((*file_name == '-') && (file_name[1] == '\0')) {
+    puVar4 = auStack56;
+    pFVar2 = stdout;
+    if (write_flag == 0) {
+      puVar4 = auStack56;
+      pFVar2 = stdin;
+    }
+  }
+  else {
+    __modes = "rb";
+    if (write_flag != 0) {
+      __modes = "wb";
+    }
+    uStack64 = 0x4022f5;
+    pFVar2 = (FILE *)fopen(file_name,__modes);
+    puVar4 = auStack56;
+    if (pFVar2 == (FILE *)0x0) {
+      uStack64 = 0x402348;
+      sVar3 = strlen(file_name);
+      lVar1 = -(sVar3 + 0x3c & 0xfffffffffffffff0);
+      *(undefined8 *)(auStack56 + lVar1 + -8) = 0x40237a;
+      __sprintf_chk((long *)((long)local_30 + lVar1),1,0xffffffffffffffff,
+                    "couldn\'t open file \'%s\'",file_name);
+      *(undefined8 *)(auStack56 + lVar1 + -8) = 0x402382;
+      perror((char *)(long *)((long)local_30 + lVar1));
+      puVar4 = auStack56 + lVar1;
+    }
+  }
+  if (local_30[0] != *(long *)(in_FS_OFFSET + 0x28)) {
+                    /* WARNING: Subroutine does not return */
+    *(undefined8 *)(puVar4 + -8) = 0x40238c;
+    __stack_chk_fail();
+  }
+  return pFVar2;
+}
+

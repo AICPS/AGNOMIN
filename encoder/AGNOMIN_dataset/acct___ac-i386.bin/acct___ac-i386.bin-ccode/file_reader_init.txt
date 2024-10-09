@@ -1,0 +1,28 @@
+
+file_rd_info * file_reader_init(int record_size,int buffered_records,int backwards)
+
+{
+  file_rd_info *pfVar1;
+  void *pvVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  byte bVar5;
+  
+  bVar5 = 0;
+  pfVar1 = (file_rd_info *)xmalloc(0x30);
+  pfVar1->the_files = (file_list *)0x0;
+  pfVar1->rec_number = 0;
+  puVar4 = (undefined4 *)((uint)&pfVar1->fp & 0xfffffffc);
+  uVar3 = (uint)((int)pfVar1 + (0x30 - (int)puVar4)) >> 2;
+  for (; uVar3 != 0; uVar3 = uVar3 - 1) {
+    *puVar4 = 0;
+    puVar4 = puVar4 + (uint)bVar5 * -2 + 1;
+  }
+  pfVar1->record_size = record_size;
+  pfVar1->buffered_records = buffered_records;
+  pvVar2 = xmalloc(record_size * buffered_records);
+  pfVar1->buffer = pvVar2;
+  pfVar1->backwards = backwards;
+  return pfVar1;
+}
+

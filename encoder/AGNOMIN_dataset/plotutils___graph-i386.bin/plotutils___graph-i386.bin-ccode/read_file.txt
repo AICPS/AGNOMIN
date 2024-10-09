@@ -1,0 +1,43 @@
+
+void read_file(Reader *reader,Point **p_addr,int *length,int *no_of_points)
+
+{
+  int iVar1;
+  bool bVar2;
+  Point *p;
+  dataset_status_t dVar3;
+  int iVar4;
+  Reader *in_stack_ffffffd4;
+  Point *in_stack_ffffffd8;
+  
+  do {
+    while( true ) {
+      iVar4 = *no_of_points;
+      p = *p_addr;
+      while( true ) {
+        iVar1 = *length;
+        if (iVar1 <= iVar4) {
+          iVar4 = iVar1 + 100000;
+          if ((uint)(iVar1 * 100) < 10000000) {
+            iVar4 = iVar1 * 2;
+          }
+          p = (Point *)xrealloc(p,iVar4 * 100);
+          *length = iVar4;
+        }
+        dVar3 = read_point(in_stack_ffffffd4,in_stack_ffffffd8);
+        if (dVar3 != IN_PROGRESS) break;
+        iVar4 = *no_of_points + 1;
+        *no_of_points = iVar4;
+      }
+      *p_addr = p;
+      if (dVar3 != ENDED_BY_MODE_CHANGE) break;
+      bVar2 = reader->auto_bump;
+      reader->auto_bump = false;
+      reset_reader(reader);
+      reader->auto_bump = bVar2;
+    }
+    reset_reader(reader);
+  } while (dVar3 != ENDED_BY_EOF);
+  return;
+}
+

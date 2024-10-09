@@ -1,0 +1,9 @@
+
+void fatal(char *s)
+
+{
+  __fprintf_chk(stderr,1,"%s: %s\n",program_name,s);
+                    /* WARNING: Subroutine does not return */
+  exit(1);
+}
+

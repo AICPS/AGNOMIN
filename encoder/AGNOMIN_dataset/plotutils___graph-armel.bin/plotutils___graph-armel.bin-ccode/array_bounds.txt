@@ -1,0 +1,224 @@
+
+/* WARNING: Could not reconcile some variable overlaps */
+
+void array_bounds(Point *p,int length,bool transpose_axes,int clip_mode,double *min_x,double *min_y,
+                 double *max_x,double *max_y,bool spec_min_x,bool spec_min_y,bool spec_max_x,
+                 bool spec_max_y)
+
+{
+  uint uVar1;
+  uint uVar2;
+  double *pdVar3;
+  undefined4 uVar4;
+  int iVar5;
+  double *pdVar6;
+  int iVar7;
+  double *pdVar8;
+  bool bVar9;
+  double *in_pc;
+  bool bVar10;
+  double *in_fpscr;
+  double dVar11;
+  double y_max_clip;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double unaff_d12;
+  double unaff_d13;
+  double dVar15;
+  double dVar16;
+  bool spec_max_y_00;
+  undefined8 local_a0;
+  double local_98;
+  double local_90;
+  double xxr [2];
+  double yyr [2];
+  
+  if (length == 0) {
+    if (spec_min_x == false) {
+      *(undefined4 *)min_x = 0;
+      *(undefined4 *)((int)min_x + 4) = 0;
+    }
+    if (spec_min_y == false) {
+      *(undefined4 *)min_y = 0;
+      *(undefined4 *)((int)min_y + 4) = 0;
+    }
+    if (spec_max_x == false) {
+      uVar4 = *(undefined4 *)((int)min_x + 4);
+      *(undefined4 *)max_x = *(undefined4 *)min_x;
+      *(undefined4 *)((int)max_x + 4) = uVar4;
+    }
+    if (spec_max_y != false) {
+      return;
+    }
+    uVar4 = *(undefined4 *)((int)min_y + 4);
+    *(undefined4 *)max_y = *(undefined4 *)min_y;
+    *(undefined4 *)((int)max_y + 4) = uVar4;
+    return;
+  }
+  if (spec_min_x == false) {
+    dVar14 = 1.797693134862316e+308;
+    dVar15 = 0.0;
+  }
+  else {
+    dVar14 = 0.0;
+    dVar15 = *min_x;
+  }
+  if (spec_max_x == false) {
+    dVar15 = -1.797693134862316e+308;
+  }
+  else {
+    dVar13 = *max_x;
+    if ((spec_min_x == false) ||
+       (in_pc = (double *)
+                ((uint)in_fpscr & 0xfffffff | (uint)(dVar15 < dVar13) << 0x1f |
+                 (uint)(dVar15 == dVar13) << 0x1e | (uint)(dVar13 <= dVar15) << 0x1d),
+       in_fpscr = in_pc, (int)spec_min_x < 1)) {
+      dVar15 = 0.0;
+    }
+    else {
+      dVar15 = 0.0;
+    }
+  }
+  if (spec_min_y == false) {
+    dVar13 = 1.797693134862316e+308;
+    dVar11 = 0.0;
+  }
+  else {
+    dVar11 = *min_y;
+    dVar13 = 0.0;
+  }
+  dVar16 = dVar11;
+  if (spec_max_y == false) {
+    dVar12 = -1.797693134862316e+308;
+    y_max_clip = 0.0;
+  }
+  else {
+    y_max_clip = *max_y;
+    if ((spec_min_y == false) ||
+       (in_pc = (double *)
+                ((uint)in_fpscr & 0xfffffff | (uint)(dVar11 < y_max_clip) << 0x1f |
+                 (uint)(dVar11 == y_max_clip) << 0x1e | (uint)(y_max_clip <= dVar11) << 0x1d),
+       (int)spec_min_y < 1)) {
+      dVar12 = *in_pc;
+    }
+    else {
+      dVar12 = 0.0;
+      dVar16 = y_max_clip;
+      y_max_clip = dVar11;
+    }
+  }
+  if (0 < length) {
+    bVar9 = false;
+    pdVar8 = &p->fill_fraction;
+    iVar7 = 0;
+    local_98 = 0.0;
+    local_90 = 0.0;
+    do {
+      bVar10 = transpose_axes != false;
+      if (bVar10) {
+        unaff_d12 = pdVar8[-10];
+      }
+      if (bVar10) {
+        unaff_d13 = pdVar8[-0xb];
+      }
+      if (!bVar10) {
+        unaff_d12 = pdVar8[-0xb];
+      }
+      if (!bVar10) {
+        unaff_d13 = pdVar8[-10];
+      }
+      if (((bVar9 == false) || (*(int *)(pdVar8 + -4) == 0)) ||
+         ((iVar5 = *(int *)((int)pdVar8 + -0xc), iVar5 < 1 && (iVar5 < 0)))) {
+LAB_00013f20:
+        if ((((spec_min_x == false) || (spec_min_x == false)) &&
+            (((spec_max_x == false || (-1 < (int)spec_max_x)) &&
+             ((spec_min_y == false || (spec_min_y == false)))))) &&
+           ((spec_max_y == false || (-1 < (int)spec_max_y)))) {
+          xxr[0] = unaff_d12;
+          yyr[0] = unaff_d13;
+          uVar1 = 1;
+LAB_00013e60:
+          pdVar3 = yyr;
+          pdVar6 = xxr;
+          iVar7 = 0;
+          do {
+            uVar2 = iVar7 + 1;
+            iVar7 = 1;
+            if (spec_min_x == false) {
+              dVar14 = *pdVar6;
+            }
+            if (spec_min_y == false) {
+              dVar13 = *pdVar3;
+            }
+            if ((spec_max_x == false) && (-1 < (int)spec_max_x)) {
+              dVar15 = *pdVar6;
+            }
+            pdVar6 = pdVar6 + 1;
+            if ((spec_max_y == false) && (-1 < (int)spec_max_y)) {
+              dVar12 = *pdVar3;
+            }
+            pdVar3 = pdVar3 + 1;
+          } while (uVar2 < uVar1);
+        }
+      }
+      else {
+        spec_max_y_00 = (bool)((ulonglong)unaff_d12 >> 0x20);
+        dVar11 = unaff_d12;
+        local_a0 = unaff_d13;
+        if (iVar5 < 0) {
+          if (clip_mode == false) goto LAB_00013f20;
+          if (clip_mode == 2) goto LAB_00013e00;
+          uVar1 = clip_line(&local_98,&local_90,(double *)&stack0xffffff58,(double *)&local_a0,
+                            (double)CONCAT44(spec_min_y,spec_min_x),
+                            (double)CONCAT44(spec_max_y,spec_max_x),dVar16,y_max_clip,length,
+                            clip_mode,SUB84(unaff_d12,0),spec_max_y_00);
+          if (((uVar1 & 1) != 0) && ((uVar1 & 6) != 6)) goto LAB_00013e3c;
+        }
+        else {
+LAB_00013e00:
+          uVar1 = clip_line(&local_98,&local_90,(double *)&stack0xffffff58,(double *)&local_a0,
+                            (double)CONCAT44(spec_min_y,spec_min_x),
+                            (double)CONCAT44(spec_max_y,spec_max_x),dVar16,y_max_clip,length,
+                            clip_mode,SUB84(unaff_d12,0),spec_max_y_00);
+          if ((uVar1 & 1) != 0) {
+LAB_00013e3c:
+            xxr[0] = local_98;
+            xxr[1]._0_4_ = SUB84(dVar11,0);
+            xxr[1]._4_4_ = (int)((ulonglong)dVar11 >> 0x20);
+            uVar1 = 2;
+            yyr[0] = local_90;
+            yyr[1]._0_4_ = (undefined4)local_a0;
+            yyr[1]._4_4_ = local_a0._4_4_;
+            goto LAB_00013e60;
+          }
+        }
+      }
+      bVar9 = bVar9 + true;
+      pdVar8 = pdVar8 + 0xd;
+      local_98 = unaff_d12;
+      local_90 = unaff_d13;
+    } while (bVar9 != length);
+    if (iVar7 != 0) goto LAB_00014010;
+  }
+  dVar12 = 0.0;
+  dVar15 = dVar12;
+  dVar13 = dVar12;
+  dVar14 = dVar12;
+LAB_00014010:
+  if (spec_min_x == false) {
+    *min_x = dVar14;
+  }
+  if (spec_min_y == false) {
+    *min_y = dVar13;
+  }
+  if (spec_max_x == false) {
+    *max_x = dVar15;
+  }
+  if (spec_max_y != false) {
+    return;
+  }
+  *max_y = dVar12;
+  return;
+}
+

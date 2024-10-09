@@ -1,0 +1,27 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+uint __regparm2 read_one_line(char *buffer,int length,FILE *f)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  uVar3 = 0;
+  while( true ) {
+    iVar1 = fgetc((FILE *)f);
+    if (iVar1 == -1) {
+      return uVar3;
+    }
+    uVar2 = uVar3 + 1;
+    buffer[uVar3] = (char)iVar1;
+    if (length <= (int)uVar2) break;
+    uVar3 = uVar2;
+    if (iVar1 == 10) {
+      return uVar2;
+    }
+  }
+  return uVar2;
+}
+

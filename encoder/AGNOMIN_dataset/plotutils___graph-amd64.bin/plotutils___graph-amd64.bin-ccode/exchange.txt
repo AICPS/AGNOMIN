@@ -1,0 +1,51 @@
+
+void exchange(char **argv)
+
+{
+  char *pcVar1;
+  int iVar2;
+  long lVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  
+  iVar2 = optind;
+  iVar4 = first_nonopt;
+  iVar5 = optind;
+  while (iVar4 < last_nonopt) {
+    while( true ) {
+      if (iVar5 <= last_nonopt) goto LAB_0040f931;
+      iVar6 = iVar5 - last_nonopt;
+      iVar7 = last_nonopt - iVar4;
+      if (iVar7 < iVar6) break;
+      if (0 < iVar6) {
+        lVar3 = 0;
+        do {
+          pcVar1 = (argv + iVar4)[lVar3];
+          (argv + iVar4)[lVar3] = (argv + last_nonopt)[lVar3];
+          (argv + last_nonopt)[lVar3] = pcVar1;
+          lVar3 = lVar3 + 1;
+        } while ((int)lVar3 < iVar6);
+      }
+      iVar4 = iVar4 + iVar6;
+      if (last_nonopt <= iVar4) goto LAB_0040f931;
+    }
+    if (0 < iVar7) {
+      lVar3 = 0;
+      do {
+        pcVar1 = (argv + iVar4)[lVar3];
+        (argv + iVar4)[lVar3] = (argv + ((iVar4 - last_nonopt) + iVar5))[lVar3];
+        (argv + ((iVar4 - last_nonopt) + iVar5))[lVar3] = pcVar1;
+        lVar3 = lVar3 + 1;
+      } while ((int)lVar3 < iVar7);
+    }
+    iVar5 = iVar5 - iVar7;
+  }
+LAB_0040f931:
+  iVar4 = iVar2 - last_nonopt;
+  last_nonopt = iVar2;
+  first_nonopt = first_nonopt + iVar4;
+  return;
+}
+

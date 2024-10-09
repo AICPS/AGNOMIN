@@ -1,0 +1,123 @@
+
+hashtab_elem * hashtab_create(hashtab *ht,void *key,uint len)
+
+{
+  uint uVar1;
+  hashtab_elem *phVar2;
+  ulong uVar3;
+  hashtab_elem *phVar4;
+  uint uVar5;
+  int iVar6;
+  hashtab_elem *phVar7;
+  void *__dest;
+  hashtab_elem **pphVar8;
+  uint uVar9;
+  int iVar10;
+  char *pcVar11;
+  char *pcVar12;
+  hashtab_elem **pphVar13;
+  uint local_4c;
+  hashtab_elem **local_40;
+  ulong local_34;
+  
+  if (ht->table == (hashtab_elem **)0x0) {
+    ht->table_size = 7;
+    ht->items_hashed = 0;
+    ht->resize_size = 4;
+    pphVar13 = (hashtab_elem **)xmalloc(0x1c);
+    ht->table = pphVar13;
+    __memset_chk(pphVar13,0,ht->table_size * 4,0x1c);
+  }
+  uVar5 = get_key_len((char *)key,len,ht->numeric);
+  if (uVar5 == 0) {
+    local_4c = 0;
+    iVar10 = 0;
+  }
+  else {
+    local_4c = 0;
+    pcVar11 = (char *)key;
+    do {
+      pcVar12 = pcVar11 + 1;
+      local_4c = local_4c * 0x1f + (int)*pcVar11;
+      pcVar11 = pcVar12;
+    } while (pcVar12 != (char *)((int)key + uVar5));
+    local_4c = local_4c % ht->table_size;
+    iVar10 = local_4c * 4;
+  }
+  for (phVar2 = *(hashtab_elem **)((int)ht->table + iVar10); phVar2 != (hashtab_elem *)0x0;
+      phVar2 = phVar2->next) {
+    if ((phVar2->key_len == uVar5) && (iVar6 = memcmp(phVar2->key,key,uVar5), iVar6 == 0)) {
+      phVar2->data = (void *)0x0;
+      return phVar2;
+    }
+  }
+  phVar7 = (hashtab_elem *)xmalloc(0x1c);
+  phVar7->key_len = uVar5;
+  __dest = xmalloc(uVar5 + 1);
+  phVar7->key = __dest;
+  memcpy(__dest,key,uVar5);
+  pphVar13 = (hashtab_elem **)(iVar10 + (int)ht->table);
+  phVar7->ht = ht;
+  phVar7->prev = (hashtab_elem *)0x0;
+  *(undefined *)((int)__dest + phVar7->key_len) = 0;
+  phVar2 = *pphVar13;
+  phVar7->hashval = local_4c;
+  phVar7->next = phVar2;
+  if (*pphVar13 != (hashtab_elem *)0x0) {
+    (*pphVar13)->prev = phVar7;
+  }
+  uVar5 = ht->items_hashed + 1;
+  uVar9 = ht->resize_size;
+  uVar1 = ht->resize_size;
+  *pphVar13 = phVar7;
+  ht->items_hashed = uVar5;
+  if (uVar5 < uVar9 || uVar5 == uVar1) {
+    return phVar7;
+  }
+  uVar3 = ht->table_size;
+  pphVar13 = ht->table;
+  ht->table_size = uVar3 * 4;
+  local_34 = (ulong)(longlong)ROUND((double)(ulonglong)(uVar3 * 4) * 0.6);
+  ht->resize_size = local_34;
+  pphVar8 = (hashtab_elem **)xmalloc(uVar3 << 4);
+  uVar5 = ht->table_size;
+  ht->table = pphVar8;
+  memset(pphVar8,0,uVar5 * 4);
+  local_40 = pphVar13;
+  if (uVar3 != 0) {
+    do {
+      phVar2 = *local_40;
+      while (phVar2 != (hashtab_elem *)0x0) {
+        phVar4 = phVar2->next;
+        if (phVar2->key_len == 0) {
+          iVar10 = 0;
+          uVar9 = 0;
+        }
+        else {
+          uVar9 = 0;
+          pcVar11 = (char *)phVar2->key;
+          do {
+            pcVar12 = pcVar11 + 1;
+            uVar9 = uVar9 * 0x1f + (int)*pcVar11;
+            pcVar11 = pcVar12;
+          } while (pcVar12 != (char *)((int)phVar2->key + phVar2->key_len));
+          uVar9 = uVar9 % uVar5;
+          iVar10 = uVar9 * 4;
+        }
+        pphVar8 = (hashtab_elem **)(iVar10 + (int)ht->table);
+        phVar2->prev = (hashtab_elem *)0x0;
+        phVar2->hashval = uVar9;
+        phVar2->next = *pphVar8;
+        if (*pphVar8 != (hashtab_elem *)0x0) {
+          (*pphVar8)->prev = phVar2;
+        }
+        *pphVar8 = phVar2;
+        phVar2 = phVar4;
+      }
+      local_40 = local_40 + 1;
+    } while (local_40 != pphVar13 + uVar3);
+  }
+  free(pphVar13);
+  return phVar7;
+}
+

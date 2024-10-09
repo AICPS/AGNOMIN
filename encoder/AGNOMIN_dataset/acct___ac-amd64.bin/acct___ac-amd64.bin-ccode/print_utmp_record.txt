@@ -1,0 +1,48 @@
+
+void print_utmp_record(utmp *rec,FILE *out)
+
+{
+  char cVar1;
+  ushort **ppuVar2;
+  char *__s;
+  int iVar3;
+  long lVar4;
+  long in_FS_OFFSET;
+  time_t tmp_time;
+  long local_30;
+  
+  local_30 = *(long *)(in_FS_OFFSET + 0x28);
+  if (rec != (utmp *)0x0) {
+    lVar4 = 0;
+    __fprintf_chk(out,1,&DAT_00404228,0x20,0x20,rec->ut_user,0x20,0x20,rec->ut_line);
+    __fprintf_chk(out,1,&DAT_00404237,(int)rec->ut_type);
+    do {
+      cVar1 = rec->ut_id[lVar4];
+      if (cVar1 == '\0') {
+        iVar3 = 4 - (int)lVar4;
+        __fprintf_chk(out,1,"%-*.*s",iVar3,iVar3,&DAT_00403896);
+        break;
+      }
+      ppuVar2 = __ctype_b_loc();
+      if ((*(byte *)((long)*ppuVar2 + (long)cVar1 * 2 + 1) & 0x40) == 0) {
+        fputc(0x3f,(FILE *)out);
+      }
+      else {
+        fputc((int)cVar1,(FILE *)out);
+      }
+      lVar4 = lVar4 + 1;
+    } while (lVar4 != 4);
+    fputc(0x7c,(FILE *)out);
+    __fprintf_chk(out,1,&DAT_00404243,rec->ut_pid);
+    __fprintf_chk(out,1,"%-*.*s|",0x100,0x100,rec->ut_host);
+    tmp_time = (time_t)(rec->ut_tv).tv_sec;
+    __s = ctime(&tmp_time);
+    fputs(__s,(FILE *)out);
+  }
+  if (local_30 == *(long *)(in_FS_OFFSET + 0x28)) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+

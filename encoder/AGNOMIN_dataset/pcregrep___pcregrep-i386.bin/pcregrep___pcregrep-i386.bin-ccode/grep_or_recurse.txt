@@ -1,0 +1,22 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+int __regparm2 grep_or_recurse(char *pathname,BOOL dir_recurse,BOOL only_one_at_top)
+
+{
+  char *printname;
+  int iVar1;
+  int in_stack_00000008;
+  
+  if ((*pathname == '-') && (pathname[1] == '\0')) {
+    printname = stdin_name;
+    if ((filenames < 2) && ((only_one_at_top != 0 || (filenames != 1)))) {
+      printname = (char *)0x0;
+    }
+    iVar1 = pcregrep(stdin,stdin_name,printname,in_stack_00000008);
+    return iVar1;
+  }
+  iVar1 = grep_or_recurse(pathname,dir_recurse,only_one_at_top);
+  return iVar1;
+}
+

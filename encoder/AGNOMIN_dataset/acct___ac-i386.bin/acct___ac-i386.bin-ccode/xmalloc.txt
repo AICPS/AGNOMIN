@@ -1,0 +1,16 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+void * xmalloc(size_t n)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = malloc(n);
+  if ((pvVar1 == (void *)0x0) && (n != 0)) {
+                    /* WARNING: Subroutine does not return */
+    xalloc_die();
+  }
+  return pvVar1;
+}
+

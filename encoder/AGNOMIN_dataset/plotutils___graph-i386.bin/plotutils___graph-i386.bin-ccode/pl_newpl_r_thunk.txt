@@ -1,0 +1,10 @@
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void pl_newpl_r(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+

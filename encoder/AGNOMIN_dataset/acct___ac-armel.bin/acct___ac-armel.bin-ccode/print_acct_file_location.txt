@@ -1,0 +1,9 @@
+
+void print_acct_file_location(void)
+
+{
+  __printf_chk(1,"\nThe system\'s default process accounting file is %s.\n","/var/log/account/pacct"
+              );
+  return;
+}
+

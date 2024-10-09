@@ -1,0 +1,46 @@
+
+void log_in(utmp *entry)
+
+{
+  int iVar1;
+  hashtab_elem *phVar2;
+  char *name;
+  void *pvVar3;
+  login_data l;
+  
+  iVar1 = __stack_chk_guard;
+  if (entry->ut_line[0] == '\0') {
+    if (print_file_problems != 0) {
+      utmp_print_file_and_line(stdout);
+      fwrite(": problem: trying to hash rec with ut_line == NULL\n",1,0x33,(FILE *)stdout);
+    }
+  }
+  else {
+    phVar2 = hashtab_find(login_table,entry->ut_line,0x20);
+    if (phVar2 == (hashtab_elem *)0x0) {
+      strncpy((char *)&l,entry->ut_user,0x20);
+      l.time = (entry->ut_tv).tv_sec;
+      phVar2 = hashtab_create(login_table,entry->ut_line,0x20);
+      hashtab_set_value(phVar2,&l,0x24);
+    }
+    else {
+      name = (char *)hashtab_get_value(phVar2);
+      if (print_file_problems != 0) {
+        pvVar3 = hashtab_get_key(phVar2);
+        utmp_print_file_and_line(stdout);
+        __fprintf_chk(stdout,1,": problem: duplicate record for line `%.*s\'\n",0x20,pvVar3);
+      }
+      if (nasty_supplant != 0) {
+        update_user_time(name,(entry->ut_tv).tv_sec - *(int *)(name + 0x20),"supplant");
+      }
+      strncpy(name,entry->ut_user,0x20);
+      *(__time_t *)(name + 0x20) = (entry->ut_tv).tv_sec;
+    }
+  }
+  if (iVar1 == __stack_chk_guard) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+

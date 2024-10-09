@@ -1,0 +1,5 @@
+__do_global_dtors_aux, basic@00010654, basic@00010668
+__do_global_dtors_aux, basic@00010654, basic@00010664
+__libc_csu_init, basic@000106b0, basic@000106e4
+__libc_csu_init, basic@000106e4, basic@000106e4
+__libc_csu_init, basic@000106e4, basic@00010704

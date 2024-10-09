@@ -1,0 +1,52 @@
+
+void __regparm3 exchange(char **argv)
+
+{
+  char *pcVar1;
+  int iVar2;
+  char **ppcVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int local_24;
+  
+  iVar2 = optind;
+  local_24 = optind;
+  iVar6 = first_nonopt;
+  while ((iVar6 < last_nonopt && (last_nonopt < local_24))) {
+    iVar5 = last_nonopt - iVar6;
+    iVar4 = local_24 - last_nonopt;
+    if (iVar5 < iVar4) {
+      if (0 < iVar5) {
+        ppcVar3 = argv + iVar6;
+        do {
+          pcVar1 = *ppcVar3;
+          *ppcVar3 = ppcVar3[local_24 - last_nonopt];
+          ppcVar3[local_24 - last_nonopt] = pcVar1;
+          ppcVar3 = ppcVar3 + 1;
+        } while (ppcVar3 != argv + iVar5 + iVar6);
+      }
+      local_24 = local_24 - iVar5;
+    }
+    else {
+      if (iVar4 < 1) {
+        iVar6 = iVar6 + iVar4;
+      }
+      else {
+        ppcVar3 = argv + iVar6;
+        iVar6 = iVar6 + iVar4;
+        do {
+          pcVar1 = *ppcVar3;
+          *ppcVar3 = ppcVar3[iVar5];
+          ppcVar3[iVar5] = pcVar1;
+          ppcVar3 = ppcVar3 + 1;
+        } while (ppcVar3 != argv + iVar6);
+      }
+    }
+  }
+  iVar6 = iVar2 - last_nonopt;
+  last_nonopt = iVar2;
+  first_nonopt = iVar6 + first_nonopt;
+  return;
+}
+

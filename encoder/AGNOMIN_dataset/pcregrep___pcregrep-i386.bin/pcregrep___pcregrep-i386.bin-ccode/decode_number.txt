@@ -1,0 +1,76 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+/* WARNING: Unknown calling convention yet parameter storage is locked */
+
+long decode_number(void)
+
+{
+  byte *in_EAX;
+  ushort **ppuVar1;
+  int iVar2;
+  __int32_t **pp_Var3;
+  char *pcVar4;
+  char *pcVar5;
+  ushort *puVar6;
+  byte bVar7;
+  uint uVar8;
+  char **in_stack_00000004;
+  int in_stack_00000008;
+  int in_stack_ffffffd4;
+  
+  bVar7 = *in_EAX;
+  if (bVar7 == 0) {
+    ppuVar1 = __ctype_b_loc();
+    puVar6 = *ppuVar1;
+    uVar8 = 0;
+  }
+  else {
+    ppuVar1 = __ctype_b_loc();
+    puVar6 = *ppuVar1;
+    uVar8 = (uint)bVar7;
+    do {
+      if ((*(byte *)((int)puVar6 + uVar8 * 2 + 1) & 0x20) == 0) {
+        uVar8 = (uint)*in_EAX;
+        break;
+      }
+      in_EAX = in_EAX + 1;
+      uVar8 = (uint)*in_EAX;
+    } while (*in_EAX != 0);
+  }
+  iVar2 = 0;
+  while (bVar7 = (byte)uVar8, (*(byte *)((int)puVar6 + uVar8 * 2 + 1) & 8) != 0) {
+    in_EAX = in_EAX + 1;
+    iVar2 = (char)bVar7 + -0x30 + iVar2 * 10;
+    uVar8 = (uint)*in_EAX;
+  }
+  pp_Var3 = __ctype_toupper_loc();
+  if ((*pp_Var3)[(char)bVar7] == 0x4b) {
+    iVar2 = iVar2 << 10;
+    bVar7 = in_EAX[1];
+  }
+  else {
+    if ((*pp_Var3)[(char)bVar7] == 0x4d) {
+      iVar2 = iVar2 << 0x14;
+      bVar7 = in_EAX[1];
+    }
+  }
+  if (bVar7 == 0) {
+    return iVar2;
+  }
+  if (in_stack_00000008 == 0) {
+    pcVar5 = "pcregrep: Malformed number \"%s\" after -%c\n";
+  }
+  else {
+    pcVar5 = *in_stack_00000004;
+    pcVar4 = strchr(pcVar5,0x3d);
+    if (pcVar4 == (char *)0x0) {
+      strlen(pcVar5);
+    }
+    pcVar5 = "pcregrep: Malformed number \"%s\" after --%.*s\n";
+  }
+  __fprintf_chk(stderr,1,pcVar5);
+  iVar2 = usage(in_stack_ffffffd4);
+                    /* WARNING: Subroutine does not return */
+  pcregrep_exit(iVar2);
+}
+

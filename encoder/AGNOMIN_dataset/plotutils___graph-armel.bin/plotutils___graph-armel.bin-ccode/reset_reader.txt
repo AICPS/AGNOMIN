@@ -1,0 +1,23 @@
+
+void reset_reader(Reader *reader)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = 1;
+  reader->need_break = true;
+  if (reader->auto_bump != false) {
+    if (reader->linemode < 1) {
+      iVar1 = -1;
+    }
+    reader->linemode = reader->linemode + iVar1;
+  }
+  if (reader->auto_abscissa != false) {
+    uVar2 = *(undefined4 *)((int)&reader->initial_abscissa + 4);
+    *(undefined4 *)&reader->abscissa = *(undefined4 *)&reader->initial_abscissa;
+    *(undefined4 *)((int)&reader->abscissa + 4) = uVar2;
+  }
+  return;
+}
+

@@ -1,0 +1,7 @@
+
+void * hashtab_get_value(hashtab_elem *he)
+
+{
+  return he->data;
+}
+

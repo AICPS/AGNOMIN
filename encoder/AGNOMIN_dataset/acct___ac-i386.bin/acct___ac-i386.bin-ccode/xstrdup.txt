@@ -1,0 +1,14 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+char * xstrdup(char *string)
+
+{
+  size_t sVar1;
+  char *pcVar2;
+  
+  sVar1 = strlen(string);
+  pcVar2 = (char *)xmemdup(string,sVar1 + 1);
+  return pcVar2;
+}
+

@@ -1,0 +1,14 @@
+
+int delete_multigrapher(Multigrapher *multigrapher)
+
+{
+  int iVar1;
+  
+  iVar1 = pl_closepl_r(multigrapher->plotter);
+  if (-1 < iVar1) {
+    iVar1 = pl_deletepl_r(multigrapher->plotter);
+  }
+  free(multigrapher);
+  return iVar1;
+}
+

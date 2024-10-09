@@ -1,0 +1,131 @@
+
+/* WARNING: Could not reconcile some variable overlaps */
+
+void print_tick_label(char *labelbuf,Axis *axis,Transform *transform,double val)
+
+{
+  undefined8 uVar1;
+  char *in_EAX;
+  char *pcVar2;
+  char *pcVar3;
+  char cVar4;
+  double *in_ECX;
+  char *pcVar5;
+  char *pcVar6;
+  int in_EDX;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  undefined4 uVar13;
+  double local_104;
+  int exponent;
+  double prefactor;
+  char labelbuf_tmp [64];
+  char incrbuf [64];
+  char floatbuf [64];
+  char local_1c [12];
+  
+  dVar10 = (double)CONCAT44(axis,labelbuf);
+  if (*(int *)(in_EDX + 0x10) == 1) {
+    dVar11 = pow(10.0,*in_ECX);
+    if (*(int *)(in_EDX + 0x10) != 1) goto LAB_0804ea80;
+    dVar12 = pow(10.0,in_ECX[1]);
+  }
+  else {
+    dVar11 = *in_ECX;
+LAB_0804ea80:
+    dVar12 = in_ECX[1];
+  }
+  if (((dVar11 != 0.0) && (dVar11 = log10(ABS(dVar11)), 4.0 <= ABS(dVar11))) ||
+     ((dVar12 != 0.0 && (dVar11 = log10(ABS(dVar12)), 4.0 <= ABS(dVar11))))) {
+    pcVar2 = labelbuf_tmp;
+    sprintf(pcVar2,"%e",labelbuf,axis);
+    pcVar3 = strchr(pcVar2,0x65);
+    if (pcVar3 == (char *)0x0) {
+      return;
+    }
+    if ((*(int *)(in_EDX + 0x10) == 1) && (*(int *)(in_EDX + 0x3c) == 0)) {
+      __isoc99_sscanf(pcVar3 + 1,"%d",&exponent,axis);
+      sprintf(in_EAX,"10\\sp%d\\ep",exponent,axis);
+      return;
+    }
+    if (dVar10 == 0.0) {
+      *in_EAX = '0';
+      in_EAX[1] = '\0';
+      return;
+    }
+    pcVar5 = (char *)0x0;
+    pcVar6 = floatbuf;
+    if (pcVar2 < pcVar3) {
+      do {
+        floatbuf[(int)pcVar5] = pcVar2[(int)pcVar5];
+        pcVar5 = pcVar5 + 1;
+      } while (pcVar5 != pcVar3 + -(int)pcVar2);
+      pcVar2 = pcVar2 + (int)(pcVar3 + (0xc0 - (int)local_1c));
+      pcVar6 = floatbuf + (int)(pcVar3 + (0xc0 - (int)local_1c));
+    }
+    *pcVar6 = '\0';
+    __isoc99_sscanf(floatbuf,"%lf",&prefactor,axis);
+    __isoc99_sscanf(pcVar2 + 1,"%d",&exponent,axis);
+    if (*(int *)(in_EDX + 0x10) == 0) {
+      local_104 = *(double *)(in_EDX + 0x14);
+    }
+    else {
+      local_104 = *(double *)(in_EDX + 0x40);
+    }
+    dVar10 = pow(10.0,(double)exponent);
+    sprintf(incrbuf,"%f",local_104 / dVar10);
+    iVar9 = 0;
+    pcVar2 = strchr(incrbuf,0x2e);
+    iVar7 = 0;
+    if (pcVar2 != (char *)0x0) {
+      while (cVar4 = pcVar2[iVar7 + 1], iVar8 = iVar7, cVar4 != '\0') {
+        while (iVar7 = iVar8 + 1, cVar4 != '0') {
+          cVar4 = pcVar2[iVar8 + 2];
+          iVar8 = iVar7;
+          iVar9 = iVar7;
+          if (cVar4 == '\0') goto LAB_0804ecab;
+        }
+      }
+    }
+LAB_0804ecab:
+    sprintf(in_EAX,"%.*f\\r6\\mu10\\sp%d\\ep",iVar9,prefactor._0_4_,prefactor._4_4_,exponent);
+    return;
+  }
+  if (*(int *)(in_EDX + 0x10) == 1) {
+    if (*(int *)(in_EDX + 0x3c) == 0) {
+      sprintf(in_EAX,"%.9g",labelbuf,axis);
+      return;
+    }
+  }
+  else {
+    if (*(int *)(in_EDX + 0x10) == 0) {
+      uVar1 = *(undefined8 *)(in_EDX + 0x14);
+      goto LAB_0804eac4;
+    }
+  }
+  uVar1 = *(undefined8 *)(in_EDX + 0x40);
+LAB_0804eac4:
+  sprintf(incrbuf,"%.9f",uVar1);
+  uVar13 = 0x2e;
+  iVar9 = 0;
+  pcVar2 = strchr(incrbuf,0x2e);
+  iVar7 = 0;
+  if (pcVar2 != (char *)0x0) {
+    while (cVar4 = pcVar2[iVar7 + 1], iVar8 = iVar7, cVar4 != '\0') {
+      while (iVar7 = iVar8 + 1, cVar4 != '0') {
+        cVar4 = pcVar2[iVar8 + 2];
+        iVar8 = iVar7;
+        iVar9 = iVar7;
+        if (cVar4 == '\0') goto LAB_0804eb0a;
+      }
+    }
+  }
+LAB_0804eb0a:
+  sprintf(in_EAX,"%.*f",iVar9,labelbuf,axis,uVar13);
+  return;
+}
+

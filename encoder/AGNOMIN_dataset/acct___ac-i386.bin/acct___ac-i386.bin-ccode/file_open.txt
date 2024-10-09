@@ -1,0 +1,58 @@
+
+FILE * file_open(char *file_name,int write_flag)
+
+{
+  int iVar1;
+  char *__modes;
+  FILE *pFVar2;
+  size_t sVar3;
+  undefined *puVar4;
+  int in_GS_OFFSET;
+  undefined auStack44 [12];
+  int local_20 [4];
+  
+  local_20[0] = *(int *)(in_GS_OFFSET + 0x14);
+  if (file_name == (char *)0x0) {
+    fatal("file_open: FILE_NAME is NULL");
+    pFVar2 = (FILE *)__printf_chk(1,"\nThe system\'s default login accounting file is %s.\n");
+    return pFVar2;
+  }
+  if ((*file_name == '-') && (file_name[1] == '\0')) {
+    puVar4 = auStack44;
+    pFVar2 = stdin;
+    if (write_flag != 0) {
+      puVar4 = auStack44;
+      pFVar2 = stdout;
+    }
+  }
+  else {
+    __modes = "wb";
+    if (write_flag == 0) {
+      __modes = "rb";
+    }
+    pFVar2 = (FILE *)fopen64(file_name,__modes);
+    puVar4 = auStack44;
+    if (pFVar2 == (FILE *)0x0) {
+      sVar3 = strlen(file_name);
+      iVar1 = -(sVar3 + 0x3c & 0xfffffff0);
+      *(char **)(&stack0xffffffc4 + iVar1) = file_name;
+      *(char **)(&stack0xffffffc0 + iVar1) = "couldn\'t open file \'%s\'";
+      *(undefined4 *)(&stack0xffffffbc + iVar1) = 0xffffffff;
+      *(undefined4 *)(&stack0xffffffb8 + iVar1) = 1;
+      *(int **)(&stack0xffffffb4 + iVar1) = (int *)((int)local_20 + iVar1);
+      *(undefined4 *)(&stack0xffffffb0 + iVar1) = 0x8049dde;
+      __sprintf_chk();
+      *(int **)(&stack0xffffffc4 + iVar1) = (int *)((int)local_20 + iVar1);
+      *(undefined4 *)(&stack0xffffffc0 + iVar1) = 0x8049de7;
+      perror(*(char **)(&stack0xffffffc4 + iVar1));
+      puVar4 = auStack44 + iVar1;
+    }
+  }
+  if (local_20[0] == *(int *)(in_GS_OFFSET + 0x14)) {
+    return pFVar2;
+  }
+                    /* WARNING: Subroutine does not return */
+  *(undefined4 *)(puVar4 + -4) = 0x8049df1;
+  __stack_chk_fail();
+}
+

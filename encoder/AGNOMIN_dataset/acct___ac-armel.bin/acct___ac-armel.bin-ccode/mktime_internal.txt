@@ -1,0 +1,206 @@
+
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+time_t mktime_internal(tm *tp,anon_subr_tm_ptr_time_t_ptr_tm_ptr *convert,time_t *offset)
+
+{
+  int iVar1;
+  time_t tVar2;
+  uint uVar3;
+  tm *ptVar4;
+  time_t tVar5;
+  int iVar6;
+  uint uVar7;
+  uint uVar8;
+  int iVar9;
+  uint uVar10;
+  uint uVar11;
+  uint year;
+  int iVar12;
+  int iVar13;
+  int iVar14;
+  int iVar15;
+  uint local_c0;
+  int local_b4;
+  uint local_b0;
+  int local_ac;
+  time_t t;
+  time_t t2;
+  time_t ot;
+  tm tm;
+  tm otm;
+  
+  iVar1 = __stack_chk_guard;
+  iVar15 = tp->tm_mon;
+  iVar12 = iVar15 >> 0x1f;
+  iVar13 = iVar15 / 0xc + iVar12;
+  iVar15 = iVar15 + (iVar13 - iVar12) * -0xc;
+  iVar9 = iVar15 >> 0x1f;
+  uVar3 = tp->tm_isdst >> 0x1f;
+  year = tp->tm_year + (iVar13 - iVar12) + iVar9;
+  if (tp->tm_isdst != 0) {
+    uVar3 = uVar3 | 1;
+  }
+  uVar11 = year & 3;
+  uVar7 = tp->tm_sec;
+  uVar8 = uVar7;
+  if (uVar11 != 0) {
+    uVar8 = 0;
+  }
+  iVar13 = tp->tm_min;
+  iVar12 = tp->tm_hour;
+  if (uVar11 == 0) {
+    if ((int)year % 100 == 0) {
+      uVar8 = count_leading_zeroes(((int)year / 100 & 3U) - 1);
+      uVar8 = uVar8 >> 5;
+    }
+    else {
+      uVar8 = 1;
+    }
+  }
+  local_ac = *offset;
+  iVar9 = tp->tm_mday +
+          ((*(ushort (*) [13])((int)__mon_yday + (uVar8 * 0xd + iVar9 * -0xc + iVar15) * 2))[0] - 1)
+  ;
+  if ((int)uVar7 < 0) {
+    local_c0 = 0;
+  }
+  else {
+    local_c0 = uVar7;
+    if (0x3a < (int)uVar7) {
+      local_c0 = 0x3b;
+    }
+  }
+  iVar15 = ((int)year >> 2) + 0x1db;
+  if (uVar11 == 0) {
+    iVar15 = ((int)year >> 2) + 0x1da;
+  }
+  iVar14 = iVar15 / 0x19 + (iVar15 % 0x19 >> 0x1f);
+  iVar6 = (tp->tm_year >> 1) + -0x23 + (tp->tm_mday >> 10) + (iVar12 >> 0xe) + (iVar13 >> 0x14);
+  uVar8 = local_ac +
+          ((((iVar15 - iVar14) + (iVar14 >> 2) + -0x1dd + (year - 0x46) * 0x16d + iVar9) * 0x18 +
+           iVar12) * 0x3c + iVar13) * 0x3c + local_c0;
+  iVar15 = ((int)uVar8 >> 0x1a) - iVar6;
+  if (iVar15 < 0) {
+    iVar15 = -iVar15;
+  }
+  local_b0 = uVar8;
+  if (iVar15 < 0x16) {
+LAB_0001433c:
+    iVar15 = 6;
+    t2 = local_b0;
+    t = local_b0;
+    local_b4 = 0;
+    uVar8 = local_b0;
+    while( true ) {
+      ptVar4 = ranged_convert(convert,&t,&tm);
+      uVar11 = t;
+      tVar5 = guess_time_tm(year,iVar9,iVar12,iVar13,local_c0,(tm *)t,(time_t *)ptVar4);
+      tVar2 = t2;
+      if (uVar11 == tVar5) break;
+      if ((uVar8 == uVar11) && (uVar8 != t2)) {
+        if (tm.tm_isdst < 0) goto offset_found;
+        if ((int)uVar3 < 0) {
+          iVar6 = tm.tm_isdst;
+          if (tm.tm_isdst != 0) {
+            iVar6 = 1;
+          }
+          if (local_b4 <= iVar6) goto offset_found;
+        }
+        else {
+          uVar10 = tm.tm_isdst;
+          if (tm.tm_isdst != 0) {
+            uVar10 = 1;
+          }
+          if ((uVar3 != 0) != uVar10) goto offset_found;
+        }
+      }
+      iVar15 = iVar15 + -1;
+      if (iVar15 == 0) goto LAB_000144e4;
+      local_b4 = tm.tm_isdst;
+      if (tm.tm_isdst != 0) {
+        local_b4 = 1;
+      }
+      t2 = uVar11;
+      uVar8 = tVar2;
+      t = tVar5;
+    }
+    uVar10 = ~uVar3 >> 0x1f;
+    if (uVar3 == tm.tm_isdst) {
+      uVar10 = 0;
+    }
+    if (tm.tm_isdst < 0) {
+      uVar10 = 0;
+    }
+    uVar8 = uVar11;
+    if (uVar10 != 0) {
+      iVar15 = 0x92c70;
+      do {
+        ot = uVar11 - iVar15;
+        if (((ot < (int)uVar11) &&
+            (ranged_convert(convert,&ot,&otm), uVar11 = t, otm.tm_isdst == uVar3)) ||
+           ((ot = iVar15 + uVar11, (int)uVar11 <= ot &&
+            (ranged_convert(convert,&ot,&otm), uVar11 = t, otm.tm_isdst == uVar3)))) {
+          t = guess_time_tm(year,iVar9,iVar12,iVar13,local_c0,(tm *)ot,(time_t *)&otm);
+          ranged_convert(convert,&t,&tm);
+          uVar8 = t;
+          break;
+        }
+        iVar15 = iVar15 + 0x92c70;
+        uVar8 = uVar11;
+      } while (iVar15 != 0x100dc400);
+    }
+offset_found:
+    *offset = (local_ac + uVar8) - local_b0;
+    if (uVar7 != tm.tm_sec) {
+      iVar12 = uVar7 + uVar8;
+      local_c0 = (local_c0 == 0 && tm.tm_sec == 0x3c) - local_c0;
+      t2 = iVar12 + local_c0;
+      uVar7 = uVar7 >> 0x1f;
+      local_c0 = local_c0 >> 0x1f;
+      if (iVar12 < (int)uVar8) {
+        uVar7 = uVar7 ^ 1;
+      }
+      if (t2 < iVar12) {
+        local_c0 = local_c0 ^ 1;
+      }
+      local_c0 = local_c0 | uVar7;
+      ptVar4 = (*convert)(&t2,&tm);
+      if (ptVar4 == (tm *)0x0) {
+        local_c0 = 1;
+      }
+      uVar8 = t2;
+      if (local_c0 != 0) goto LAB_000144e4;
+    }
+    tp->tm_sec = tm.tm_sec;
+    tp->tm_min = tm.tm_min;
+    tp->tm_hour = tm.tm_hour;
+    tp->tm_mday = tm.tm_mday;
+    tp->tm_mon = tm.tm_mon;
+    tp->tm_year = tm.tm_year;
+    tp->tm_wday = tm.tm_wday;
+    tp->tm_yday = tm.tm_yday;
+    tp->tm_isdst = tm.tm_isdst;
+    tp->tm_gmtoff = tm.tm_gmtoff;
+    tp->tm_zone = tm.tm_zone;
+  }
+  else {
+    local_b0 = ~uVar8;
+    iVar6 = ((int)local_b0 >> 0x1a) - iVar6;
+    if (iVar6 < 0) {
+      iVar6 = -iVar6;
+    }
+    if (iVar6 < 0x16) {
+      local_ac = local_ac + (local_b0 - uVar8);
+      goto LAB_0001433c;
+    }
+LAB_000144e4:
+    uVar8 = 0xffffffff;
+  }
+  if (iVar1 != __stack_chk_guard) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail();
+  }
+  return uVar8;
+}
+

@@ -1,0 +1,11 @@
+
+/* WARNING: Removing unreachable block (ram,0x000105fc) */
+/* WARNING: Removing unreachable block (ram,0x00010604) */
+/* WARNING: Removing unreachable block (ram,0x00010608) */
+
+void deregister_tm_clones(void)
+
+{
+  return;
+}
+

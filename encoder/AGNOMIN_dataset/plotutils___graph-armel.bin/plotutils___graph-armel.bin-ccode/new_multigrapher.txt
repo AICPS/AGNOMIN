@@ -1,0 +1,64 @@
+
+/* WARNING: Heritage AFTER dead removal. Example location: s1 : 0x00017054 */
+/* WARNING: Restarted to delay deadcode elimination for space: register */
+
+Multigrapher *
+new_multigrapher(char *output_format,char *bg_color,char *bitmap_size,char *emulate_color,
+                char *max_line_length,char *meta_portable,char *page_size,char *rotation_angle,
+                bool save_screen)
+
+{
+  Multigrapher *pMVar1;
+  undefined4 uVar2;
+  plPlotter *ppVar3;
+  int iVar4;
+  uint uVar5;
+  undefined4 extraout_s0;
+  undefined4 uVar6;
+  undefined4 extraout_s0_00;
+  undefined4 extraout_s0_01;
+  undefined4 extraout_s1;
+  undefined4 extraout_s1_00;
+  undefined4 extraout_s3;
+  undefined4 extraout_s3_00;
+  undefined4 extraout_s5;
+  undefined4 uVar7;
+  undefined4 extraout_s5_00;
+  
+  pMVar1 = (Multigrapher *)xmalloc(0x210);
+  uVar2 = pl_newplparams();
+  uVar6 = pl_setplparam(extraout_s0,uVar2,"BG_COLOR",bg_color);
+  uVar6 = pl_setplparam(uVar6,uVar2,"BITMAPSIZE",bitmap_size);
+  uVar6 = pl_setplparam(uVar6,uVar2,"EMULATE_COLOR",emulate_color);
+  uVar6 = pl_setplparam(uVar6,uVar2,"MAX_LINE_LENGTH",max_line_length);
+  uVar6 = pl_setplparam(uVar6,uVar2,"META_PORTABLE",meta_portable);
+  uVar6 = pl_setplparam(uVar6,uVar2,"PAGESIZE",page_size);
+  uVar6 = pl_setplparam(uVar6,uVar2,"ROTATION",rotation_angle);
+  ppVar3 = (plPlotter *)pl_newpl_r(uVar6,output_format,0,stdout,stderr);
+  if (ppVar3 != (plPlotter *)0x0) {
+    uVar2 = pl_deleteplparams(extraout_s0_00,uVar2);
+    pMVar1->plotter = ppVar3;
+    iVar4 = pl_openpl_r(uVar2,ppVar3);
+    if (-1 < iVar4) {
+      pMVar1->bg_color = bg_color;
+      uVar5 = count_leading_zeroes(save_screen);
+      uVar5 = uVar5 >> 5;
+      if (bg_color != (char *)0x0) {
+        uVar5 = uVar5 | 1;
+      }
+      uVar2 = extraout_s1;
+      uVar6 = extraout_s3;
+      uVar7 = extraout_s5;
+      if (uVar5 != 0) {
+        pl_erase_r(extraout_s0_01,ppVar3);
+        uVar2 = extraout_s1_00;
+        uVar6 = extraout_s3_00;
+        uVar7 = extraout_s5_00;
+      }
+      pl_fspace_r(0,uVar2,0,uVar6,0,uVar7,0,ppVar3);
+      return pMVar1;
+    }
+  }
+  return (Multigrapher *)0x0;
+}
+

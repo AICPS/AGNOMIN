@@ -1,0 +1,91 @@
+
+void display_usage(char *progname,int *omit_vals,char *appendage,int info)
+
+{
+  size_t sVar1;
+  char *__s;
+  int *piVar2;
+  int iVar3;
+  option *poVar4;
+  int iVar5;
+  
+  poVar4 = long_options;
+  fprintf(stdout,"Usage: %s",progname);
+  sVar1 = strlen(progname);
+  iVar3 = sVar1 + 7;
+  __s = long_options[0].name;
+  while (__s != (char *)0x0) {
+    piVar2 = omit_vals;
+    do {
+      iVar5 = *piVar2;
+      if (iVar5 == 0) {
+        sVar1 = strlen(__s);
+        if ((int)(0x40 - sVar1) <= iVar3) {
+          iVar3 = 8;
+          fwrite(&DAT_0001dda0,1,2,stdout);
+        }
+        fprintf(stdout," [--%s",poVar4->name);
+        iVar3 = sVar1 + 4 + iVar3;
+        if ((uint)poVar4->val < 0x100) {
+          iVar3 = iVar3 + 5;
+          fprintf(stdout," | -%c");
+          iVar5 = poVar4->has_arg;
+        }
+        else {
+          iVar5 = poVar4->has_arg;
+        }
+        if (iVar5 == 1) {
+          iVar3 = iVar3 + 5;
+          fwrite(" arg]",1,5,stdout);
+        }
+        else {
+          if (iVar5 == 2) {
+            iVar3 = iVar3 + 10;
+            fwrite(" [arg(s)]]",1,10,stdout);
+          }
+          else {
+            iVar3 = iVar3 + 1;
+            fputc(0x5d,stdout);
+          }
+        }
+        break;
+      }
+      piVar2 = piVar2 + 1;
+    } while (poVar4->val != iVar5);
+    poVar4 = poVar4 + 1;
+    __s = poVar4->name;
+  }
+  if (appendage == (char *)0x0) {
+    fputc(10,stdout);
+    if (info != 1) goto LAB_0001bbd8;
+LAB_0001bcc0:
+    fprintf(stdout,
+            "\nTo specify an output format, type `%s -T \"format\"\',\nwhere \"format\" is one of:\n"
+            ,progname);
+  }
+  else {
+    fputs(appendage,stdout);
+    if (info == 1) goto LAB_0001bcc0;
+LAB_0001bbd8:
+    if (info != 2) goto LAB_0001bbe4;
+    fprintf(stdout,
+            "\nTo list available fonts, type `%s -T \"format\" --help-fonts\',\nwhere \"format\" is the output format, and is one of:\n"
+            ,progname);
+  }
+  fwrite("pnm or gif (bitmap formats), or\nsvg, ps, ai, cgm, fig, pcl, hpgl, regis, or tek (vector formats).\n"
+         ,1,0x62,stdout);
+  fwrite("The default format is \"meta\", which is probably not what you want.\n",1,0x43,stdout);
+LAB_0001bbe4:
+  if (appendage != (char *)0x0) {
+    appendage = (char *)0x1;
+  }
+  if (info - 1U < 2) {
+    appendage = (char *)((uint)appendage | 1);
+  }
+  if (appendage != (char *)0x0) {
+    fputc(10,stdout);
+  }
+  fprintf(stdout,"Report bugs to %s.\n","bug-plotutils@gnu.org",info);
+  return;
+}
+

@@ -1,0 +1,14 @@
+
+void file_reader_print_file_and_line(FILE *out,file_rd_info *fri)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = fri->name;
+  if (pcVar1 == (char *)0x0) {
+    pcVar1 = "NULL?";
+  }
+  __fprintf_chk(out,1,"%s:%ld",pcVar1,fri->rec_number);
+  return;
+}
+

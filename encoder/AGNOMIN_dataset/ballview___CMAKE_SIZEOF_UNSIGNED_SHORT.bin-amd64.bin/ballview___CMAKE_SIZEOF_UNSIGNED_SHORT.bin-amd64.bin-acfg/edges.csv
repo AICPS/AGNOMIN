@@ -1,0 +1,8 @@
+_start, basic@0040068b, basic@004006b4
+_start, basic@004006b4, basic@004006b4
+__do_global_dtors_aux, basic@00400740, basic@00400749
+__do_global_dtors_aux, basic@00400740, basic@0040075a
+__do_global_dtors_aux, basic@00400749, basic@0040075a
+__libc_csu_init, basic@00400790, basic@004007d0
+__libc_csu_init, basic@004007d0, basic@004007d0
+__libc_csu_init, basic@004007d0, basic@004007e6

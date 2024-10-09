@@ -1,0 +1,22 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+void __regparm3 free_pattern_chain(patstr *pc)
+
+{
+  patstr *ppVar1;
+  
+  while (pc != (patstr *)0x0) {
+    ppVar1 = pc->next;
+    if (pc->hint != (pcre_extra *)0x0) {
+      pcre_free_study(pc->hint);
+    }
+    if (pc->compiled != (pcre *)0x0) {
+      (*pcre_free)(pc->compiled);
+    }
+    free(pc);
+    pc = ppVar1;
+  }
+  return;
+}
+

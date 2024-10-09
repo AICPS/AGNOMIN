@@ -1,0 +1,18 @@
+
+void plot_point_array(Multigrapher *multigrapher,Point *p,int length)
+
+{
+  int iVar1;
+  
+  if (length < 1) {
+    return;
+  }
+  iVar1 = 0;
+  do {
+    iVar1 = iVar1 + 1;
+    plot_point(multigrapher,p);
+    p = p + 1;
+  } while (iVar1 != length);
+  return;
+}
+

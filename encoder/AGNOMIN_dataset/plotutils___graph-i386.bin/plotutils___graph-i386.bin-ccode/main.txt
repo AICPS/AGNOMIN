@@ -1,0 +1,1242 @@
+
+/* WARNING: Could not reconcile some variable overlaps */
+
+int main(int argc,char **argv)
+
+{
+  char cVar1;
+  char *pcVar2;
+  uint uVar3;
+  bool bVar4;
+  bool auto_abscissa;
+  bool bVar5;
+  bool bVar6;
+  char **argv_00;
+  double trans_x;
+  double trans_y;
+  double scale;
+  double dVar7;
+  uint uVar8;
+  double dVar9;
+  double dVar10;
+  int iVar11;
+  Multigrapher *pMVar12;
+  char *pcVar13;
+  int iVar14;
+  undefined4 extraout_ECX;
+  Multigrapher *pMVar15;
+  undefined4 uVar16;
+  undefined4 extraout_ECX_00;
+  FILE **extraout_EDX;
+  undefined4 extraout_EDX_00;
+  FILE **extraout_EDX_01;
+  FILE **input;
+  undefined4 extraout_EDX_02;
+  Multigrapher *unaff_EBX;
+  FILE *unaff_ESI;
+  Multigrapher *unaff_EDI;
+  undefined8 uVar17;
+  FILE *pFVar18;
+  bool local_2b8;
+  char *local_2b4;
+  double local_2b0;
+  double local_2a8;
+  bool local_2a0;
+  bool local_29c;
+  bool local_298;
+  bool local_294;
+  double local_290;
+  undefined8 local_288;
+  undefined8 local_280;
+  undefined8 local_278;
+  undefined8 local_270;
+  double local_268;
+  double local_260;
+  bool local_258;
+  uint local_254;
+  double local_250;
+  uint local_248;
+  bool local_244;
+  uint local_240;
+  uint local_23c;
+  grid_type local_238;
+  Multigrapher *local_234;
+  double local_230;
+  char *local_228;
+  char *local_224;
+  char *local_220;
+  char *local_21c;
+  char *local_218;
+  char *local_214;
+  double local_210;
+  double local_208;
+  double local_200;
+  double local_1f8;
+  bool local_1f0;
+  bool local_1ec;
+  uint local_1e4;
+  bool local_1e0;
+  char *local_1dc;
+  char *local_1d8;
+  char *local_1d4;
+  char *local_1d0;
+  bool local_1cc;
+  bool local_1c8;
+  data_type local_1c4;
+  bool local_1c0;
+  bool local_1bc;
+  double local_1b8;
+  Multigrapher *local_1b0;
+  char *local_1ac;
+  bool local_1a8;
+  Reader *local_1a4;
+  uint local_1a0;
+  bool local_19c;
+  bool local_198;
+  char *local_194;
+  bool local_190;
+  uint local_18c;
+  bool local_188;
+  bool local_184;
+  bool local_180;
+  bool local_17c;
+  char *local_170;
+  bool local_16c;
+  bool local_168;
+  bool local_164;
+  Multigrapher *local_160;
+  char *local_15c;
+  Multigrapher *local_158;
+  uint local_144;
+  int local_138;
+  int local_134;
+  uint local_130;
+  uint local_12c;
+  uint local_128;
+  FILE *local_124;
+  int local_120;
+  int local_11c;
+  double local_118;
+  double local_110;
+  double local_108;
+  double local_100;
+  double local_f8;
+  double local_f0;
+  double local_e8;
+  double local_e0;
+  double local_d8;
+  double local_d0;
+  double local_c8;
+  double local_c0;
+  double local_b8;
+  double local_b0;
+  double local_a8;
+  double local_a0;
+  double local_98;
+  double local_90;
+  double local_88;
+  double local_80;
+  double local_78;
+  double local_70;
+  double local_68;
+  double local_60;
+  double local_58;
+  double local_50;
+  double local_48;
+  char local_40 [40];
+  int *local_18;
+  
+  argv_00 = argv;
+  iVar14 = argc;
+  local_18 = &argc;
+  local_134 = 1;
+  local_120 = 0x400;
+  local_11c = 0;
+  bVar6 = false;
+  local_118 = 0.2;
+  local_110 = 0.2;
+  local_108 = 0.6;
+  local_100 = 0.6;
+  local_f8 = 0.02;
+  local_f0 = 1.3;
+  local_78 = 0.0;
+  local_70 = 0.0;
+  local_68 = 0.0;
+  local_60 = 0.0;
+  local_58 = 0.0;
+  local_50 = 0.0;
+  local_48 = 1.0;
+  local_19c = false;
+  local_244 = false;
+  local_258 = false;
+  local_2a0 = false;
+  local_29c = false;
+  local_298 = false;
+  local_294 = false;
+  local_1e4 = 0;
+  local_234 = (Multigrapher *)0x0;
+  local_1c0 = false;
+  local_1bc = false;
+  local_16c = false;
+  local_268 = 0.0;
+  local_164 = false;
+  local_17c = false;
+  local_168 = false;
+  local_1d8 = (char *)0x0;
+  local_1d4 = (char *)0x0;
+  local_1d0 = (char *)0x0;
+  local_1ac = "ZapfDingbats";
+  local_170 = (char *)0x0;
+  local_194 = (char *)0x0;
+  local_260 = 0.0;
+  local_2b0 = 0.0;
+  local_2a8 = 0.0;
+  local_288 = 0.0;
+  local_280 = 0.0;
+  local_278 = 0.0;
+  local_270 = 0.0;
+  local_230 = 0.07000000000000001;
+  local_290 = 0.0525;
+  local_1f8 = -0.001;
+  local_248 = 0;
+  local_254 = 0;
+  local_23c = 0;
+  local_1b0 = (Multigrapher *)0x0;
+  local_240 = 1;
+  local_1dc = "black";
+  local_1e0 = false;
+  local_238 = AXES_AND_BOX;
+  local_2b8 = false;
+  local_228 = (char *)0x0;
+  local_224 = (char *)0x0;
+  local_208 = -1.0;
+  local_2b4 = (char *)0x0;
+  local_220 = (char *)0x0;
+  local_21c = (char *)0x0;
+  local_218 = (char *)0x0;
+  local_214 = (char *)0x0;
+  local_15c = "meta";
+  local_210 = 0.03;
+  local_160 = (Multigrapher *)0x0;
+  local_1ec = false;
+  local_1a8 = false;
+  local_18c = 0;
+  local_1b8 = -0.001;
+  auto_abscissa = false;
+  local_1cc = true;
+  local_1c4 = T_ASCII;
+  local_200 = 1.0;
+  local_1a4 = (Reader *)0x0;
+  local_158 = (Multigrapher *)0x1;
+  local_144 = 1;
+  local_250 = 0.0;
+  local_188 = false;
+  local_1c8 = false;
+  local_198 = false;
+  local_190 = false;
+  local_184 = false;
+  local_1f0 = false;
+  local_180 = false;
+  local_1a0 = 0;
+  bVar4 = true;
+  bVar5 = false;
+  dVar7 = local_290;
+  uVar8 = local_240;
+LAB_08049710:
+  local_240 = uVar8;
+  local_290 = dVar7;
+  dVar7 = local_290;
+  uVar8 = local_240;
+  dVar9 = local_230;
+  dVar10 = local_1f8;
+  if (!bVar4) {
+LAB_0804971e:
+    if (optind < iVar14) {
+      pMVar15 = (Multigrapher *)argv_00[optind];
+      if ((*(char *)&pMVar15->plotter != '-') ||
+         (unaff_ESI = stdin, *(char *)((int)&pMVar15->plotter + 1) != '\0')) {
+        unaff_ESI = (FILE *)fopen((char *)pMVar15,"r");
+        input = extraout_EDX;
+        if (unaff_ESI == (FILE *)0x0) goto LAB_08049eb1;
+        pMVar15 = (Multigrapher *)argv_00[optind];
+      }
+      optind = optind + 1;
+      pFVar18 = unaff_ESI;
+      optarg = (char *)pMVar15;
+    }
+    else {
+      pMVar15 = unaff_EBX;
+      pFVar18 = stdin;
+      unaff_EDI = local_158;
+      if ((local_144 & (uint)local_158) == 0) {
+        if (local_144 == 0) {
+          if (local_1a0 == 0) {
+            array_bounds((Point *)local_124,local_11c,local_19c,local_240,&local_78,&local_68,
+                         &local_70,&local_60,local_294,local_298,local_29c,local_2a0);
+            if ((local_158 != (Multigrapher *)0x0) &&
+               (local_160 = new_multigrapher(local_15c,local_214,local_218,local_21c,local_220,
+                                             local_2b4,local_224,local_228,local_2b8),
+               local_160 == (Multigrapher *)0x0)) goto LAB_0804af3e;
+            begin_graph(local_160,local_48,local_58,local_50);
+            if ((local_194 != (char *)0x0) && (local_170 == (char *)0x0)) {
+              local_170 = local_194;
+            }
+            set_graph_parameters
+                      (local_160,local_1f8,local_1dc,local_1d8,local_170,local_230,local_f8,
+                       local_238,local_78,local_70,local_260,local_68,local_60,local_268,local_258,
+                       local_244,local_100,local_108,local_118,local_110,local_194,local_290,
+                       local_1d0,local_194,local_290,local_1d4,local_1e0,(int)local_234,local_1e4,
+                       local_254,local_248,local_240,local_f0,local_19c);
+            draw_frame_of_graph(local_160,(uint)local_158 ^ 1);
+            plot_point_array(local_160,(Point *)local_124,local_11c);
+            free(local_124);
+            local_11c = 0;
+          }
+          if (bVar6) {
+            end_polyline_and_flush(local_160);
+            draw_frame_of_graph(local_160,false);
+          }
+          end_graph(local_160);
+        }
+        iVar14 = delete_multigrapher(local_160);
+        if (-1 < iVar14) {
+          return 0;
+        }
+        fprintf(stderr,"%s: error: the graphing device could not be closed\n",progname,iVar14);
+        return 1;
+      }
+    }
+LAB_08049748:
+    unaff_ESI = pFVar18;
+    if (local_144 != 0) {
+      if (((uint)local_1b0 & 1) != 0) {
+        if (local_168 != false) {
+          local_280._0_4_ = (undefined4)local_270;
+          local_280._4_4_ = local_270._4_4_;
+          if (local_270 <= 0.0) goto LAB_0804bb0a;
+          local_270 = log10(local_270);
+        }
+        if (local_164 != false) {
+          if (local_280 <= 0.0) goto LAB_0804bb0a;
+          local_280 = log10(local_280);
+        }
+      }
+      if (((uint)local_1b0 & 2) != 0) {
+        if (local_17c != false) {
+          local_280._0_4_ = (undefined4)local_278;
+          local_280._4_4_ = local_278._4_4_;
+          if (local_278 <= 0.0) goto LAB_0804bb0a;
+          local_278 = log10(local_278);
+        }
+        if (local_16c != false) {
+          local_280._0_4_ = (undefined4)local_288;
+          local_280._4_4_ = local_288._4_4_;
+          if (local_288 <= 0.0) {
+LAB_0804bb0a:
+            fprintf(stderr,"%s: error: the limit %g on a logarithmic axis is nonpositive\n",progname
+                    ,(undefined4)local_280,local_280._4_4_);
+            return 1;
+          }
+          local_288 = log10(local_288);
+        }
+      }
+      local_78 = local_270;
+      local_1e4 = local_23c;
+      local_70 = local_280;
+      local_68 = local_278;
+      local_60 = local_288;
+      if ((local_164 | local_168) == 0) {
+        local_1e4 = local_23c | 1;
+      }
+      if ((local_16c | local_17c) == 0) {
+        local_1e4 = local_1e4 | 2;
+      }
+      if ((local_168 == false) || (local_164 == false)) {
+        local_1a0 = 0;
+      }
+      else {
+        local_1a0 = local_16c & local_17c;
+      }
+      local_19c = local_1ec;
+      local_268 = local_2b0;
+      local_244 = local_1c0;
+      local_260 = local_2a8;
+      local_258 = local_1bc;
+      local_2a0 = local_16c;
+      local_29c = local_164;
+      local_298 = local_17c;
+      local_294 = local_168;
+      local_234 = local_1b0;
+    }
+    if (local_1a0 == 0) {
+      if (local_144 == 0) {
+        alter_reader_parameters
+                  (local_1a4,unaff_ESI,local_1c4,auto_abscissa,local_200,local_250,local_18c,
+                   local_210,local_1ac,local_134,local_1b8,local_208,local_1a8,local_180,local_1f0,
+                   local_184,local_190,local_198,local_1c8,local_188);
+      }
+      else {
+        local_124 = (FILE *)xmalloc(local_120 * 100);
+        local_1a4 = new_reader(unaff_ESI,local_1c4,auto_abscissa,local_200,local_250,local_19c,
+                               (int)local_234,local_1cc,local_18c,local_210,local_1ac,local_134,
+                               local_1b8,local_208,local_1a8);
+      }
+      read_file(local_1a4,(Point **)&local_124,&local_120,&local_11c);
+    }
+    else {
+      if (local_144 == 0) {
+        alter_reader_parameters
+                  (local_1a4,unaff_ESI,local_1c4,auto_abscissa,local_200,local_250,local_18c,
+                   local_210,local_1ac,local_134,local_1b8,local_208,local_1a8,local_180,local_1f0,
+                   local_184,local_190,local_198,local_1c8,local_188);
+      }
+      else {
+        if ((local_158 != (Multigrapher *)0x0) &&
+           (local_160 = new_multigrapher(local_15c,local_214,local_218,local_21c,local_220,local_2b4
+                                         ,local_224,local_228,local_2b8),
+           local_160 == (Multigrapher *)0x0)) {
+LAB_0804af3e:
+          fprintf(stderr,"%s: error: the graphing device could not be opened\n",progname,unaff_ESI);
+          return 1;
+        }
+        begin_graph(local_160,local_48,local_58,local_50);
+        if ((local_194 != (char *)0x0) && (local_170 == (char *)0x0)) {
+          local_170 = local_194;
+        }
+        set_graph_parameters
+                  (local_160,local_1f8,local_1dc,local_1d8,local_170,local_230,local_f8,local_238,
+                   local_78,local_70,local_260,local_68,local_60,local_268,local_258,local_244,
+                   local_100,local_108,local_118,local_110,local_194,local_290,local_1d0,local_194,
+                   local_290,local_1d4,local_1e0,(int)local_234,local_1e4,local_254,local_248,
+                   local_240,local_f0,local_19c);
+        draw_frame_of_graph(local_160,(uint)local_158 ^ 1);
+        local_1a4 = new_reader(unaff_ESI,local_1c4,auto_abscissa,local_200,local_250,local_19c,
+                               (int)local_234,local_1cc,local_18c,local_210,local_1ac,local_134,
+                               local_1b8,local_208,local_1a8);
+        pMVar15 = local_234;
+        unaff_EDI = local_160;
+      }
+      read_and_plot_file(local_1a4,local_160);
+    }
+    pcVar13 = optarg;
+    unaff_EBX = pMVar15;
+    if ((stdin != unaff_ESI) &&
+       (iVar11 = fclose((FILE *)unaff_ESI), unaff_EBX = (Multigrapher *)pcVar13, iVar11 < 0)) {
+      fprintf(stderr,"%s: the input file `%s\' could not be closed\n",progname,pcVar13);
+    }
+    local_144 = 0;
+    local_188 = false;
+    local_1c8 = false;
+    local_198 = false;
+    local_190 = false;
+    local_184 = false;
+    local_1f0 = false;
+    local_180 = false;
+    goto LAB_08049710;
+  }
+  pMVar12 = (Multigrapher *)getopt_long(iVar14,argv_00,optstring,long_options,&local_138);
+  scale = local_48;
+  trans_y = local_50;
+  trans_x = local_58;
+  pMVar15 = (Multigrapher *)optarg;
+  if (pMVar12 == (Multigrapher *)0xffffffff) {
+    bVar4 = false;
+    goto LAB_0804971e;
+  }
+  if (pMVar12 == (Multigrapher *)0x1) {
+    if (((*optarg == '-') && (pFVar18 = stdin, optarg[1] == '\0')) ||
+       (unaff_ESI = (FILE *)fopen(optarg,"r"), input = extraout_EDX_01, pFVar18 = unaff_ESI,
+       unaff_ESI != (FILE *)0x0)) goto LAB_08049748;
+LAB_08049eb1:
+    pMVar12 = pMVar15;
+    open_file_for_reading((char *)pMVar15,input);
+    uVar16 = extraout_EDX_02;
+    unaff_EBX = pMVar15;
+LAB_08049ec0:
+    if (pMVar12 == (Multigrapher *)0x66) {
+      iVar11 = __isoc99_sscanf(optarg,"%lf",&local_d0,unaff_EDI);
+      if (iVar11 < 1) {
+        fprintf(stderr,"%s: error: the font size should be a number, but it was `%s\'\n",progname,
+                optarg);
+        goto LAB_08049e5f;
+      }
+      uVar16 = (undefined4)((ulonglong)local_d0 >> 0x20);
+      if (local_d0 < 1.0) {
+        dVar7 = local_d0;
+        if (local_d0 < 0.0) {
+          fprintf(stderr,"%s: the negative font size `%f\' is disregarded\n",progname,
+                  SUB84(local_d0,0),uVar16);
+          dVar7 = local_290;
+        }
+      }
+      else {
+        fprintf(stderr,
+                "%s: the too-large font size `%f\' is disregarded (it should be less than 1.0)\n",
+                progname,SUB84(local_d0,0),uVar16);
+      }
+      goto LAB_08049710;
+    }
+    if ((int)pMVar12 < 0x67) {
+      if (pMVar12 == (Multigrapher *)0x58) {
+        local_1d0 = xstrdup(optarg);
+      }
+      else {
+        if ((int)pMVar12 < 0x59) {
+          if (pMVar12 == (Multigrapher *)0x54) goto LAB_0804b317;
+          if (pMVar12 == (Multigrapher *)0x57) {
+            iVar11 = __isoc99_sscanf(optarg,"%lf",&local_b8,0x57);
+            if (iVar11 < 1) {
+              fprintf(stderr,
+                      "%s: error: the line thickness for the plot should be a number, but it was `%s\'\n"
+                      ,progname,optarg);
+              bVar5 = true;
+            }
+            if (local_b8 < 0.0) {
+              fprintf(stderr,"%s: the negative plot line thickness `%f\' is disregarded\n",progname,
+                      SUB84(local_b8,0),(int)((ulonglong)local_b8 >> 0x20));
+            }
+            else {
+              local_198 = true;
+              local_1b8 = local_b8;
+            }
+            goto LAB_08049e51;
+          }
+          goto LAB_08049e5f;
+        }
+        if (pMVar12 == (Multigrapher *)0x59) {
+          local_1d4 = xstrdup(optarg);
+        }
+        else {
+          if (pMVar12 != (Multigrapher *)0x61) goto LAB_08049e5f;
+          auto_abscissa = true;
+          if ((optind < iVar14) &&
+             (iVar11 = __isoc99_sscanf(argv_00[optind],"%lf",&local_e0,uVar16), dVar9 = local_e0,
+             unaff_EDI = (Multigrapher *)argv_00, 0 < iVar11)) {
+            iVar11 = optind + 1;
+            uVar3 = optind & 0xffff0000;
+            auto_abscissa = false;
+            optind = iVar11;
+            if ((local_e0 == 0.0) == 0) {
+              if ((iVar11 < iVar14) &&
+                 (iVar11 = __isoc99_sscanf(argv_00[iVar11],"%lf",&local_e8,
+                                           uVar3 | (ushort)((ushort)(local_e0 < 0.0) << 8 |
+                                                           (ushort)(local_e0 == 0.0) << 0xe)),
+                 0 < iVar11)) {
+                local_250 = local_e8;
+                optind = optind + 1;
+                auto_abscissa = true;
+                local_200 = dVar9;
+              }
+              else {
+                auto_abscissa = true;
+                local_200 = dVar9;
+              }
+            }
+          }
+        }
+      }
+      goto LAB_08049710;
+    }
+    if (pMVar12 == (Multigrapher *)0x6b) {
+      iVar11 = __isoc99_sscanf(optarg,"%lf",&local_f8,0x6b);
+      if (iVar11 < 1) {
+        fprintf(stderr,"%s: error: the tick size should be a number, but it was `%s\'\n",progname,
+                optarg);
+        goto LAB_08049e5f;
+      }
+      goto LAB_08049710;
+    }
+    if ((int)pMVar12 < 0x6c) {
+      if (pMVar12 == (Multigrapher *)0x67) {
+        iVar11 = __isoc99_sscanf(optarg,"%d",&local_130,unaff_ESI);
+        if (iVar11 < 1) {
+          fprintf(stderr,"%s: error: the grid style should be a (small) integer, but it was `%s\'\n"
+                  ,progname,optarg);
+          goto LAB_08049e5f;
+        }
+        switch(local_130) {
+        case 0:
+          local_238 = NO_AXES;
+          break;
+        case 1:
+          local_238 = AXES;
+          break;
+        case 2:
+          local_238 = AXES_AND_BOX;
+          break;
+        case 3:
+          local_238 = AXES_AND_BOX_AND_GRID;
+          break;
+        case 4:
+          local_238 = AXES_AT_ORIGIN;
+          break;
+        default:
+          fprintf(stderr,"%s: error: the grid style number `%s\' is out of bounds\n",progname,optarg
+                 );
+          goto LAB_08049e5f;
+        }
+      }
+      else {
+        if (pMVar12 != (Multigrapher *)0x68) goto LAB_08049e5f;
+        iVar11 = __isoc99_sscanf(optarg,"%lf",&local_108,unaff_EBX);
+        if (iVar11 < 1) {
+          fprintf(stderr,"%s: error: the plot height should be a number, but it was `%s\'\n",
+                  progname,optarg);
+          goto LAB_08049e5f;
+        }
+      }
+      goto LAB_08049710;
+    }
+    if (pMVar12 == (Multigrapher *)0x6d) {
+      iVar11 = __isoc99_sscanf(optarg,"%d",&local_134,uVar16);
+      local_190 = true;
+      if (iVar11 < 1) {
+        fprintf(stderr,"%s: error: the linemode should be a (small) integer, but it was `%s\'\n",
+                progname,optarg);
+        goto LAB_08049e5f;
+      }
+      goto LAB_08049710;
+    }
+    if (0x6c < (int)pMVar12) {
+      if (pMVar12 != (Multigrapher *)0x71) goto LAB_08049e5f;
+      iVar11 = __isoc99_sscanf(optarg,"%lf",&local_80,0x71);
+      if (iVar11 < 1) {
+        fprintf(stderr,"%s: error: the fill fraction should be a number, but it was `%s\'\n",
+                progname,optarg);
+        goto LAB_08049e5f;
+      }
+      if (local_80 <= 1.0) {
+        local_1c8 = true;
+        local_208 = local_80;
+      }
+      else {
+        fprintf(stderr,
+                "%s: the region fill fraction `%f\' was disregarded (it should be less than or equal to 1.0)\n"
+                ,progname,SUB84(local_80,0),(int)((ulonglong)local_80 >> 0x20));
+      }
+      goto LAB_08049710;
+    }
+    cVar1 = *optarg;
+    if (cVar1 == 'Y') {
+LAB_0804b1d6:
+      local_1b0 = (Multigrapher *)((uint)local_1b0 ^ 2);
+      goto LAB_08049710;
+    }
+    if (cVar1 < 'Z') {
+      if (cVar1 == 'X') goto LAB_0804b2b1;
+    }
+    else {
+      if (cVar1 == 'x') {
+LAB_0804b2b1:
+        local_1b0 = (Multigrapher *)((uint)local_1b0 ^ 1);
+        goto LAB_08049710;
+      }
+      if (cVar1 == 'y') goto LAB_0804b1d6;
+    }
+  }
+  else {
+    if (pMVar12 == (Multigrapher *)0x72) {
+      iVar11 = __isoc99_sscanf(optarg,"%lf",&local_110,0x72);
+      if (iVar11 < 1) {
+        fprintf(stderr,
+                "%s: error: the rightward displacement for the plot should be a number, but it was `%s\'\n"
+                ,progname,optarg);
+LAB_08049e5f:
+        fprintf(stderr,"Try `%s --help\' for more information\n",progname,unaff_EDI);
+        return 1;
+      }
+      goto LAB_08049710;
+    }
+    if (0x72 < (int)pMVar12) {
+      if (pMVar12 == (Multigrapher *)0x5200) {
+        uVar17 = __isoc99_sscanf(optarg,"%lf",&local_58,extraout_ECX);
+        if ((int)uVar17 < 1) {
+          fprintf(stderr,"%s: error: the x repositioning should be a number, but it was `%s\'\n",
+                  progname,optarg);
+          return 1;
+        }
+        if (iVar14 <= optind) {
+LAB_0804b9e6:
+          fprintf(stderr,
+                  "%s: error: one or more arguments to the --reposition option were missing\n",
+                  progname,optind);
+          return 1;
+        }
+        iVar11 = __isoc99_sscanf(argv_00[optind],"%lf",&local_50,(int)((ulonglong)uVar17 >> 0x20));
+        if (iVar11 < 1) {
+          fprintf(stderr,"%s: error: the y repositioning should be a number, but it was `%s\'\n",
+                  progname,argv_00[optind]);
+          return 1;
+        }
+        optind = optind + 1;
+        if (iVar14 <= optind) goto LAB_0804b9e6;
+        pFVar18 = (FILE *)0x80573de;
+        iVar11 = __isoc99_sscanf(argv_00[optind],"%lf",&local_48,argv_00);
+        if (iVar11 < 1) {
+          fprintf(stderr,
+                  "%s: error: the reposition scale factor should be a number, but it was `%s\'\n",
+                  progname,optarg);
+          return 1;
+        }
+        if (local_48 == 0.0) {
+          fprintf(stderr,"%s: error: the reposition scale factor should not be zero\n",progname,
+                  unaff_ESI);
+          return 1;
+        }
+        optind = optind + 1;
+        if (local_144 == 0) {
+          unaff_EDI = (Multigrapher *)argv_00;
+          if (local_1a0 == 0) {
+            array_bounds((Point *)local_124,local_11c,local_19c,local_240,&local_78,&local_68,
+                         &local_70,&local_60,local_294,local_298,local_29c,local_2a0);
+            if ((local_158 != (Multigrapher *)0x0) &&
+               (local_160 = new_multigrapher(local_15c,local_214,local_218,local_21c,local_220,
+                                             local_2b4,local_224,local_228,local_2b8),
+               local_160 == (Multigrapher *)0x0)) goto LAB_0804af3e;
+            begin_graph(local_160,scale,trans_x,trans_y);
+            if ((local_194 != (char *)0x0) && (local_170 == (char *)0x0)) {
+              local_170 = local_194;
+            }
+            set_graph_parameters
+                      (local_160,local_1f8,local_1dc,local_1d8,local_170,local_230,local_f8,
+                       local_238,local_78,local_70,local_260,local_68,local_60,local_268,local_258,
+                       local_244,local_100,local_108,local_118,local_110,local_194,local_290,
+                       local_1d0,local_194,local_290,local_1d4,local_1e0,(int)local_234,local_1e4,
+                       local_254,local_248,local_240,local_f0,local_19c);
+            draw_frame_of_graph(local_160,(uint)local_158 ^ 1);
+            pFVar18 = local_124;
+            plot_point_array(local_160,(Point *)local_124,local_11c);
+            free(local_124);
+            local_11c = 0;
+            unaff_EDI = local_160;
+          }
+          if (bVar6) {
+            unaff_EBX = local_160;
+            unaff_ESI = pFVar18;
+            end_polyline_and_flush(local_160);
+            draw_frame_of_graph(local_160,false);
+            unaff_EDI = local_160;
+          }
+          end_graph(local_160);
+          local_158 = (Multigrapher *)0x0;
+          local_144 = 1;
+        }
+        else {
+          local_144 = 1;
+          unaff_EDI = (Multigrapher *)argv_00;
+        }
+        goto LAB_08049710;
+      }
+      if (0x5200 < (int)pMVar12) {
+        if (pMVar12 == (Multigrapher *)0x6500) {
+          local_21c = xstrdup(optarg);
+        }
+        else {
+          if ((int)pMVar12 < 0x6501) {
+            if (pMVar12 == (Multigrapher *)0x5700) {
+              iVar11 = __isoc99_sscanf(optarg,"%lf",&local_c0,extraout_ECX);
+              if (iVar11 < 1) {
+                fprintf(stderr,
+                        "%s: error: the line thickness for the frame should be a number, but it was `%s\'\n"
+                        ,progname,optarg);
+                bVar5 = true;
+              }
+              dVar10 = local_c0;
+              if (local_c0 < 0.0) {
+                fprintf(stderr,"%s: the negative frame line thickness `%f\' is disregarded\n",
+                        progname,SUB84(local_c0,0),(int)((ulonglong)local_c0 >> 0x20));
+                dVar10 = local_1f8;
+              }
+              goto LAB_08049e51;
+            }
+            if ((int)pMVar12 < 0x5701) {
+              if (pMVar12 != (Multigrapher *)0x5400) {
+                if (pMVar12 == (Multigrapher *)0x5600) {
+                  display_version(progname,written,copyright);
+                  return 0;
+                }
+                goto LAB_08049e5f;
+              }
+LAB_0804b317:
+              local_15c = xstrdup(optarg);
+            }
+            else {
+              if (pMVar12 == (Multigrapher *)0x5a00) {
+                local_170 = xstrdup(optarg);
+              }
+              else {
+                if (pMVar12 != (Multigrapher *)0x6200) goto LAB_08049e5f;
+                iVar11 = __isoc99_sscanf(optarg,"%lf",&local_f0,unaff_EDI);
+                if (iVar11 < 1) {
+                  fprintf(stderr,
+                          "%s: error: the fractional blankout should be a number, but it was `%s\'\n"
+                          ,progname,optarg);
+                  goto LAB_08049e5f;
+                }
+              }
+            }
+          }
+          else {
+            if (pMVar12 == (Multigrapher *)0x6c00) {
+              iVar14 = list_fonts(local_15c,progname);
+              return (uint)(iVar14 == 0);
+            }
+            if ((int)pMVar12 < 0x6c01) {
+              if (pMVar12 == (Multigrapher *)0x6600) {
+                iVar14 = display_fonts(local_15c,progname);
+                return (uint)(iVar14 == 0);
+              }
+              if (pMVar12 == (Multigrapher *)0x6800) {
+                display_usage(progname,hidden_options,usage_appendage,2);
+                return 0;
+              }
+              goto LAB_08049e5f;
+            }
+            if (pMVar12 == (Multigrapher *)0x7100) {
+              local_214 = xstrdup(optarg);
+            }
+            else {
+              if (pMVar12 == (Multigrapher *)0x7200) {
+                local_228 = xstrdup(optarg);
+              }
+              else {
+                if (pMVar12 != (Multigrapher *)0x7000) goto LAB_08049e5f;
+                unaff_EBX = (Multigrapher *)optarg;
+                while (cVar1 = *(char *)&unaff_EBX->plotter, unaff_EDI = (Multigrapher *)local_40,
+                      cVar1 != '\0') {
+                  if (cVar1 == ':') {
+                    unaff_EBX = (Multigrapher *)((int)&unaff_EBX->plotter + 1);
+                  }
+                  else {
+                    if (9 < (byte)(cVar1 - 0x30U)) {
+LAB_0804b241:
+                      fprintf(stderr,"%s: the unparseable pen string `%s\' is disregarded\n",
+                              progname,optarg);
+                      break;
+                    }
+                    unaff_ESI = (FILE *)0x0;
+                    do {
+                      pMVar15 = unaff_EBX;
+                      unaff_EBX = (Multigrapher *)((int)&pMVar15->plotter + 1);
+                      iVar11 = (int)cVar1 + (int)unaff_ESI * 10;
+                      cVar1 = *(char *)&unaff_EBX->plotter;
+                      unaff_ESI = (FILE *)(iVar11 + -0x30);
+                    } while ((byte)(cVar1 - 0x30U) < 10);
+                    if ((4 < iVar11 - 0x31U) || (cVar1 != '=')) goto LAB_0804b241;
+                    unaff_EBX = (Multigrapher *)((int)&pMVar15->plotter + 2);
+                    iVar11 = 0;
+                    pMVar15 = unaff_EBX;
+                    do {
+                      cVar1 = *(char *)&pMVar15->plotter;
+                      if (cVar1 == ':') {
+                        local_40[iVar11] = '\0';
+                        unaff_EBX = (Multigrapher *)((int)&pMVar15->plotter + 1);
+                        break;
+                      }
+                      if (cVar1 == '\0') {
+                        local_40[iVar11] = '\0';
+                        unaff_EBX = pMVar15;
+                        break;
+                      }
+                      *(char *)((int)&((Multigrapher *)local_40)->plotter + iVar11) = cVar1;
+                      iVar11 = iVar11 + 1;
+                      pMVar15 = (Multigrapher *)((int)&pMVar15->plotter + 1);
+                    } while (iVar11 != 0x20);
+                    pcVar13 = xstrdup((char *)(Multigrapher *)local_40);
+                    (&optstring)[(int)unaff_ESI] = pcVar13;
+                  }
+                }
+              }
+            }
+          }
+        }
+        goto LAB_08049710;
+      }
+      if (pMVar12 == (Multigrapher *)0x79) {
+        if (iVar14 <= optind) {
+LAB_0804a116:
+          local_1c0 = false;
+          local_16c = false;
+          local_17c = false;
+          goto LAB_08049710;
+        }
+        pcVar13 = argv_00[optind];
+        if ((*pcVar13 != '-') || (local_17c = false, uVar16 = extraout_ECX, pcVar13[1] != '\0')) {
+          uVar17 = __isoc99_sscanf(pcVar13,"%lf",&local_a8,unaff_EBX);
+          pcVar13 = (char *)((ulonglong)uVar17 >> 0x20);
+          unaff_EDI = (Multigrapher *)argv_00;
+          if ((int)uVar17 < 1) goto LAB_0804a116;
+          local_278 = local_a8;
+          local_17c = true;
+          uVar16 = extraout_ECX_00;
+        }
+        optind = optind + 1;
+        if (iVar14 <= optind) {
+LAB_0804b128:
+          local_1c0 = false;
+          local_16c = false;
+          unaff_EDI = (Multigrapher *)argv_00;
+          goto LAB_08049710;
+        }
+        pcVar2 = argv_00[optind];
+        if ((*pcVar2 != '-') || (local_16c = false, pcVar2[1] != '\0')) {
+          uVar17 = __isoc99_sscanf(pcVar2,"%lf",&local_98,uVar16);
+          pcVar13 = (char *)((ulonglong)uVar17 >> 0x20);
+          if ((int)uVar17 < 1) goto LAB_0804b128;
+          local_16c = true;
+          local_288 = local_98;
+        }
+        local_1c0 = false;
+        optind = optind + 1;
+        unaff_EDI = (Multigrapher *)argv_00;
+        if (iVar14 <= optind) goto LAB_08049710;
+        pcVar2 = argv_00[optind];
+        if ((*pcVar2 != '-') || (pcVar2[1] != '\0')) {
+          iVar11 = __isoc99_sscanf(pcVar2,"%lf",&local_88,pcVar13);
+          if (iVar11 < 1) {
+            local_1c0 = false;
+            goto LAB_08049710;
+          }
+          local_2b0 = local_88;
+          local_1c0 = true;
+        }
+      }
+      else {
+        if (0x79 < (int)pMVar12) {
+          if (pMVar12 == (Multigrapher *)0x4600) {
+            iVar11 = __isoc99_sscanf(optarg,"%lf",&local_c8,unaff_ESI);
+            if (iVar11 < 1) {
+              fprintf(stderr,
+                      "%s: error: the font size for the title should be a number, but it was `%s\'\n"
+                      ,progname,optarg);
+              bVar5 = true;
+            }
+            else {
+              uVar16 = (undefined4)((ulonglong)local_c8 >> 0x20);
+              if (local_c8 < 1.0) {
+                if (local_c8 < 0.0) {
+                  fprintf(stderr,"%s: the negative title font size `%f\' is disregarded\n",progname,
+                          SUB84(local_c8,0),uVar16);
+                }
+              }
+              else {
+                fprintf(stderr,
+                        "%s: the too-large title font size `%f\' is disregarded (it should be less than 1.0)\n"
+                        ,progname,SUB84(local_c8,0),uVar16);
+              }
+            }
+            dVar9 = local_c8;
+            if (local_c8 == 0.0) {
+              fprintf(stderr,"%s: the request for a zero title font size is disregarded\n",progname,
+                      unaff_EBX);
+              dVar9 = local_230;
+            }
+LAB_08049e51:
+            local_1f8 = dVar10;
+            local_230 = dVar9;
+            if (bVar5) goto LAB_08049e5f;
+          }
+          else {
+            if ((int)pMVar12 < 0x4601) {
+              if (pMVar12 == (Multigrapher *)0x4200) {
+                local_218 = xstrdup(optarg);
+              }
+              else {
+                if (pMVar12 != (Multigrapher *)0x4300) goto LAB_08049e5f;
+                local_1dc = xstrdup(optarg);
+              }
+            }
+            else {
+              if (pMVar12 == (Multigrapher *)0x4d00) {
+                local_220 = xstrdup(optarg);
+              }
+              else {
+                if (pMVar12 == (Multigrapher *)0x5000) {
+                  local_224 = xstrdup(optarg);
+                }
+                else {
+                  if (pMVar12 != (Multigrapher *)0x4700) goto LAB_08049e5f;
+                  local_1ac = xstrdup(optarg);
+                  local_184 = true;
+                }
+              }
+            }
+          }
+          goto LAB_08049710;
+        }
+        if (pMVar12 == (Multigrapher *)0x75) {
+          iVar11 = __isoc99_sscanf(optarg,"%lf",&local_118,0x75);
+          if (iVar11 < 1) {
+            fprintf(stderr,
+                    "%s: error: the upward displacement for the plot should be a number, but it was `%s\'\n"
+                    ,progname,optarg);
+            goto LAB_08049e5f;
+          }
+          goto LAB_08049710;
+        }
+        if ((int)pMVar12 < 0x76) {
+          if (pMVar12 == (Multigrapher *)0x73) {
+            local_2b8 = true;
+          }
+          else {
+            if (pMVar12 != (Multigrapher *)0x74) goto LAB_08049e5f;
+            local_1ec = local_1ec ^ 1;
+          }
+          goto LAB_08049710;
+        }
+        if (pMVar12 == (Multigrapher *)0x77) {
+          iVar11 = __isoc99_sscanf(optarg,"%lf",&local_100,0x77);
+          if (iVar11 < 1) {
+            fprintf(stderr,"%s: error: the plot width should be a number, but it was `%s\'\n",
+                    progname,optarg);
+            goto LAB_08049e5f;
+          }
+          goto LAB_08049710;
+        }
+        if (pMVar12 != (Multigrapher *)0x78) goto LAB_08049e5f;
+        if (iVar14 <= optind) {
+LAB_0804b265:
+          local_1bc = false;
+          local_164 = false;
+          local_168 = false;
+          goto LAB_08049710;
+        }
+        pcVar13 = argv_00[optind];
+        if ((*pcVar13 != '-') || (local_168 = false, pcVar13[1] != '\0')) {
+          iVar11 = __isoc99_sscanf(pcVar13,"%lf",&local_b0,optind);
+          unaff_EDI = (Multigrapher *)argv_00;
+          if (iVar11 < 1) goto LAB_0804b265;
+          local_168 = true;
+          local_270 = local_b0;
+        }
+        optind = optind + 1;
+        if (iVar14 <= optind) {
+LAB_0804b141:
+          local_1bc = false;
+          local_164 = false;
+          unaff_EDI = (Multigrapher *)argv_00;
+          goto LAB_08049710;
+        }
+        pcVar13 = argv_00[optind];
+        if ((*pcVar13 != '-') || (local_164 = false, pcVar13[1] != '\0')) {
+          iVar11 = __isoc99_sscanf(pcVar13,"%lf",&local_a0,argv_00);
+          if (iVar11 < 1) goto LAB_0804b141;
+          local_164 = true;
+          local_280 = local_a0;
+        }
+        local_1bc = false;
+        optind = optind + 1;
+        unaff_EDI = (Multigrapher *)argv_00;
+        if (iVar14 <= optind) goto LAB_08049710;
+        pcVar13 = argv_00[optind];
+        if ((*pcVar13 == '-') && (pcVar13[1] == '\0')) goto LAB_0804b604;
+        iVar11 = __isoc99_sscanf(pcVar13,"%lf",&local_90,unaff_ESI);
+        if (iVar11 < 1) {
+          local_1bc = false;
+          goto LAB_08049710;
+        }
+        local_2a8 = local_90;
+        local_1bc = true;
+      }
+LAB_0804b604:
+      optind = optind + 1;
+      unaff_EDI = (Multigrapher *)argv_00;
+      goto LAB_08049710;
+    }
+    if (pMVar12 == (Multigrapher *)0x53) {
+      if ((optind < iVar14) &&
+         (iVar11 = __isoc99_sscanf(argv_00[optind],"%d",&local_12c,unaff_EDI),
+         unaff_EDI = (Multigrapher *)argv_00, 0 < iVar11)) {
+        local_18c = local_12c;
+        if (0xff < local_12c) {
+          fprintf(stderr,
+                  "%s: the symbol type `%d\' is disregarded (it should be in the range 0..255)\n",
+                  progname,local_12c);
+          local_18c = 1;
+        }
+        local_180 = true;
+        optind = optind + 1;
+        if ((optind < iVar14) &&
+           (iVar11 = __isoc99_sscanf(argv_00[optind],"%lf",&local_d8,unaff_ESI), 0 < iVar11)) {
+          if (local_d8 < 0.0) {
+            fprintf(stderr,"%s: the negative symbol size `%f\' is disregarded\n",progname,
+                    SUB84(local_d8,0),(int)((ulonglong)local_d8 >> 0x20));
+          }
+          else {
+            if (local_d8 == 0.0) {
+              fprintf(stderr,"%s: the request for a zero symbol size is disregarded\n",progname,
+                      unaff_EBX);
+            }
+            else {
+              local_1f0 = true;
+              local_210 = local_d8;
+            }
+          }
+          optind = optind + 1;
+          local_180 = true;
+        }
+      }
+      else {
+        local_18c = 1;
+        local_180 = true;
+      }
+      goto LAB_08049710;
+    }
+    uVar16 = extraout_EDX_00;
+    if (0x53 < (int)pMVar12) goto LAB_08049ec0;
+    if (pMVar12 == (Multigrapher *)0x49) {
+      cVar1 = *optarg;
+      if (cVar1 == 'I') {
+LAB_0804a32a:
+        local_1c4 = T_INTEGER;
+        goto LAB_08049710;
+      }
+      if (cVar1 < 'J') {
+        if (cVar1 == 'E') goto LAB_0804b3aa;
+        if (cVar1 < 'F') {
+          if (cVar1 == 'A') goto LAB_0804b47e;
+          if (cVar1 == 'D') goto LAB_0804ad83;
+        }
+        else {
+          if (cVar1 == 'F') {
+LAB_0804b48d:
+            local_1c4 = T_SINGLE;
+            goto LAB_08049710;
+          }
+          if (cVar1 == 'G') goto LAB_0804a4ad;
+        }
+      }
+      else {
+        if (cVar1 == 'e') {
+LAB_0804b3aa:
+          local_1c4 = T_ASCII_ERRORBAR;
+          goto LAB_08049710;
+        }
+        if (cVar1 < 'f') {
+          if (cVar1 == 'a') {
+LAB_0804b47e:
+            local_1c4 = T_ASCII;
+            goto LAB_08049710;
+          }
+          if (cVar1 == 'd') {
+LAB_0804ad83:
+            local_1c4 = T_DOUBLE;
+            goto LAB_08049710;
+          }
+        }
+        else {
+          if (cVar1 == 'g') {
+LAB_0804a4ad:
+            local_1c4 = T_GNUPLOT;
+            goto LAB_08049710;
+          }
+          if (cVar1 < 'g') goto LAB_0804b48d;
+          if (cVar1 == 'i') goto LAB_0804a32a;
+        }
+      }
+      fprintf(stderr,"%s: error: `%s\' is an unrecognized data option\n",progname,optarg);
+      goto LAB_08049e5f;
+    }
+    if ((int)pMVar12 < 0x4a) {
+      if (pMVar12 != (Multigrapher *)0x45) {
+        if ((int)pMVar12 < 0x46) {
+          if (pMVar12 == (Multigrapher *)0x42) {
+            local_1cc = local_1cc ^ 1;
+          }
+          else {
+            if (pMVar12 != (Multigrapher *)0x43) goto LAB_08049e5f;
+            local_1a8 = local_1a8 ^ 1;
+            local_188 = true;
+          }
+        }
+        else {
+          if (pMVar12 == (Multigrapher *)0x46) {
+            local_194 = xstrdup(optarg);
+          }
+          else {
+            if (pMVar12 != (Multigrapher *)0x48) goto LAB_08049e5f;
+            bVar6 = (bool)(bVar6 ^ 1);
+          }
+        }
+        goto LAB_08049710;
+      }
+      cVar1 = *optarg;
+      if (cVar1 == 'Y') {
+LAB_0804a6a3:
+        local_254 = local_254 ^ 1;
+        goto LAB_08049710;
+      }
+      if (cVar1 < 'Z') {
+        if (cVar1 != 'X') goto LAB_0804b198;
+LAB_0804add9:
+        local_254 = local_254 ^ 2;
+        goto LAB_08049710;
+      }
+      if (cVar1 == 'x') goto LAB_0804add9;
+      if (cVar1 == 'y') goto LAB_0804a6a3;
+    }
+    else {
+      if (pMVar12 == (Multigrapher *)0x4e) {
+        cVar1 = *optarg;
+        if (cVar1 == 'Y') {
+LAB_08049d1d:
+          local_248 = local_248 ^ 2;
+          goto LAB_08049710;
+        }
+        if (cVar1 < 'Z') {
+          if (cVar1 != 'X') goto LAB_0804b198;
+LAB_0804adc5:
+          local_248 = local_248 ^ 1;
+          goto LAB_08049710;
+        }
+        if (cVar1 == 'x') goto LAB_0804adc5;
+        if (cVar1 == 'y') goto LAB_08049d1d;
+      }
+      else {
+        if ((int)pMVar12 < 0x4f) {
+          if (pMVar12 == (Multigrapher *)0x4b) {
+            iVar11 = __isoc99_sscanf(optarg,"%d",&local_128,extraout_ECX);
+            if ((iVar11 < 1) || (uVar8 = local_128, 2 < local_128)) {
+              fprintf(stderr,
+                      "%s: the bad clip mode `%s\' is disregarded (it should be 0, 1, or 2)\n",
+                      progname,optarg);
+              uVar8 = local_240;
+            }
+          }
+          else {
+            if (pMVar12 != (Multigrapher *)0x4c) goto LAB_08049e5f;
+            local_1d8 = xstrdup(optarg);
+          }
+          goto LAB_08049710;
+        }
+        if (pMVar12 == (Multigrapher *)0x51) {
+          local_1e0 = local_1e0 ^ 1;
+          goto LAB_08049710;
+        }
+        if ((int)pMVar12 < 0x52) {
+          if (pMVar12 != (Multigrapher *)0x4f) goto LAB_08049e5f;
+          local_2b4 = "yes";
+          goto LAB_08049710;
+        }
+        cVar1 = *optarg;
+        if (cVar1 == 'Y') {
+LAB_0804b1fd:
+          local_23c = local_23c ^ 2;
+          goto LAB_08049710;
+        }
+        if (cVar1 < 'Z') {
+          if (cVar1 != 'X') goto LAB_0804b198;
+LAB_0804b29d:
+          local_23c = local_23c ^ 1;
+          goto LAB_08049710;
+        }
+        if (cVar1 == 'x') goto LAB_0804b29d;
+        if (cVar1 == 'y') goto LAB_0804b1fd;
+      }
+    }
+  }
+LAB_0804b198:
+  fprintf(stderr,"%s: the unrecognized axis specification `%s\' is disregarded\n",progname,optarg);
+  goto LAB_08049710;
+}
+

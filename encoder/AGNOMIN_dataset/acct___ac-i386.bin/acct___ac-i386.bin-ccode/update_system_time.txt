@@ -1,0 +1,24 @@
+
+void update_system_time(time_t the_time)
+
+{
+  int iVar1;
+  hashtab_elem *he;
+  void *pvVar2;
+  int in_GS_OFFSET;
+  hashtab_order ho;
+  
+  iVar1 = *(int *)(in_GS_OFFSET + 0x14);
+  he = hashtab_first(login_table,&ho);
+  while (he != (hashtab_elem *)0x0) {
+    pvVar2 = hashtab_get_value(he);
+    *(int *)((int)pvVar2 + 0x20) = *(int *)((int)pvVar2 + 0x20) + the_time;
+    he = hashtab_next(&ho);
+  }
+  if (iVar1 == *(int *)(in_GS_OFFSET + 0x14)) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+

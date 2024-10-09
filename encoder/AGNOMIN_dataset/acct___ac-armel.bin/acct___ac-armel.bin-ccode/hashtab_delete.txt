@@ -1,0 +1,36 @@
+
+void hashtab_delete(hashtab_elem *he)
+
+{
+  hashtab_elem **pphVar1;
+  void *__ptr;
+  hashtab_elem *phVar2;
+  hashtab_elem *phVar3;
+  
+  phVar3 = (hashtab_elem *)he->ht;
+  phVar2 = he->prev;
+  phVar3->key_len = phVar3->key_len - 1;
+  if (phVar2 == (hashtab_elem *)0x0) {
+    pphVar1 = (hashtab_elem **)&phVar3->data;
+    phVar3 = (hashtab_elem *)he->hashval;
+    *(hashtab_elem **)((int)*pphVar1 + phVar3 * 4) = he->next;
+  }
+  else {
+    phVar2->next = he->next;
+  }
+  phVar2 = he->next;
+  if (phVar2 != (hashtab_elem *)0x0) {
+    phVar3 = he->prev;
+  }
+  __ptr = he->data;
+  if (phVar2 != (hashtab_elem *)0x0) {
+    phVar2->prev = phVar3;
+  }
+  if (__ptr != (void *)0x0) {
+    free(__ptr);
+  }
+  free(he->key);
+  free(he);
+  return;
+}
+

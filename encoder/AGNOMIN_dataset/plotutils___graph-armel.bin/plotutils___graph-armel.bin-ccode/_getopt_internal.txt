@@ -1,0 +1,324 @@
+
+/* WARNING: Restarted to delay deadcode elimination for space: ram */
+
+int _getopt_internal(int argc,char **argv,char *optstring,option *longopts,int *longind,
+                    int long_only)
+
+{
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
+  size_t sVar6;
+  byte *pbVar7;
+  char *pcVar8;
+  char **ppcVar9;
+  uint __c;
+  anon_enum_32_conflict5ae aVar10;
+  uint uVar11;
+  int iVar12;
+  char *__s1;
+  option *poVar13;
+  option *poVar14;
+  char *local_50;
+  int local_48;
+  int local_3c;
+  
+  aVar10 = optind;
+  optarg = (char *)0x0;
+  local_50 = optstring;
+  if (optind == 0) {
+    nextchar = (char *)optind;
+    optind = 1;
+    last_nonopt = 1;
+    first_nonopt = 1;
+    if (*optstring == '-') {
+      local_50 = optstring + 1;
+      ordering = Y_AXIS;
+      aVar10 = ordering;
+    }
+    else {
+      if (*optstring == '+') {
+        local_50 = optstring + 1;
+        ordering = aVar10;
+      }
+      else {
+        pcVar8 = getenv("POSIXLY_CORRECT");
+        ordering = aVar10;
+        if (pcVar8 == (char *)0x0) {
+          ordering = X_AXIS;
+          goto LAB_0001c1f8;
+        }
+      }
+    }
+joined_r0x0001c098:
+    iVar2 = first_nonopt;
+    iVar12 = last_nonopt;
+    iVar3 = optind;
+    if (argc == optind) goto LAB_0001c278;
+LAB_0001bfb0:
+    pcVar8 = argv[optind];
+    if (*pcVar8 != '-') {
+LAB_0001c020:
+      if (aVar10 == M_NONE) {
+        return 0xffffffff;
+      }
+      optind = optind + 1;
+      optarg = pcVar8;
+      return 1;
+    }
+    if ((pcVar8[1] == '-') && (pcVar8[2] == '\0')) {
+      optind = optind + 1;
+      iVar2 = optind;
+      iVar12 = argc;
+      iVar3 = argc;
+      if ((first_nonopt != last_nonopt) &&
+         (iVar2 = first_nonopt, iVar12 = argc, iVar3 = argc, optind != last_nonopt)) {
+        exchange(argv);
+        iVar2 = first_nonopt;
+        iVar12 = argc;
+        iVar3 = argc;
+      }
+LAB_0001c278:
+      optind = iVar3;
+      last_nonopt = iVar12;
+      first_nonopt = iVar2;
+      if (last_nonopt != first_nonopt) {
+        optind = first_nonopt;
+      }
+      return 0xffffffff;
+    }
+    if ((byte)pcVar8[1] == 0) goto LAB_0001c020;
+    uVar11 = count_leading_zeroes((byte)pcVar8[1] - 0x2d);
+    uVar11 = uVar11 >> 5;
+    if (longopts == (option *)0x0) {
+      uVar11 = 0;
+    }
+    nextchar = pcVar8 + uVar11 + 1;
+  }
+  else {
+    if ((nextchar == (char *)0x0) || (*nextchar == '\0')) {
+      if (ordering == X_AXIS) {
+LAB_0001c1f8:
+        if (first_nonopt == last_nonopt) {
+          if (first_nonopt != optind) {
+            first_nonopt = optind;
+          }
+        }
+        else {
+          if (last_nonopt != optind) {
+            exchange(argv);
+          }
+        }
+        if (optind < argc) {
+          ppcVar9 = argv + optind;
+          do {
+            if ((**ppcVar9 == '-') && ((*ppcVar9)[1] != '\0')) break;
+            optind = optind + 1;
+            ppcVar9 = ppcVar9 + 1;
+          } while (optind != argc);
+        }
+        last_nonopt = optind;
+        aVar10 = X_AXIS;
+        goto joined_r0x0001c098;
+      }
+      aVar10 = ordering;
+      iVar2 = first_nonopt;
+      iVar12 = last_nonopt;
+      iVar3 = optind;
+      if (argc == optind) goto LAB_0001c278;
+      goto LAB_0001bfb0;
+    }
+  }
+  pcVar8 = nextchar;
+  iVar2 = optind;
+  if (longopts == (option *)0x0) {
+    uVar11 = (uint)(byte)*nextchar;
+LAB_0001bf20:
+    pcVar8 = pcVar8 + 1;
+    nextchar = pcVar8;
+    pcVar4 = strchr(local_50,uVar11);
+    if (*pcVar8 == '\0') {
+      optind = optind + 1;
+    }
+    if (pcVar4 != (char *)0x0 && uVar11 != 0x3a) {
+      if (pcVar4[1] != ':') {
+        return uVar11;
+      }
+      if (pcVar4[2] == ':') {
+        if (*pcVar8 == '\0') {
+          optarg = (char *)0x0;
+        }
+        else {
+          optind = optind + 1;
+          optarg = pcVar8;
+        }
+      }
+      else {
+        if (*pcVar8 == '\0') {
+          if (optind == argc) {
+            if (opterr != 0) {
+              fprintf(stderr,"%s: option requires an argument -- %c\n",progname,uVar11);
+            }
+            optopt = uVar11;
+            if (*local_50 == ':') {
+              uVar11 = 0x3a;
+            }
+            else {
+              uVar11 = 0x3f;
+            }
+          }
+          else {
+            ppcVar9 = argv + optind;
+            optind = optind + 1;
+            optarg = *ppcVar9;
+          }
+        }
+        else {
+          optind = optind + 1;
+          optarg = pcVar8;
+        }
+      }
+      nextchar = (char *)0x0;
+      return uVar11;
+    }
+    if (opterr != 0) {
+      fprintf(stderr,"%s: illegal option -- %c\n",progname,uVar11);
+    }
+    optopt = uVar11;
+    return 0x3f;
+  }
+  local_48 = optind;
+  pbVar7 = (byte *)argv[optind];
+  __c = (uint)pbVar7[1];
+  if ((__c != 0x2d) &&
+     ((long_only == 0 ||
+      ((pbVar7[2] == 0 && (pcVar4 = strchr(local_50,__c), pcVar4 != (char *)0x0)))))) {
+    uVar11 = (uint)(byte)*pcVar8;
+    goto LAB_0001bf20;
+  }
+  uVar11 = (uint)(byte)*pcVar8;
+  pcVar4 = pcVar8;
+  if (uVar11 != 0x3d && uVar11 != 0) {
+    do {
+      pcVar4 = pcVar4 + 1;
+    } while (*pcVar4 != '=' && *pcVar4 != '\0');
+  }
+  __s1 = longopts->name;
+  if (__s1 != (char *)0x0) {
+    iVar12 = 0;
+    local_3c = 0;
+    bVar1 = false;
+    poVar14 = (option *)0x0;
+    do {
+      iVar5 = strncmp(__s1,pcVar8,(size_t)(pcVar4 + -(int)pcVar8));
+      poVar13 = poVar14;
+      iVar3 = local_3c;
+      if (iVar5 == 0) {
+        sVar6 = strlen(__s1);
+        poVar13 = longopts;
+        if (pcVar4 == pcVar8 + sVar6) goto LAB_0001c350;
+        iVar3 = iVar12;
+        if (poVar14 != (option *)0x0) {
+          bVar1 = true;
+          poVar13 = poVar14;
+          iVar3 = local_3c;
+        }
+      }
+      local_3c = iVar3;
+      longopts = longopts + 1;
+      __s1 = longopts->name;
+      iVar12 = iVar12 + 1;
+      poVar14 = poVar13;
+    } while (__s1 != (char *)0x0);
+    if (bVar1) {
+      if (opterr != 0) {
+        fprintf(stderr,"%s: the option `%s\' is ambiguous\n",progname,pbVar7);
+        local_48 = optind;
+        pcVar8 = nextchar;
+      }
+      sVar6 = strlen(pcVar8);
+      optind = local_48 + 1;
+      nextchar = pcVar8 + sVar6;
+      return 0x3f;
+    }
+    iVar12 = local_3c;
+    if (poVar13 != (option *)0x0) {
+LAB_0001c350:
+      optind = iVar2 + 1;
+      if (*pcVar4 == '\0') {
+        if (poVar13->has_arg == 1) {
+          if (argc <= optind) {
+            if (opterr != 0) {
+              fprintf(stderr,"%s: the option `%s\' requires an argument\n",progname,argv[iVar2]);
+              pcVar8 = nextchar;
+            }
+            sVar6 = strlen(pcVar8);
+            if (*local_50 == ':') {
+              nextchar = pcVar8 + sVar6;
+              return 0x3a;
+            }
+            nextchar = pcVar8 + sVar6;
+            return 0x3f;
+          }
+          optind = iVar2 + 2;
+          optarg = argv[iVar2 + 1];
+        }
+      }
+      else {
+        if (poVar13->has_arg == 0) {
+          if (opterr != 0) {
+            if (argv[iVar2][1] == 0x2d) {
+              fprintf(stderr,"%s: the option `--%s\' doesn\'t allow an argument\n",progname,
+                      poVar13->name);
+              pcVar8 = nextchar;
+            }
+            else {
+              fprintf(stderr,"%s: the option `%c%s\' doesn\'t allow an argument\n",progname,
+                      (uint)(byte)*argv[iVar2],poVar13->name);
+              pcVar8 = nextchar;
+            }
+          }
+          sVar6 = strlen(pcVar8);
+          nextchar = pcVar8 + sVar6;
+          return 0x3f;
+        }
+        optarg = pcVar4 + 1;
+      }
+      sVar6 = strlen(pcVar8);
+      nextchar = pcVar8 + sVar6;
+      if (longind != (int *)0x0) {
+        *longind = iVar12;
+      }
+      if (poVar13->flag != (int *)0x0) {
+        *poVar13->flag = poVar13->val;
+        return 0;
+      }
+      return poVar13->val;
+    }
+  }
+  if (long_only == 0) {
+    if (opterr == 0) goto LAB_0001c4cc;
+    if (__c == 0x2d) goto LAB_0001c688;
+  }
+  else {
+    if (__c == 0x2d) {
+      if (opterr == 0) goto LAB_0001c4cc;
+LAB_0001c688:
+      fprintf(stderr,"%s: the option `--%s\' is unrecognized\n",progname,pcVar8);
+      local_48 = optind;
+      goto LAB_0001c4cc;
+    }
+    pcVar4 = strchr(local_50,uVar11);
+    if (pcVar4 != (char *)0x0) goto LAB_0001bf20;
+    if (opterr == 0) goto LAB_0001c4cc;
+  }
+  fprintf(stderr,"%s: the option `%c%s\' is unrecognized\n",progname,(uint)*pbVar7,pcVar8);
+  local_48 = optind;
+LAB_0001c4cc:
+  nextchar = "";
+  optind = local_48 + 1;
+  return 0x3f;
+}
+

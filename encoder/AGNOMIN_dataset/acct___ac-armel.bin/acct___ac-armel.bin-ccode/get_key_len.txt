@@ -1,0 +1,33 @@
+
+uint get_key_len(char *s,uint len,int numeric)
+
+{
+  uint uVar1;
+  char *pcVar2;
+  
+  if (numeric != 0) {
+    if (len == 0) {
+      fatal("hashtab.c (get_key_len): hashing a num with len == 0");
+    }
+    else {
+      if (numeric == len) {
+        return numeric;
+      }
+    }
+    fatal("hashtab.c (get_key_len): hashing a num with len != numeric");
+    return len;
+  }
+  if (len == 0) {
+    uVar1 = strlen(s);
+    return uVar1;
+  }
+  pcVar2 = s + -1;
+  uVar1 = len;
+  do {
+    pcVar2 = pcVar2 + 1;
+    if (*pcVar2 == '\0') break;
+    uVar1 = uVar1 - 1;
+  } while (uVar1 != 0);
+  return len - uVar1;
+}
+

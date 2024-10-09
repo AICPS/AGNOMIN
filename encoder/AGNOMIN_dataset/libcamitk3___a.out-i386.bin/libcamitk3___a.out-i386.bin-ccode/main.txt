@@ -1,0 +1,9 @@
+
+int main(int argc,char **argv)
+
+{
+  return (int)info_platform[argc] + (int)info_compiler[argc] + (int)info_arch[argc] +
+         (int)"INFO:compiler_version[00000004.00000009.00000002]"[argc] +
+         (int)info_language_dialect_default[argc];
+}
+

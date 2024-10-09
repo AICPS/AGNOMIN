@@ -1,0 +1,16 @@
+_init, 00010278
+__libc_start_main, 00010298
+abort, 000102b0
+main, 000102bc
+_start, 00010308
+call_weak_fn, 00010344
+deregister_tm_clones, 00010368
+register_tm_clones, 00010398
+__do_global_dtors_aux, 000103d4
+frame_dummy, 000103fc
+__libc_csu_init, 00010430
+__libc_csu_fini, 00010490
+_fini, 00010494
+__libc_start_main, 00022000
+__gmon_start__, 00022004
+abort, 00022008

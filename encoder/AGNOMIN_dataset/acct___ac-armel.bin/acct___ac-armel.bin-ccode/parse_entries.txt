@@ -1,0 +1,164 @@
+
+void parse_entries(void)
+
+{
+  bool bVar1;
+  FILE *pFVar2;
+  utmp *rec;
+  int iVar3;
+  hashtab_elem *he;
+  void *pvVar4;
+  void *pvVar5;
+  char *pcVar6;
+  time_t current_time;
+  int iVar7;
+  __time_t _Var8;
+  hashtab_order local_38;
+  int local_2c;
+  
+  iVar7 = 1;
+  local_2c = __stack_chk_guard;
+  _Var8 = 0;
+  bVar1 = false;
+LAB_00011c7c:
+  do {
+    rec = utmp_get_entry();
+    while( true ) {
+      if (rec == (utmp *)0x0) {
+        if (local_2c != __stack_chk_guard) {
+                    /* WARNING: Subroutine does not return */
+          __stack_chk_fail();
+        }
+        return;
+      }
+      if (debugging_enabled != 0) {
+        fwrite("---------------------------------------------------------------------------\nCURRENT REC: "
+               ,1,0x59,(FILE *)stdout);
+        print_utmp_record(rec,stdout);
+      }
+      iVar3 = fix_ut_type_field(rec);
+      if ((iVar3 != 0) && (debugging_enabled != 0)) {
+        fwrite(" MUNGED REC: ",1,0xd,(FILE *)stdout);
+        print_utmp_record(rec,stdout);
+      }
+      iVar3 = bad_utmp_record(rec);
+      if (iVar3 == 0) break;
+      if (print_file_problems == 0) goto LAB_00011c7c;
+      utmp_print_file_and_line(stdout);
+      fwrite(": problem: bad record\n",1,0x16,(FILE *)stdout);
+      rec = utmp_get_entry();
+    }
+    if (iVar7 != 0) {
+      next_midnight = midnight_after_me((rec->ut_tv).tv_sec);
+    }
+    if (rec->ut_type == 3) {
+      last_time = (rec->ut_tv).tv_sec;
+switchD_00011d88_caseD_3:
+      if (bVar1) {
+        bVar1 = false;
+        update_system_time((rec->ut_tv).tv_sec - _Var8);
+        next_midnight = midnight_after_me((rec->ut_tv).tv_sec);
+        iVar7 = debugging_enabled;
+      }
+      else {
+        iVar7 = debugging_enabled;
+        if (print_file_problems != 0) {
+          utmp_print_file_and_line(stdout);
+          fwrite(": problem: unpaired time record (ignored)\n",1,0x2a,(FILE *)stdout);
+          iVar7 = debugging_enabled;
+        }
+      }
+    }
+    else {
+      current_time = (rec->ut_tv).tv_sec;
+      if ((current_time + time_warp_leniency < last_time) ||
+         (last_time + time_warp_suspicious < current_time)) {
+        if (print_file_problems != 0) {
+          utmp_print_file_and_line(stdout);
+          pFVar2 = stdout;
+          pcVar6 = ctime(&last_time);
+          __fprintf_chk(pFVar2,1,": problem: time warp (%-24.24s",pcVar6);
+          pFVar2 = stdout;
+          local_38.which = (rec->ut_tv).tv_sec;
+          pcVar6 = ctime((time_t *)&local_38);
+          __fprintf_chk(pFVar2,1," -> %-24.24s)\n",pcVar6);
+        }
+        do_totals(&next_midnight,next_midnight + 1,nasty_time_warp,0,"time warp");
+        next_midnight = midnight_after_me((rec->ut_tv).tv_sec);
+        current_time = (rec->ut_tv).tv_sec;
+        last_time = current_time;
+        if (rec->ut_type == 3) goto switchD_00011d88_caseD_3;
+      }
+      last_time = current_time;
+      do_totals(&next_midnight,current_time,1,1,"midnight logout");
+      iVar7 = debugging_enabled;
+      switch(rec->ut_type) {
+      case 0:
+      case 5:
+      case 6:
+      case 9:
+        break;
+      case 1:
+        iVar7 = strcmp(rec->ut_user,"shutdown");
+        if ((iVar7 == 0) ||
+           (iVar7 = debugging_enabled, *(char *)&rec->ut_pid == '0' || *(char *)&rec->ut_pid == '6')
+           ) {
+do_shutdown:
+          log_everyone_out((rec->ut_tv).tv_sec,1,0,"shutdown");
+          iVar7 = debugging_enabled;
+        }
+        break;
+      case 2:
+        iVar7 = strcmp(rec->ut_user,"shutdown");
+        if (iVar7 == 0) goto do_shutdown;
+        log_everyone_out((rec->ut_tv).tv_sec,nasty_reboot,0,"reboot");
+        iVar7 = debugging_enabled;
+        break;
+      case 3:
+        goto switchD_00011d88_caseD_3;
+      case 4:
+        _Var8 = (rec->ut_tv).tv_sec;
+        bVar1 = true;
+        break;
+      case 7:
+switchD_00011d88_caseD_7:
+        if (rec->ut_user[0] == '\0') {
+          log_out(rec);
+          iVar7 = debugging_enabled;
+        }
+        else {
+          log_in(rec);
+          iVar7 = debugging_enabled;
+        }
+        break;
+      case 8:
+        if (rec->ut_line[0] != '\0') {
+          log_out(rec);
+          iVar7 = debugging_enabled;
+        }
+        break;
+      default:
+        if (rec->ut_line[0] != '\0') goto switchD_00011d88_caseD_7;
+        if (print_file_problems != 0) {
+          utmp_print_file_and_line(stdout);
+          fwrite(": problem: empty record\n",1,0x18,(FILE *)stdout);
+          iVar7 = debugging_enabled;
+        }
+      }
+    }
+    debugging_enabled = iVar7;
+    if (iVar7 != 0) {
+      he = hashtab_first(login_table,&local_38);
+      while (he != (hashtab_elem *)0x0) {
+        pvVar4 = hashtab_get_key(he);
+        pvVar5 = hashtab_get_value(he);
+        pFVar2 = stdout;
+        pcVar6 = ctime((time_t *)((int)pvVar5 + 0x20));
+        __fprintf_chk(pFVar2,1,"**\t%-*.*s %-*.*s %s",0x20,0x20,pvVar4,0x20,0x20,pvVar5,pcVar6);
+        he = hashtab_next(&local_38);
+      }
+      iVar7 = 0;
+    }
+  } while( true );
+}
+

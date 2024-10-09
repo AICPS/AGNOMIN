@@ -1,0 +1,37 @@
+
+Multigrapher *
+new_multigrapher(char *output_format,char *bg_color,char *bitmap_size,char *emulate_color,
+                char *max_line_length,char *meta_portable,char *page_size,char *rotation_angle,
+                bool save_screen)
+
+{
+  Multigrapher *pMVar1;
+  plPlotter *ppVar2;
+  int iVar3;
+  
+  pMVar1 = (Multigrapher *)xmalloc(0x1e4);
+  pl_newplparams();
+  pl_setplparam();
+  pl_setplparam();
+  pl_setplparam();
+  pl_setplparam();
+  pl_setplparam();
+  pl_setplparam();
+  pl_setplparam();
+  ppVar2 = (plPlotter *)pl_newpl_r();
+  if (ppVar2 != (plPlotter *)0x0) {
+    pl_deleteplparams();
+    pMVar1->plotter = ppVar2;
+    iVar3 = pl_openpl_r();
+    if (-1 < iVar3) {
+      pMVar1->bg_color = bg_color;
+      if ((bg_color != (char *)0x0) || (save_screen == false)) {
+        pl_erase_r();
+      }
+      pl_fspace_r(ppVar2,0,0,0x40b0000000000000,0x40b0000000000000);
+      return pMVar1;
+    }
+  }
+  return (Multigrapher *)0x0;
+}
+

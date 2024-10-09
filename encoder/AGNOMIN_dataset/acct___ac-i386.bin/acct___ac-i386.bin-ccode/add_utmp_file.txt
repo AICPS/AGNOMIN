@@ -1,0 +1,8 @@
+
+void add_utmp_file(char *name)
+
+{
+  file_reader_add_file(utmp_info,name);
+  return;
+}
+

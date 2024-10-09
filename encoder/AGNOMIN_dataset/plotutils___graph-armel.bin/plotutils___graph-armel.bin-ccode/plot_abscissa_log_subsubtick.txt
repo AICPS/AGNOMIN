@@ -1,0 +1,539 @@
+
+/* WARNING: Heritage AFTER dead removal. Example location: s1 : 0x000166b0 */
+/* WARNING: Restarted to delay deadcode elimination for space: register */
+
+void plot_abscissa_log_subsubtick(Multigrapher *multigrapher,double xval)
+
+{
+  bool bVar1;
+  char in_NG;
+  undefined in_ZR;
+  char in_OV;
+  bool bVar2;
+  undefined4 uVar3;
+  double in_d0;
+  double extraout_d2;
+  double dVar4;
+  double extraout_d3;
+  double extraout_d3_00;
+  double extraout_d4;
+  double extraout_d4_00;
+  double extraout_d4_01;
+  double extraout_d4_02;
+  double extraout_d4_03;
+  double extraout_d4_04;
+  double dVar5;
+  double extraout_d5;
+  double extraout_d5_00;
+  double extraout_d5_01;
+  double extraout_d5_02;
+  double extraout_d5_03;
+  double extraout_d5_04;
+  double dVar6;
+  double extraout_d5_05;
+  double extraout_d5_06;
+  double extraout_d5_07;
+  double extraout_d5_08;
+  double extraout_d5_09;
+  double extraout_d6;
+  double extraout_d6_00;
+  double extraout_d6_01;
+  double extraout_d6_02;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  char in_stack_fffff7b8;
+  undefined7 in_stack_fffff7b9;
+  double in_stack_fffff7c0;
+  
+  dVar5 = (multigrapher->x_trans).output_range * (multigrapher->x_trans).squeezed_range;
+  dVar8 = (multigrapher->y_trans).output_range * (multigrapher->y_trans).squeezed_range;
+  if ((bool)in_NG) {
+    dVar9 = dVar5 * multigrapher->tick_size;
+    dVar8 = dVar5;
+  }
+  else {
+    dVar9 = dVar8 * multigrapher->tick_size;
+    if ((bool)in_NG) {
+      dVar8 = dVar5;
+    }
+  }
+  dVar10 = multigrapher->subtick_size;
+  pl_fontname_r(multigrapher->plotter,(multigrapher->x_axis).font_name);
+  dVar5 = (multigrapher->y_trans).output_range * (multigrapher->y_trans).squeezed_range;
+  if ((bool)in_NG) {
+    dVar5 = (multigrapher->x_trans).output_range * (multigrapher->x_trans).squeezed_range;
+  }
+  uVar3 = pl_ffontsize_r(SUB84(dVar5 * (multigrapher->x_axis).font_size,0),multigrapher->plotter);
+  if (((bool)in_ZR || in_NG != in_OV) && ((bool)in_ZR || in_NG != in_OV)) {
+    dVar5 = extraout_d4;
+    dVar6 = extraout_d5;
+    if ((multigrapher->x_axis).user_specified_subsubticks != false) {
+      pow((double)CONCAT71(in_stack_fffff7b9,in_stack_fffff7b8),in_stack_fffff7c0);
+      print_tick_label(&stack0xfffff7b8,&multigrapher->x_axis,&multigrapher->x_trans,
+                       (double)CONCAT71(in_stack_fffff7b9,in_stack_fffff7b8));
+      bVar1 = (multigrapher->x_trans).reverse;
+      if ((multigrapher->y_axis).switch_axis_end == false) {
+        bVar2 = bVar1 == false;
+        dVar7 = in_d0 - (multigrapher->x_trans).input_min;
+        dVar6 = (multigrapher->x_trans).input_range;
+        dVar5 = extraout_d3_00;
+        if (!bVar2) {
+          dVar5 = 1.0;
+        }
+        dVar4 = (multigrapher->y_trans).input_range;
+        if (!bVar2) {
+          dVar6 = dVar7 / dVar6;
+        }
+        if (bVar2) {
+          dVar5 = dVar7 / dVar6;
+        }
+        if (!bVar2) {
+          dVar5 = dVar5 - dVar6;
+        }
+        dVar6 = 0.75;
+        if ((int)bVar1 < 0) {
+          dVar6 = 1.75;
+        }
+        dVar5 = (multigrapher->x_trans).output_min +
+                ((multigrapher->x_trans).squeezed_min +
+                dVar5 * (multigrapher->x_trans).squeezed_range) *
+                (multigrapher->x_trans).output_range;
+        dVar9 = ((multigrapher->y_trans).output_min +
+                ((multigrapher->y_trans).squeezed_min +
+                (((multigrapher->y_axis).other_axis_loc - (multigrapher->y_trans).input_min) / dVar4
+                ) * (multigrapher->y_trans).squeezed_range) * (multigrapher->y_trans).output_range)
+                - (multigrapher->half_line_width + dVar6 * ABS(dVar9));
+        uVar3 = pl_fmove_r(SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),SUB84(dVar9,0),
+                           (int)((ulonglong)dVar9 >> 0x20),SUB84(dVar4,0),multigrapher->plotter);
+        uVar3 = pl_alabel_r(uVar3,multigrapher->plotter,99,0x74,&stack0xfffff7b8);
+        (multigrapher->x_axis).labelled_ticks = (multigrapher->x_axis).labelled_ticks + 1;
+        dVar5 = extraout_d4_02;
+        dVar6 = extraout_d5_05;
+      }
+      else {
+        bVar2 = bVar1 == false;
+        dVar7 = in_d0 - (multigrapher->x_trans).input_min;
+        dVar6 = (multigrapher->x_trans).input_range;
+        dVar5 = extraout_d3_00;
+        if (!bVar2) {
+          dVar5 = 1.0;
+        }
+        dVar4 = (multigrapher->y_trans).input_range;
+        if (!bVar2) {
+          dVar6 = dVar7 / dVar6;
+        }
+        if (bVar2) {
+          dVar5 = dVar7 / dVar6;
+        }
+        if (!bVar2) {
+          dVar5 = dVar5 - dVar6;
+        }
+        dVar6 = 0.75;
+        if ((int)bVar1 < 0) {
+          dVar6 = 1.75;
+        }
+        dVar5 = (multigrapher->x_trans).output_min +
+                ((multigrapher->x_trans).squeezed_min +
+                dVar5 * (multigrapher->x_trans).squeezed_range) *
+                (multigrapher->x_trans).output_range;
+        dVar9 = (multigrapher->y_trans).output_min +
+                ((multigrapher->y_trans).squeezed_min +
+                (((multigrapher->y_axis).alt_other_axis_loc - (multigrapher->y_trans).input_min) /
+                dVar4) * (multigrapher->y_trans).squeezed_range) *
+                (multigrapher->y_trans).output_range +
+                multigrapher->half_line_width + dVar6 * ABS(dVar9);
+        uVar3 = pl_fmove_r(SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),SUB84(dVar9,0),
+                           (int)((ulonglong)dVar9 >> 0x20),SUB84(dVar4,0),multigrapher->plotter);
+        uVar3 = pl_alabel_r(uVar3,multigrapher->plotter,99,0x62,&stack0xfffff7b8);
+        (multigrapher->x_axis).labelled_ticks = (multigrapher->x_axis).labelled_ticks + 1;
+        dVar5 = extraout_d4_04;
+        dVar6 = extraout_d5_09;
+      }
+    }
+    dVar8 = dVar8 * dVar10;
+    switch(multigrapher->grid_spec) {
+    case AXES_AND_BOX_AND_GRID:
+      pl_linemod_r(uVar3,multigrapher->plotter,"dotted");
+      dVar5 = (multigrapher->x_trans).input_min;
+      bVar2 = (multigrapher->x_trans).reverse == false;
+      if (!bVar2) {
+        dVar5 = in_d0 - dVar5;
+      }
+      if (bVar2) {
+        dVar5 = in_d0 - dVar5;
+        dVar9 = extraout_d5_00;
+      }
+      else {
+        dVar9 = (multigrapher->x_trans).input_range;
+      }
+      if (bVar2) {
+        dVar10 = (multigrapher->x_trans).input_range;
+      }
+      else {
+        dVar9 = dVar5 / dVar9;
+        dVar10 = 1.0;
+      }
+      dVar6 = extraout_d2;
+      if (bVar2) {
+        dVar6 = dVar5 / dVar10;
+      }
+      if (!bVar2) {
+        dVar6 = dVar10 - dVar9;
+      }
+      dVar10 = (multigrapher->x_trans).squeezed_min + dVar6 * (multigrapher->x_trans).squeezed_range
+      ;
+      dVar9 = (multigrapher->y_trans).output_min +
+              ((multigrapher->y_trans).squeezed_min + (multigrapher->y_trans).squeezed_range * 0.0)
+              * (multigrapher->y_trans).output_range;
+      dVar5 = (multigrapher->x_trans).output_min + dVar10 * (multigrapher->x_trans).output_range;
+      pl_fmove_r(SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),SUB84(dVar9,0),
+                 (int)((ulonglong)dVar9 >> 0x20),SUB84(dVar10,0),(int)((ulonglong)dVar6 >> 0x20),0,
+                 multigrapher->plotter);
+      dVar10 = in_d0 - (multigrapher->x_trans).input_min;
+      bVar2 = (multigrapher->x_trans).reverse == false;
+      dVar9 = (multigrapher->x_trans).input_range;
+      dVar5 = extraout_d3;
+      if (!bVar2) {
+        dVar5 = 1.0;
+        dVar10 = dVar10 / dVar9;
+      }
+      if (bVar2) {
+        dVar10 = dVar10 / dVar9;
+      }
+      if (!bVar2) {
+        dVar10 = dVar5 - dVar10;
+      }
+      dVar5 = (multigrapher->x_trans).output_min +
+              ((multigrapher->x_trans).squeezed_min +
+              dVar10 * (multigrapher->x_trans).squeezed_range) *
+              (multigrapher->x_trans).output_range;
+      uVar3 = pl_fcont_r(SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),
+                         SUB84((multigrapher->y_trans).output_min +
+                               ((multigrapher->y_trans).squeezed_min +
+                               (multigrapher->y_trans).squeezed_range) *
+                               (multigrapher->y_trans).output_range,0),multigrapher->plotter);
+      pl_linemod_r(uVar3,multigrapher->plotter,"solid");
+      dVar5 = extraout_d4_00;
+      dVar6 = extraout_d5_01;
+    case AXES_AND_BOX:
+      bVar1 = (multigrapher->x_trans).reverse;
+      if ((multigrapher->y_axis).switch_axis_end == false) {
+        bVar2 = bVar1 == false;
+        if (!bVar2) {
+          dVar5 = (multigrapher->x_trans).input_range;
+          dVar6 = 1.0;
+        }
+        dVar9 = in_d0 - (multigrapher->x_trans).input_min;
+        if (bVar2) {
+          dVar6 = (multigrapher->x_trans).input_range;
+        }
+        else {
+          dVar5 = dVar9 / dVar5;
+        }
+        dVar10 = (multigrapher->y_trans).input_range;
+        dVar7 = (multigrapher->x_trans).squeezed_range;
+        if (bVar2) {
+          dVar5 = dVar9 / dVar6;
+        }
+        if (!bVar2) {
+          dVar5 = dVar6 - dVar5;
+        }
+        dVar5 = (multigrapher->x_trans).output_min +
+                ((multigrapher->x_trans).squeezed_min + dVar5 * dVar7) *
+                (multigrapher->x_trans).output_range;
+        dVar9 = (multigrapher->y_trans).output_min +
+                ((multigrapher->y_trans).squeezed_min +
+                (((multigrapher->y_axis).alt_other_axis_loc - (multigrapher->y_trans).input_min) /
+                dVar10) * (multigrapher->y_trans).squeezed_range) *
+                (multigrapher->y_trans).output_range;
+        pl_fmove_r(SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),SUB84(dVar9,0),
+                   (int)((ulonglong)dVar9 >> 0x20),SUB84(dVar10,0),(int)((ulonglong)dVar10 >> 0x20),
+                   SUB84(dVar7,0),multigrapher->plotter);
+        bVar1 = (multigrapher->x_trans).reverse;
+        dVar5 = (multigrapher->x_trans).input_min;
+        bVar2 = bVar1 == false;
+        dVar9 = (multigrapher->y_trans).input_range;
+        if (!bVar2) {
+          dVar5 = in_d0 - dVar5;
+        }
+        if (bVar2) {
+          dVar5 = in_d0 - dVar5;
+          dVar6 = extraout_d5_02;
+          dVar10 = extraout_d6;
+        }
+        else {
+          dVar10 = 1.0;
+          dVar6 = dVar5 / (multigrapher->x_trans).input_range;
+        }
+        if (bVar2) {
+          dVar10 = (multigrapher->x_trans).input_range;
+        }
+        if (bVar2) {
+          dVar6 = dVar5 / dVar10;
+        }
+        if (!bVar2) {
+          dVar6 = dVar10 - dVar6;
+        }
+        dVar10 = (multigrapher->y_trans).output_range;
+        dVar5 = (multigrapher->x_trans).output_min +
+                ((multigrapher->x_trans).squeezed_min +
+                dVar6 * (multigrapher->x_trans).squeezed_range) *
+                (multigrapher->x_trans).output_range;
+        dVar6 = multigrapher->half_line_width;
+        if ((int)bVar1 < 1) {
+          dVar6 = 0.0 - dVar6;
+        }
+        dVar6 = ((multigrapher->y_trans).output_min +
+                ((multigrapher->y_trans).squeezed_min +
+                (((multigrapher->y_axis).alt_other_axis_loc - (multigrapher->y_trans).input_min) /
+                dVar9) * (multigrapher->y_trans).squeezed_range) * dVar10) - (dVar6 + dVar8);
+        pl_fcont_r(SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),SUB84(dVar6,0),
+                   (int)((ulonglong)dVar6 >> 0x20),SUB84(dVar9,0),(int)((ulonglong)dVar9 >> 0x20),
+                   SUB84(dVar10,0),multigrapher->plotter);
+        dVar5 = extraout_d4_01;
+        dVar6 = extraout_d5_03;
+      }
+      else {
+        bVar2 = bVar1 == false;
+        if (!bVar2) {
+          dVar5 = (multigrapher->x_trans).input_range;
+          dVar6 = 1.0;
+        }
+        dVar9 = in_d0 - (multigrapher->x_trans).input_min;
+        if (bVar2) {
+          dVar6 = (multigrapher->x_trans).input_range;
+        }
+        else {
+          dVar5 = dVar9 / dVar5;
+        }
+        dVar10 = (multigrapher->y_trans).input_range;
+        dVar7 = (multigrapher->x_trans).squeezed_range;
+        if (bVar2) {
+          dVar5 = dVar9 / dVar6;
+        }
+        if (!bVar2) {
+          dVar5 = dVar6 - dVar5;
+        }
+        dVar5 = (multigrapher->x_trans).output_min +
+                ((multigrapher->x_trans).squeezed_min + dVar5 * dVar7) *
+                (multigrapher->x_trans).output_range;
+        dVar9 = (multigrapher->y_trans).output_min +
+                ((multigrapher->y_trans).squeezed_min +
+                (((multigrapher->y_axis).other_axis_loc - (multigrapher->y_trans).input_min) /
+                dVar10) * (multigrapher->y_trans).squeezed_range) *
+                (multigrapher->y_trans).output_range;
+        pl_fmove_r(SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),SUB84(dVar9,0),
+                   (int)((ulonglong)dVar9 >> 0x20),SUB84(dVar10,0),(int)((ulonglong)dVar10 >> 0x20),
+                   SUB84(dVar7,0),multigrapher->plotter);
+        bVar1 = (multigrapher->x_trans).reverse;
+        dVar5 = (multigrapher->x_trans).input_min;
+        bVar2 = bVar1 == false;
+        dVar9 = (multigrapher->y_trans).input_range;
+        if (!bVar2) {
+          dVar5 = in_d0 - dVar5;
+        }
+        if (bVar2) {
+          dVar5 = in_d0 - dVar5;
+          dVar6 = extraout_d5_07;
+          dVar10 = extraout_d6_02;
+        }
+        else {
+          dVar10 = 1.0;
+          dVar6 = dVar5 / (multigrapher->x_trans).input_range;
+        }
+        if (bVar2) {
+          dVar10 = (multigrapher->x_trans).input_range;
+        }
+        if (bVar2) {
+          dVar6 = dVar5 / dVar10;
+        }
+        if (!bVar2) {
+          dVar6 = dVar10 - dVar6;
+        }
+        dVar10 = (multigrapher->y_trans).output_range;
+        dVar5 = (multigrapher->x_trans).output_min +
+                ((multigrapher->x_trans).squeezed_min +
+                dVar6 * (multigrapher->x_trans).squeezed_range) *
+                (multigrapher->x_trans).output_range;
+        dVar6 = multigrapher->half_line_width;
+        if ((int)bVar1 < 1) {
+          dVar6 = 0.0 - dVar6;
+        }
+        dVar6 = (multigrapher->y_trans).output_min +
+                ((multigrapher->y_trans).squeezed_min +
+                (((multigrapher->y_axis).other_axis_loc - (multigrapher->y_trans).input_min) / dVar9
+                ) * (multigrapher->y_trans).squeezed_range) * dVar10 + dVar6 + dVar8;
+        pl_fcont_r(SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),SUB84(dVar6,0),
+                   (int)((ulonglong)dVar6 >> 0x20),SUB84(dVar9,0),(int)((ulonglong)dVar9 >> 0x20),
+                   SUB84(dVar10,0),multigrapher->plotter);
+        dVar5 = extraout_d4_03;
+        dVar6 = extraout_d5_08;
+      }
+    case AXES:
+    case AXES_AT_ORIGIN:
+      bVar1 = (multigrapher->x_trans).reverse;
+      if ((multigrapher->y_axis).switch_axis_end == false) {
+        bVar2 = bVar1 == false;
+        if (!bVar2) {
+          dVar5 = (multigrapher->x_trans).input_range;
+          dVar6 = 1.0;
+        }
+        dVar9 = in_d0 - (multigrapher->x_trans).input_min;
+        if (bVar2) {
+          dVar6 = (multigrapher->x_trans).input_range;
+        }
+        else {
+          dVar5 = dVar9 / dVar5;
+        }
+        dVar10 = (multigrapher->y_trans).input_range;
+        dVar7 = (multigrapher->x_trans).squeezed_range;
+        if (bVar2) {
+          dVar5 = dVar9 / dVar6;
+        }
+        if (!bVar2) {
+          dVar5 = dVar6 - dVar5;
+        }
+        dVar5 = (multigrapher->x_trans).output_min +
+                ((multigrapher->x_trans).squeezed_min + dVar5 * dVar7) *
+                (multigrapher->x_trans).output_range;
+        dVar9 = (multigrapher->y_trans).output_min +
+                ((multigrapher->y_trans).squeezed_min +
+                (((multigrapher->y_axis).other_axis_loc - (multigrapher->y_trans).input_min) /
+                dVar10) * (multigrapher->y_trans).squeezed_range) *
+                (multigrapher->y_trans).output_range;
+        pl_fmove_r(SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),SUB84(dVar9,0),
+                   (int)((ulonglong)dVar9 >> 0x20),SUB84(dVar10,0),(int)((ulonglong)dVar10 >> 0x20),
+                   SUB84(dVar7,0),multigrapher->plotter);
+        bVar1 = (multigrapher->x_trans).reverse;
+        dVar9 = (multigrapher->x_trans).input_min;
+        bVar2 = bVar1 != false;
+        dVar5 = (multigrapher->y_trans).squeezed_range;
+        if (bVar2) {
+          in_d0 = in_d0 - dVar9;
+        }
+        if (bVar2) {
+          dVar9 = (multigrapher->x_trans).input_range;
+        }
+        else {
+          in_d0 = in_d0 - dVar9;
+          dVar9 = extraout_d5_04;
+        }
+        if (bVar2) {
+          in_d0 = in_d0 / dVar9;
+        }
+        dVar9 = extraout_d6_00;
+        if (bVar2) {
+          dVar9 = 1.0;
+        }
+        if (!bVar2) {
+          dVar9 = (multigrapher->x_trans).input_range;
+        }
+        dVar10 = multigrapher->half_line_width;
+        if (bVar2) {
+          dVar9 = dVar9 - in_d0;
+        }
+        else {
+          dVar9 = in_d0 / dVar9;
+        }
+        if ((int)bVar1 < 1) {
+          dVar10 = 0.0 - dVar10;
+        }
+        dVar6 = (multigrapher->x_trans).output_range;
+        dVar9 = (multigrapher->x_trans).output_min +
+                ((multigrapher->x_trans).squeezed_min +
+                dVar9 * (multigrapher->x_trans).squeezed_range) * dVar6;
+        dVar8 = (multigrapher->y_trans).output_min +
+                ((multigrapher->y_trans).squeezed_min +
+                (((multigrapher->y_axis).other_axis_loc - (multigrapher->y_trans).input_min) /
+                (multigrapher->y_trans).input_range) * dVar5) * (multigrapher->y_trans).output_range
+                + dVar10 + dVar8;
+        pl_fcont_r(SUB84(dVar9,0),(int)((ulonglong)dVar9 >> 0x20),SUB84(dVar8,0),
+                   (int)((ulonglong)dVar8 >> 0x20),SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),
+                   SUB84(dVar6,0),multigrapher->plotter);
+      }
+      else {
+        bVar2 = bVar1 == false;
+        if (!bVar2) {
+          dVar5 = (multigrapher->x_trans).input_range;
+          dVar6 = 1.0;
+        }
+        dVar9 = in_d0 - (multigrapher->x_trans).input_min;
+        if (bVar2) {
+          dVar6 = (multigrapher->x_trans).input_range;
+        }
+        else {
+          dVar5 = dVar9 / dVar5;
+        }
+        dVar10 = (multigrapher->y_trans).input_range;
+        dVar7 = (multigrapher->x_trans).squeezed_range;
+        if (bVar2) {
+          dVar5 = dVar9 / dVar6;
+        }
+        if (!bVar2) {
+          dVar5 = dVar6 - dVar5;
+        }
+        dVar5 = (multigrapher->x_trans).output_min +
+                ((multigrapher->x_trans).squeezed_min + dVar5 * dVar7) *
+                (multigrapher->x_trans).output_range;
+        dVar9 = (multigrapher->y_trans).output_min +
+                ((multigrapher->y_trans).squeezed_min +
+                (((multigrapher->y_axis).alt_other_axis_loc - (multigrapher->y_trans).input_min) /
+                dVar10) * (multigrapher->y_trans).squeezed_range) *
+                (multigrapher->y_trans).output_range;
+        pl_fmove_r(SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),SUB84(dVar9,0),
+                   (int)((ulonglong)dVar9 >> 0x20),SUB84(dVar10,0),(int)((ulonglong)dVar10 >> 0x20),
+                   SUB84(dVar7,0),multigrapher->plotter);
+        bVar1 = (multigrapher->x_trans).reverse;
+        dVar9 = (multigrapher->x_trans).input_min;
+        bVar2 = bVar1 != false;
+        dVar5 = (multigrapher->y_trans).squeezed_range;
+        if (bVar2) {
+          in_d0 = in_d0 - dVar9;
+        }
+        if (bVar2) {
+          dVar9 = (multigrapher->x_trans).input_range;
+        }
+        else {
+          in_d0 = in_d0 - dVar9;
+          dVar9 = extraout_d5_06;
+        }
+        if (bVar2) {
+          in_d0 = in_d0 / dVar9;
+        }
+        dVar9 = extraout_d6_01;
+        if (bVar2) {
+          dVar9 = 1.0;
+        }
+        if (!bVar2) {
+          dVar9 = (multigrapher->x_trans).input_range;
+        }
+        dVar10 = multigrapher->half_line_width;
+        if (bVar2) {
+          dVar9 = dVar9 - in_d0;
+        }
+        else {
+          dVar9 = in_d0 / dVar9;
+        }
+        if ((int)bVar1 < 1) {
+          dVar10 = 0.0 - dVar10;
+        }
+        dVar6 = (multigrapher->x_trans).output_range;
+        dVar9 = (multigrapher->x_trans).output_min +
+                ((multigrapher->x_trans).squeezed_min +
+                dVar9 * (multigrapher->x_trans).squeezed_range) * dVar6;
+        dVar8 = ((multigrapher->y_trans).output_min +
+                ((multigrapher->y_trans).squeezed_min +
+                (((multigrapher->y_axis).alt_other_axis_loc - (multigrapher->y_trans).input_min) /
+                (multigrapher->y_trans).input_range) * dVar5) * (multigrapher->y_trans).output_range
+                ) - (dVar10 + dVar8);
+        pl_fcont_r(SUB84(dVar9,0),(int)((ulonglong)dVar9 >> 0x20),SUB84(dVar8,0),
+                   (int)((ulonglong)dVar8 >> 0x20),SUB84(dVar5,0),(int)((ulonglong)dVar5 >> 0x20),
+                   SUB84(dVar6,0),multigrapher->plotter);
+      }
+    }
+  }
+  return;
+}
+

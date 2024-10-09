@@ -1,0 +1,80 @@
+
+void exchange(char **argv,_getopt_data *d)
+
+{
+  char **ppcVar1;
+  char **ppcVar2;
+  char **ppcVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  char *pcVar11;
+  bool bVar12;
+  
+  iVar8 = d->__first_nonopt;
+  iVar4 = d->__last_nonopt;
+  iVar7 = d->rpl_optind;
+  iVar5 = iVar8;
+  iVar6 = iVar7;
+  while( true ) {
+    bVar12 = SBORROW4(iVar4,iVar5);
+    iVar9 = iVar4 - iVar5;
+    iVar10 = iVar5;
+    if (iVar5 < iVar4) {
+      bVar12 = SBORROW4(iVar6,iVar4);
+      iVar9 = iVar6 - iVar4;
+      iVar10 = iVar6;
+    }
+    if (iVar4 == iVar10 || iVar9 < 0 != bVar12) break;
+    while( true ) {
+      iVar10 = iVar6 - iVar4;
+      iVar9 = iVar4 - iVar5;
+      if (iVar9 < iVar10) break;
+      if (0 < iVar10) {
+        ppcVar1 = argv + iVar5;
+        ppcVar3 = argv + iVar4;
+        do {
+          pcVar11 = *ppcVar1;
+          *ppcVar1 = *ppcVar3;
+          ppcVar2 = ppcVar3 + 1;
+          *ppcVar3 = pcVar11;
+          ppcVar1 = ppcVar1 + 1;
+          ppcVar3 = ppcVar2;
+        } while (ppcVar2 != argv + iVar4 + iVar10);
+      }
+      iVar5 = iVar5 + iVar10;
+      bVar12 = SBORROW4(iVar4,iVar5);
+      iVar9 = iVar4 - iVar5;
+      iVar10 = iVar5;
+      if (iVar5 < iVar4) {
+        bVar12 = SBORROW4(iVar6,iVar4);
+        iVar9 = iVar6 - iVar4;
+        iVar10 = iVar6;
+      }
+      if (iVar4 == iVar10 || iVar9 < 0 != bVar12) goto LAB_00013054;
+    }
+    if (0 < iVar9) {
+      iVar10 = iVar6 + (iVar5 - iVar4);
+      ppcVar1 = argv + iVar5;
+      ppcVar3 = argv + iVar10;
+      do {
+        pcVar11 = *ppcVar1;
+        *ppcVar1 = *ppcVar3;
+        ppcVar2 = ppcVar3 + 1;
+        *ppcVar3 = pcVar11;
+        ppcVar1 = ppcVar1 + 1;
+        ppcVar3 = ppcVar2;
+      } while (ppcVar2 != argv + iVar9 + iVar10);
+    }
+    iVar6 = iVar6 - iVar9;
+  }
+LAB_00013054:
+  d->__last_nonopt = iVar7;
+  d->__first_nonopt = iVar8 + (iVar7 - iVar4);
+  return;
+}
+

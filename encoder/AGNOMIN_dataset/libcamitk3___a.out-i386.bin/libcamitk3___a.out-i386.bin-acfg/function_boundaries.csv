@@ -1,0 +1,16 @@
+_init, 08048274
+FUN_080482a0, 080482a0
+__gmon_start__, 080482b0
+__libc_start_main, 080482c0
+main, 080482d0
+_start, 0804830a
+__x86.get_pc_thunk.bx, 08048330
+deregister_tm_clones, 08048340
+register_tm_clones, 08048370
+__do_global_dtors_aux, 080483b0
+frame_dummy, 080483d0
+__libc_csu_init, 08048400
+__libc_csu_fini, 08048470
+_fini, 08048474
+__gmon_start__, 0804a000
+__libc_start_main, 0804a004

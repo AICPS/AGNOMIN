@@ -1,0 +1,221 @@
+
+DItype __divdi3(DItype u,DItype v)
+
+{
+  longlong lVar1;
+  uint in_r0;
+  uint in_r1;
+  uint in_r2;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint in_r3;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  bool bVar12;
+  
+  if ((int)in_r1 < 0) {
+    bVar12 = in_r0 != 0;
+    in_r0 = -in_r0;
+    uVar11 = 0xffffffff;
+    in_r1 = -(in_r1 + bVar12);
+  }
+  else {
+    uVar11 = 0;
+  }
+  if ((int)in_r3 < 0) {
+    bVar12 = in_r2 != 0;
+    in_r2 = -in_r2;
+    in_r3 = -(in_r3 + bVar12);
+    uVar11 = ~uVar11;
+  }
+  if (in_r3 == 0) {
+    if (in_r2 <= in_r1) {
+      if (in_r2 == 0) {
+        in_r2 = 1 / 0;
+      }
+      uVar2 = count_leading_zeroes(in_r2);
+      if (uVar2 == 0) {
+        uVar2 = in_r1 - in_r2;
+        uVar10 = 1;
+        uVar3 = in_r0;
+      }
+      else {
+        in_r2 = in_r2 << (uVar2 & 0xff);
+        uVar3 = in_r0 << (uVar2 & 0xff);
+        uVar10 = in_r1 >> (0x20 - uVar2 & 0xff);
+        uVar5 = in_r2 >> 0x10;
+        uVar2 = in_r0 >> (0x20 - uVar2 & 0xff) | in_r1 << (uVar2 & 0xff);
+        uVar6 = uVar10 / uVar5;
+        uVar7 = (in_r2 & 0xffff) * uVar6;
+        uVar9 = uVar2 >> 0x10 | (uVar10 - uVar5 * uVar6) * 0x10000;
+        if (uVar9 < uVar7) {
+          bVar12 = CARRY4(uVar9,in_r2);
+          uVar9 = uVar9 + in_r2;
+          if (uVar9 < uVar7 && !bVar12) {
+            uVar9 = uVar9 + in_r2;
+            uVar6 = uVar6 - 2;
+          }
+          else {
+            uVar6 = uVar6 - 1;
+          }
+        }
+        uVar10 = (uVar9 - uVar7) / uVar5;
+        uVar4 = (in_r2 & 0xffff) * uVar10;
+        uVar2 = uVar2 & 0xffff | ((uVar9 - uVar7) - uVar5 * uVar10) * 0x10000;
+        if (uVar2 < uVar4) {
+          bVar12 = CARRY4(uVar2,in_r2);
+          uVar2 = uVar2 + in_r2;
+          if (uVar2 < uVar4 && !bVar12) {
+            uVar2 = uVar2 + in_r2;
+            uVar10 = uVar10 - 2;
+          }
+          else {
+            uVar10 = uVar10 - 1;
+          }
+        }
+        uVar2 = uVar2 - uVar4;
+        uVar10 = uVar10 | uVar6 << 0x10;
+      }
+      uVar5 = in_r2 >> 0x10;
+      uVar6 = uVar2 / uVar5;
+      uVar9 = (in_r2 & 0xffff) * uVar6;
+      uVar2 = uVar3 >> 0x10 | (uVar2 - uVar5 * uVar6) * 0x10000;
+      if (uVar2 < uVar9) {
+        bVar12 = CARRY4(uVar2,in_r2);
+        uVar2 = uVar2 + in_r2;
+        if (uVar2 < uVar9 && !bVar12) {
+          uVar2 = uVar2 + in_r2;
+          uVar6 = uVar6 - 2;
+        }
+        else {
+          uVar6 = uVar6 - 1;
+        }
+      }
+      uVar4 = (uVar2 - uVar9) / uVar5;
+      uVar7 = (in_r2 & 0xffff) * uVar4;
+      uVar2 = uVar3 & 0xffff | ((uVar2 - uVar9) - uVar5 * uVar4) * 0x10000;
+      if (uVar2 < uVar7) {
+        if (uVar7 <= uVar2 + in_r2 || CARRY4(uVar2,in_r2)) {
+          uVar4 = uVar4 - 1;
+        }
+        else {
+          uVar4 = uVar4 - 2;
+        }
+      }
+      uVar4 = uVar4 | uVar6 << 0x10;
+      goto LAB_00014c70;
+    }
+    uVar2 = count_leading_zeroes(in_r2);
+    if (uVar2 != 0) {
+      in_r2 = in_r2 << (uVar2 & 0xff);
+      in_r1 = in_r0 >> (0x20 - uVar2 & 0xff) | in_r1 << (uVar2 & 0xff);
+    }
+    uVar10 = in_r2 >> 0x10;
+    if (uVar2 != 0) {
+      in_r0 = in_r0 << (uVar2 & 0xff);
+    }
+    uVar5 = in_r1 / uVar10;
+    uVar2 = (in_r2 & 0xffff) * uVar5;
+    uVar3 = in_r0 >> 0x10 | (in_r1 - uVar10 * uVar5) * 0x10000;
+    if (uVar3 < uVar2) {
+      bVar12 = CARRY4(uVar3,in_r2);
+      uVar3 = uVar3 + in_r2;
+      if (uVar3 < uVar2 && !bVar12) {
+        uVar3 = uVar3 + in_r2;
+        uVar5 = uVar5 - 2;
+      }
+      else {
+        uVar5 = uVar5 - 1;
+      }
+    }
+    uVar4 = (uVar3 - uVar2) / uVar10;
+    uVar9 = (in_r2 & 0xffff) * uVar4;
+    uVar2 = in_r0 & 0xffff | ((uVar3 - uVar2) - uVar10 * uVar4) * 0x10000;
+    if (uVar2 < uVar9) {
+      if (uVar9 <= uVar2 + in_r2 || CARRY4(uVar2,in_r2)) {
+        uVar4 = uVar4 - 1;
+      }
+      else {
+        uVar4 = uVar4 - 2;
+      }
+    }
+    uVar4 = uVar4 | uVar5 << 0x10;
+LAB_00014c60:
+    uVar10 = 0;
+  }
+  else {
+    if (in_r3 <= in_r1) {
+      uVar2 = count_leading_zeroes(in_r3);
+      if (uVar2 != 0) {
+        uVar5 = 0x20 - uVar2;
+        uVar6 = in_r2 >> (uVar5 & 0xff) | in_r3 << (uVar2 & 0xff);
+        uVar3 = in_r1 >> (uVar5 & 0xff);
+        uVar10 = uVar6 >> 0x10;
+        uVar7 = uVar3 / uVar10;
+        uVar9 = in_r0 >> (uVar5 & 0xff) | in_r1 << (uVar2 & 0xff);
+        uVar5 = (uVar6 & 0xffff) * uVar7;
+        uVar3 = uVar9 >> 0x10 | (uVar3 - uVar10 * uVar7) * 0x10000;
+        if (uVar3 < uVar5) {
+          bVar12 = CARRY4(uVar3,uVar6);
+          uVar3 = uVar3 + uVar6;
+          if (uVar3 < uVar5 && !bVar12) {
+            uVar3 = uVar3 + uVar6;
+            uVar7 = uVar7 - 2;
+          }
+          else {
+            uVar7 = uVar7 - 1;
+          }
+        }
+        uVar4 = (uVar3 - uVar5) / uVar10;
+        uVar8 = (uVar6 & 0xffff) * uVar4;
+        uVar10 = uVar9 & 0xffff | ((uVar3 - uVar5) - uVar10 * uVar4) * 0x10000;
+        if (uVar10 < uVar8) {
+          bVar12 = CARRY4(uVar10,uVar6);
+          uVar10 = uVar10 + uVar6;
+          if (uVar10 < uVar8 && !bVar12) {
+            uVar10 = uVar10 + uVar6;
+            uVar4 = uVar4 - 2;
+          }
+          else {
+            uVar4 = uVar4 - 1;
+          }
+        }
+        uVar4 = uVar4 | uVar7 << 0x10;
+        lVar1 = (ulonglong)(in_r2 << (uVar2 & 0xff)) * (ulonglong)uVar4;
+        uVar3 = (uint)((ulonglong)lVar1 >> 0x20);
+        if (uVar3 <= uVar10 - uVar8) {
+          uVar10 = (uint)(uVar3 == uVar10 - uVar8);
+          if ((uint)lVar1 <= in_r0 << (uVar2 & 0xff)) {
+            uVar10 = 0;
+          }
+          if (uVar10 == 0) goto LAB_00014c70;
+        }
+        uVar4 = uVar4 - 1;
+        goto LAB_00014c60;
+      }
+      bVar12 = in_r3 <= in_r1;
+      if (in_r1 <= in_r3) {
+        bVar12 = in_r2 <= in_r0;
+      }
+      if (bVar12) {
+        uVar4 = 1;
+        uVar10 = uVar2;
+        goto LAB_00014c70;
+      }
+    }
+    uVar4 = 0;
+    uVar10 = uVar4;
+  }
+LAB_00014c70:
+  if (uVar11 != 0) {
+    return CONCAT44(-(uVar10 + (uVar4 != 0)),-uVar4);
+  }
+  return CONCAT44(uVar10,uVar4);
+}
+

@@ -1,0 +1,187 @@
+
+int fix_ut_type_field(utmp *rec)
+
+{
+  byte bVar1;
+  int iVar2;
+  short sVar3;
+  long lVar4;
+  char *pcVar5;
+  byte *pbVar6;
+  byte *pbVar7;
+  char *pcVar8;
+  byte *pbVar9;
+  char cVar10;
+  bool bVar11;
+  bool bVar12;
+  
+  bVar1 = rec->ut_line[0];
+  if (bVar1 == 0x7c) {
+    sVar3 = 4;
+    rec->ut_type = 4;
+LAB_004030ed:
+    iVar2 = 1;
+joined_r0x004030f6:
+    bVar11 = sVar3 == 2;
+    if (bVar11) {
+LAB_004031d6:
+      lVar4 = 9;
+      pcVar5 = rec->ut_user;
+      pcVar8 = "shutdown";
+      do {
+        if (lVar4 == 0) break;
+        lVar4 = lVar4 + -1;
+        bVar11 = *pcVar5 == *pcVar8;
+        pcVar5 = pcVar5 + 1;
+        pcVar8 = pcVar8 + 1;
+      } while (bVar11);
+      if (bVar11) {
+LAB_004030c7:
+        rec->ut_type = 1;
+        return 1;
+      }
+      goto LAB_004031ec;
+    }
+LAB_004030fc:
+    if (sVar3 == 7) {
+      if (rec->ut_user[0] != '\0') {
+        return iVar2;
+      }
+      goto LAB_00403123;
+    }
+  }
+  else {
+    if (bVar1 == 0x7b) {
+      sVar3 = 3;
+      rec->ut_type = 3;
+      goto LAB_004030ed;
+    }
+    bVar11 = bVar1 < 0x7e;
+    bVar12 = bVar1 == 0x7e;
+    if (bVar12) {
+      pbVar6 = (byte *)rec->ut_user;
+      lVar4 = 7;
+      pbVar7 = pbVar6;
+      pbVar9 = (byte *)"reboot";
+      do {
+        if (lVar4 == 0) break;
+        lVar4 = lVar4 + -1;
+        bVar11 = *pbVar7 < *pbVar9;
+        bVar12 = *pbVar7 == *pbVar9;
+        pbVar7 = pbVar7 + 1;
+        pbVar9 = pbVar9 + 1;
+      } while (bVar12);
+      cVar10 = (!bVar11 && !bVar12) - bVar11;
+      bVar11 = cVar10 == '\0';
+      if (!bVar11) {
+        lVar4 = 9;
+        pbVar7 = pbVar6;
+        pbVar9 = (byte *)"shutdown";
+        do {
+          if (lVar4 == 0) break;
+          lVar4 = lVar4 + -1;
+          bVar11 = *pbVar7 == *pbVar9;
+          pbVar7 = pbVar7 + 1;
+          pbVar9 = pbVar9 + 1;
+        } while (bVar11);
+        if (!bVar11) goto LAB_00403068;
+        iVar2 = 0;
+        bVar11 = rec->ut_type == 0;
+        bVar12 = rec->ut_type == 1;
+        if (!bVar12) goto LAB_00403235;
+        goto LAB_00403098;
+      }
+      bVar11 = (ushort)rec->ut_type < 2;
+      bVar12 = rec->ut_type == 2;
+      if (!bVar12) {
+        sVar3 = 2;
+        rec->ut_type = 2;
+        goto LAB_004030ed;
+      }
+      lVar4 = 9;
+      pbVar7 = pbVar6;
+      pbVar9 = (byte *)"shutdown";
+      do {
+        if (lVar4 == 0) break;
+        lVar4 = lVar4 + -1;
+        bVar11 = *pbVar7 < *pbVar9;
+        bVar12 = *pbVar7 == *pbVar9;
+        pbVar7 = pbVar7 + 1;
+        pbVar9 = pbVar9 + 1;
+      } while (bVar12);
+      if (bVar12) {
+LAB_00403235:
+        lVar4 = 7;
+        rec->ut_type = 1;
+        pbVar7 = (byte *)"reboot";
+        do {
+          if (lVar4 == 0) break;
+          lVar4 = lVar4 + -1;
+          bVar11 = *pbVar6 < *pbVar7;
+          bVar12 = *pbVar6 == *pbVar7;
+          pbVar6 = pbVar6 + 1;
+          pbVar7 = pbVar7 + 1;
+        } while (bVar12);
+        cVar10 = (!bVar11 && !bVar12) - bVar11;
+        iVar2 = 1;
+        goto LAB_00403098;
+      }
+      iVar2 = 0;
+      bVar11 = true;
+      goto LAB_004031d6;
+    }
+LAB_00403068:
+    sVar3 = rec->ut_type;
+    bVar11 = sVar3 == 0;
+    bVar12 = sVar3 == 1;
+    if (!bVar12) {
+      iVar2 = 0;
+      goto joined_r0x004030f6;
+    }
+    lVar4 = 7;
+    pbVar6 = (byte *)rec->ut_user;
+    pbVar7 = (byte *)"reboot";
+    do {
+      if (lVar4 == 0) break;
+      lVar4 = lVar4 + -1;
+      bVar11 = *pbVar6 < *pbVar7;
+      bVar12 = *pbVar6 == *pbVar7;
+      pbVar6 = pbVar6 + 1;
+      pbVar7 = pbVar7 + 1;
+    } while (bVar12);
+    cVar10 = (!bVar11 && !bVar12) - bVar11;
+    iVar2 = 0;
+LAB_00403098:
+    bVar11 = cVar10 == '\0';
+    if (!bVar11) {
+      sVar3 = rec->ut_type;
+      goto LAB_004030fc;
+    }
+    lVar4 = 9;
+    rec->ut_type = 2;
+    pcVar5 = rec->ut_user;
+    pcVar8 = "shutdown";
+    do {
+      if (lVar4 == 0) break;
+      lVar4 = lVar4 + -1;
+      bVar11 = *pcVar5 == *pcVar8;
+      pcVar5 = pcVar5 + 1;
+      pcVar8 = pcVar8 + 1;
+    } while (bVar11);
+    iVar2 = 1;
+    if (bVar11) goto LAB_004030c7;
+LAB_004031ec:
+    sVar3 = rec->ut_type;
+  }
+  if (bVar1 == 0 || (ushort)(sVar3 - 1U) < 8) {
+    return iVar2;
+  }
+  if (rec->ut_user[0] != '\0') {
+    rec->ut_type = 7;
+    return 1;
+  }
+LAB_00403123:
+  rec->ut_type = 8;
+  return 1;
+}
+

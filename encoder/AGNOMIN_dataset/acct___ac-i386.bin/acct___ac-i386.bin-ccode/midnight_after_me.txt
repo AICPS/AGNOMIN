@@ -1,0 +1,31 @@
+
+time_t midnight_after_me(time_t now_time)
+
+{
+  int iVar1;
+  tm *ptVar2;
+  time_t tVar3;
+  int in_GS_OFFSET;
+  tm temp_tm;
+  
+  iVar1 = *(int *)(in_GS_OFFSET + 0x14);
+  ptVar2 = localtime(&now_time);
+  temp_tm.tm_sec = 0;
+  temp_tm.tm_min = 0;
+  temp_tm.tm_hour = 0;
+  temp_tm.tm_mon = ptVar2->tm_mon;
+  temp_tm.tm_mday = ptVar2->tm_mday + 1;
+  temp_tm.tm_year = ptVar2->tm_year;
+  temp_tm.tm_wday = ptVar2->tm_wday;
+  temp_tm.tm_yday = ptVar2->tm_yday;
+  temp_tm.tm_gmtoff = ptVar2->tm_gmtoff;
+  temp_tm.tm_isdst = -1;
+  temp_tm.tm_zone = ptVar2->tm_zone;
+  tVar3 = rpl_mktime(&temp_tm);
+  if (iVar1 == *(int *)(in_GS_OFFSET + 0x14)) {
+    return tVar3;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+

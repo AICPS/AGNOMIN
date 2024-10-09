@@ -1,0 +1,183 @@
+
+/* WARNING: Type propagation algorithm not settling */
+
+void parse_entries(void)
+
+{
+  bool bVar1;
+  char cVar2;
+  int iVar3;
+  utmp *rec;
+  hashtab_elem *he;
+  void *pvVar4;
+  char *pcVar5;
+  long lVar6;
+  time_t current_time;
+  char *pcVar7;
+  long lVar8;
+  long in_FS_OFFSET;
+  bool bVar9;
+  byte bVar10;
+  hashtab_order local_48;
+  long local_30;
+  
+  bVar10 = 0;
+  lVar8 = 0;
+  bVar9 = true;
+  bVar1 = false;
+  local_30 = *(long *)(in_FS_OFFSET + 0x28);
+LAB_00401d58:
+  rec = utmp_get_entry();
+  do {
+    if (rec == (utmp *)0x0) {
+      if (local_30 == *(long *)(in_FS_OFFSET + 0x28)) {
+        return;
+      }
+                    /* WARNING: Subroutine does not return */
+      __stack_chk_fail();
+    }
+    if (debugging_enabled != 0) {
+      fwrite("---------------------------------------------------------------------------\nCURRENT REC: "
+             ,1,0x59,(FILE *)stdout);
+      print_utmp_record(rec,stdout);
+    }
+    iVar3 = fix_ut_type_field(rec);
+    if ((iVar3 != 0) && (debugging_enabled != 0)) {
+      fwrite(" MUNGED REC: ",1,0xd,(FILE *)stdout);
+      print_utmp_record(rec,stdout);
+    }
+    iVar3 = bad_utmp_record(rec);
+    if (iVar3 == 0) {
+      if (bVar9) {
+        next_midnight = midnight_after_me((long)(rec->ut_tv).tv_sec);
+      }
+      if (rec->ut_type == 3) {
+        last_time = (time_t)(rec->ut_tv).tv_sec;
+joined_r0x00402102:
+        if (bVar1) {
+          bVar1 = false;
+          update_system_time((rec->ut_tv).tv_sec - lVar8);
+          next_midnight = midnight_after_me((long)(rec->ut_tv).tv_sec);
+        }
+        else {
+          if (print_file_problems != 0) {
+            utmp_print_file_and_line(stdout);
+            fwrite(": problem: unpaired time record (ignored)\n",1,0x2a,(FILE *)stdout);
+          }
+        }
+      }
+      else {
+        current_time = (time_t)(rec->ut_tv).tv_sec;
+        if ((current_time + time_warp_leniency < last_time) ||
+           (last_time + time_warp_suspicious < current_time)) {
+          if (print_file_problems != 0) {
+            utmp_print_file_and_line(stdout);
+            pcVar5 = ctime(&last_time);
+            __fprintf_chk(stdout,1,": problem: time warp (%-24.24s",pcVar5);
+            local_48._0_8_ = (long)(rec->ut_tv).tv_sec;
+            ctime((time_t *)&local_48);
+            __fprintf_chk(stdout,1," -> %-24.24s)\n");
+          }
+          do_totals(&next_midnight,next_midnight + 1,nasty_time_warp,0,"time warp");
+          next_midnight = midnight_after_me((long)(rec->ut_tv).tv_sec);
+          current_time = (time_t)(rec->ut_tv).tv_sec;
+          last_time = current_time;
+          if (rec->ut_type == 3) goto joined_r0x00402102;
+        }
+        last_time = current_time;
+        do_totals(&next_midnight,current_time,1,1,"midnight logout");
+        bVar9 = rec->ut_type == 9;
+        if ((ushort)rec->ut_type < 10) {
+          switch(rec->ut_type) {
+          default:
+            goto joined_r0x00401fd2;
+          case 1:
+            lVar6 = 9;
+            pcVar5 = rec->ut_user;
+            pcVar7 = "shutdown";
+            goto code_r0x00401f96;
+          case 2:
+            lVar6 = 9;
+            pcVar5 = rec->ut_user;
+            pcVar7 = "shutdown";
+            goto code_r0x00401fee;
+          case 3:
+            goto joined_r0x00402102;
+          case 4:
+            lVar8 = (long)(rec->ut_tv).tv_sec;
+            bVar1 = true;
+            goto joined_r0x00401fd2;
+          case 7:
+            goto switchD_00401e6e_caseD_7;
+          case 8:
+            if (rec->ut_line[0] != '\0') {
+              log_out(rec);
+            }
+            goto joined_r0x00401fd2;
+          }
+        }
+        if (rec->ut_line[0] == '\0') {
+          if (print_file_problems != 0) {
+            utmp_print_file_and_line(stdout);
+            fwrite(": problem: empty record\n",1,0x18,(FILE *)stdout);
+          }
+          goto joined_r0x00401fd2;
+        }
+switchD_00401e6e_caseD_7:
+        if (rec->ut_user[0] == '\0') {
+          log_out(rec);
+        }
+        else {
+          log_in(rec);
+        }
+      }
+      goto joined_r0x00401fd2;
+    }
+    if (print_file_problems == 0) goto LAB_00401d58;
+    utmp_print_file_and_line(stdout);
+    fwrite(": problem: bad record\n",1,0x16,(FILE *)stdout);
+    rec = utmp_get_entry();
+  } while( true );
+  while( true ) {
+    lVar6 = lVar6 + -1;
+    bVar9 = *pcVar5 == *pcVar7;
+    pcVar5 = pcVar5 + (ulong)bVar10 * -2 + 1;
+    pcVar7 = pcVar7 + (ulong)bVar10 * -2 + 1;
+    if (!bVar9) break;
+code_r0x00401fee:
+    if (lVar6 == 0) break;
+  }
+  if (!bVar9) {
+    log_everyone_out((long)(rec->ut_tv).tv_sec,nasty_reboot,0,"reboot");
+    goto joined_r0x00401fd2;
+  }
+  goto do_shutdown;
+  while( true ) {
+    lVar6 = lVar6 + -1;
+    bVar9 = *pcVar5 == *pcVar7;
+    pcVar5 = pcVar5 + (ulong)bVar10 * -2 + 1;
+    pcVar7 = pcVar7 + (ulong)bVar10 * -2 + 1;
+    if (!bVar9) break;
+code_r0x00401f96:
+    if (lVar6 == 0) break;
+  }
+  if (((!bVar9) && (cVar2 = (char)rec->ut_pid, cVar2 != '6')) && (cVar2 != '0'))
+  goto joined_r0x00401fd2;
+do_shutdown:
+  log_everyone_out((long)(rec->ut_tv).tv_sec,1,0,"shutdown");
+joined_r0x00401fd2:
+  bVar9 = false;
+  if (debugging_enabled != 0) {
+    he = hashtab_first(login_table,&local_48);
+    while (he != (hashtab_elem *)0x0) {
+      hashtab_get_key(he);
+      pvVar4 = hashtab_get_value(he);
+      ctime((time_t *)((long)pvVar4 + 0x20));
+      __fprintf_chk(stdout,1,"**\t%-*.*s %-*.*s %s");
+      he = hashtab_next(&local_48);
+    }
+    bVar9 = false;
+  }
+  goto LAB_00401d58;
+}
+

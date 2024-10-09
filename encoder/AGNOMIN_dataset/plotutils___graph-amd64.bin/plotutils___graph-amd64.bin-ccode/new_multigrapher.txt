@@ -1,0 +1,38 @@
+
+Multigrapher *
+new_multigrapher(char *output_format,char *bg_color,char *bitmap_size,char *emulate_color,
+                char *max_line_length,char *meta_portable,char *page_size,char *rotation_angle,
+                bool save_screen)
+
+{
+  int iVar1;
+  Multigrapher *pMVar2;
+  undefined8 uVar3;
+  plPlotter *ppVar4;
+  
+  pMVar2 = (Multigrapher *)xmalloc(0x238);
+  uVar3 = pl_newplparams();
+  pl_setplparam(uVar3,"BG_COLOR",bg_color);
+  pl_setplparam(uVar3,"BITMAPSIZE",bitmap_size);
+  pl_setplparam(uVar3,"EMULATE_COLOR",emulate_color);
+  pl_setplparam(uVar3,"MAX_LINE_LENGTH",max_line_length);
+  pl_setplparam(uVar3,"META_PORTABLE",meta_portable);
+  pl_setplparam(uVar3,"PAGESIZE",page_size);
+  pl_setplparam(uVar3,"ROTATION",rotation_angle);
+  ppVar4 = (plPlotter *)pl_newpl_r(output_format,0,stdout,stderr,uVar3);
+  if (ppVar4 != (plPlotter *)0x0) {
+    pl_deleteplparams(uVar3);
+    pMVar2->plotter = ppVar4;
+    iVar1 = pl_openpl_r(ppVar4);
+    if (-1 < iVar1) {
+      pMVar2->bg_color = bg_color;
+      if ((bg_color != (char *)0x0) || (save_screen == false)) {
+        pl_erase_r(ppVar4);
+      }
+      pl_fspace_r(0,0,0x40b0000000000000,ppVar4);
+      return pMVar2;
+    }
+  }
+  return (Multigrapher *)0x0;
+}
+

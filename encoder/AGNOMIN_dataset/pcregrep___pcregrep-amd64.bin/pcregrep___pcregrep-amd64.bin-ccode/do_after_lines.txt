@@ -1,0 +1,38 @@
+
+void do_after_lines(int lastmatchnumber,char *lastmatchrestart,char *endptr,char *printname)
+
+{
+  bool bVar1;
+  char *pcVar2;
+  int iVar3;
+  long in_FS_OFFSET;
+  int local_4c;
+  int ellength;
+  long local_40;
+  
+  local_40 = *(long *)(in_FS_OFFSET + 0x28);
+  if ((lastmatchrestart < endptr) && (0 < after_context)) {
+    iVar3 = 1;
+    local_4c = lastmatchnumber;
+    do {
+      if (printname != (char *)0x0) {
+        __fprintf_chk(stdout,1,&DAT_00107097,printname);
+      }
+      if (number != 0) {
+        __fprintf_chk(stdout,1,&DAT_0010709b,local_4c);
+        local_4c = local_4c + 1;
+      }
+      pcVar2 = end_of_line(lastmatchrestart,endptr,&ellength);
+      fwrite(lastmatchrestart,1,(size_t)(pcVar2 + -(long)lastmatchrestart),stdout);
+    } while ((pcVar2 < endptr) &&
+            (bVar1 = iVar3 < after_context, lastmatchrestart = pcVar2, iVar3 = iVar3 + 1, bVar1));
+  }
+  hyphenpending = 1;
+  if (local_40 != *(long *)(in_FS_OFFSET + 0x28)) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail();
+  }
+  hyphenpending = 1;
+  return;
+}
+

@@ -1,0 +1,90 @@
+
+undefined8 __divdi3(uint param_1,uint param_2,uint param_3,uint param_4)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  byte bVar5;
+  uint uVar6;
+  byte bVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  bool bVar11;
+  uint local_24;
+  uint local_20;
+  uint local_18;
+  
+  local_24 = param_1;
+  uVar10 = 0;
+  local_20 = param_2;
+  if ((int)param_2 < 0) {
+    local_24 = -param_1;
+    uVar10 = 0xffffffff;
+    local_20 = -(param_2 + (param_1 != 0));
+  }
+  if ((int)param_4 < 0) {
+    bVar11 = param_3 != 0;
+    param_3 = -param_3;
+    uVar10 = ~uVar10;
+    param_4 = -(param_4 + bVar11);
+  }
+  if (param_4 == 0) {
+    if (local_20 < param_3) {
+      local_18 = 0;
+      uVar6 = (uint)(CONCAT44(local_20,local_24) / (ulonglong)param_3);
+    }
+    else {
+      if (param_3 == 0) {
+        param_3 = (uint)(1 / 0);
+      }
+      local_18 = local_20 / param_3;
+      uVar6 = (uint)(((ulonglong)local_20 % (ulonglong)param_3 << 0x20 | (ulonglong)local_24) /
+                    (ulonglong)param_3);
+    }
+  }
+  else {
+    if (local_20 < param_4) {
+      local_18 = 0;
+      uVar6 = 0;
+    }
+    else {
+      local_18 = 0x1f;
+      if (param_4 != 0) {
+        for (; param_4 >> local_18 == 0; local_18 = local_18 - 1) {
+        }
+      }
+      local_18 = local_18 ^ 0x1f;
+      if (local_18 == 0) {
+        if ((param_3 <= local_24) || (uVar6 = 0, param_4 < local_20)) {
+          uVar6 = 1;
+        }
+      }
+      else {
+        bVar5 = (byte)local_18;
+        bVar7 = 0x20 - bVar5;
+        uVar1 = (ulonglong)(param_3 >> (bVar7 & 0x1f) | param_4 << (bVar5 & 0x1f));
+        uVar2 = CONCAT44(local_20 >> (bVar7 & 0x1f),
+                         local_20 << (bVar5 & 0x1f) | local_24 >> (bVar7 & 0x1f));
+        uVar3 = uVar2 / uVar1;
+        uVar6 = (uint)uVar3;
+        uVar8 = (uint)(uVar2 % uVar1);
+        lVar4 = (uVar3 & 0xffffffff) * (ulonglong)(param_3 << (bVar5 & 0x1f));
+        uVar9 = (uint)((ulonglong)lVar4 >> 0x20);
+        if ((uVar8 < uVar9) || ((local_24 << (bVar5 & 0x1f) < (uint)lVar4 && (uVar8 == uVar9)))) {
+          uVar6 = uVar6 - 1;
+          local_18 = 0;
+        }
+        else {
+          local_18 = 0;
+        }
+      }
+    }
+  }
+  uVar10 = (uint)(uVar10 != 0);
+  return CONCAT44((-(uint)(uVar10 != 0) ^ local_18) + (uint)CARRY4(uVar10,uVar6 ^ -uVar10),
+                  uVar10 + (uVar6 ^ -uVar10));
+}
+

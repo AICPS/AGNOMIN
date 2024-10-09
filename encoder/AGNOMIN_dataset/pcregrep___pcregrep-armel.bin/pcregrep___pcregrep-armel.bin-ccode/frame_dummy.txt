@@ -1,0 +1,11 @@
+
+void frame_dummy(void)
+
+{
+  if (__JCR_END__ != 0) {
+    _Jv_RegisterClasses();
+  }
+  register_tm_clones();
+  return;
+}
+

@@ -1,0 +1,87 @@
+
+void display_usage(char *progname,int *omit_vals,char *appendage,int info)
+
+{
+  int iVar1;
+  size_t sVar2;
+  int *piVar3;
+  int iVar4;
+  char *__s;
+  option *poVar5;
+  
+  fprintf(stdout,"Usage: %s",progname);
+  sVar2 = strlen(progname);
+  iVar4 = sVar2 + 7;
+  if (long_options[0].name != (char *)0x0) {
+    poVar5 = long_options;
+    __s = long_options[0].name;
+    do {
+      piVar3 = omit_vals;
+      do {
+        iVar1 = *piVar3;
+        if (iVar1 == 0) {
+          sVar2 = strlen(__s);
+          if ((int)(0x40 - sVar2) <= iVar4) {
+            iVar4 = 8;
+            fwrite(&DAT_08057aff,1,2,stdout);
+          }
+          iVar4 = iVar4 + 4 + sVar2;
+          fprintf(stdout," [--%s",poVar5->name);
+          if ((uint)poVar5->val < 0x100) {
+            iVar4 = iVar4 + 5;
+            fprintf(stdout," | -%c",poVar5->val);
+            iVar1 = poVar5->has_arg;
+          }
+          else {
+            iVar1 = poVar5->has_arg;
+          }
+          if (iVar1 == 1) {
+            iVar4 = iVar4 + 5;
+            fwrite(" arg]",1,5,stdout);
+          }
+          else {
+            if (iVar1 == 2) {
+              iVar4 = iVar4 + 10;
+              fwrite(" [arg(s)]]",1,10,stdout);
+            }
+            else {
+              iVar4 = iVar4 + 1;
+              fputc(0x5d,stdout);
+            }
+          }
+          break;
+        }
+        piVar3 = piVar3 + 1;
+      } while (poVar5->val != iVar1);
+      poVar5 = poVar5 + 1;
+      __s = poVar5->name;
+    } while (__s != (char *)0x0);
+  }
+  if (appendage == (char *)0x0) {
+    fputc(10,stdout);
+    if (info != 1) goto LAB_08055839;
+LAB_0805594d:
+    fprintf(stdout,
+            "\nTo specify an output format, type `%s -T \"format\"\',\nwhere \"format\" is one of:\n"
+            ,progname);
+  }
+  else {
+    fputs(appendage,stdout);
+    if (info == 1) goto LAB_0805594d;
+LAB_08055839:
+    if (info != 2) goto LAB_08055849;
+    fprintf(stdout,
+            "\nTo list available fonts, type `%s -T \"format\" --help-fonts\',\nwhere \"format\" is the output format, and is one of:\n"
+            ,progname);
+  }
+  fwrite("X, png, pnm, or gif (bitmap formats), or\nsvg, ps, ai, cgm, fig, pcl, hpgl, regis, or tek (vector formats).\n"
+         ,1,0x6b,stdout);
+  fwrite("The default format is \"meta\", which is probably not what you want.\n",1,0x43,stdout);
+LAB_08055849:
+  if ((info - 1U < 2) || (appendage != (char *)0x0)) {
+    fputc(10,stdout);
+  }
+  fprintf(stdout,"Report bugs to %s.\n");
+  return;
+}
+

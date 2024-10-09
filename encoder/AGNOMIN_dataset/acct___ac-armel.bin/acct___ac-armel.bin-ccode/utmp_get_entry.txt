@@ -1,0 +1,10 @@
+
+utmp * utmp_get_entry(void)
+
+{
+  utmp *puVar1;
+  
+  puVar1 = (utmp *)file_reader_get_entry(utmp_info);
+  return puVar1;
+}
+

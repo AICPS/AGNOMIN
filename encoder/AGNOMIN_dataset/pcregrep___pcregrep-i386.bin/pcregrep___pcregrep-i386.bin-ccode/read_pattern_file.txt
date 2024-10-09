@@ -1,0 +1,93 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+BOOL __regparm2 read_pattern_file(char *name,patstr **patptr,patstr **patlastptr,int popts)
+
+{
+  int iVar1;
+  char cVar2;
+  int *piVar3;
+  ushort **ppuVar4;
+  char *pcVar5;
+  patstr *ppVar6;
+  BOOL BVar7;
+  uint uVar8;
+  int in_GS_OFFSET;
+  byte bVar9;
+  undefined *puVar10;
+  patstr **pppVar11;
+  int local_2040;
+  FILE *local_203c;
+  char *filename;
+  char cStack8235;
+  char buffer [8202];
+  
+  bVar9 = 0;
+  iVar1 = *(int *)(in_GS_OFFSET + 0x14);
+  if ((*name == '-') && (name[1] == '\0')) {
+    local_203c = stdin;
+    filename = stdin_name;
+  }
+  else {
+    puVar10 = &DAT_00016375;
+    pppVar11 = patptr;
+    local_203c = fopen(name,"r");
+    filename = name;
+    if (local_203c == (FILE *)0x0) {
+      piVar3 = __errno_location();
+      pcVar5 = strerror(*piVar3);
+      __fprintf_chk(stderr,1,"pcregrep: Failed to open %s: %s\n",name,pcVar5,puVar10,pppVar11);
+      BVar7 = 0;
+      goto LAB_00011818;
+    }
+  }
+  local_2040 = 0;
+  while (pcVar5 = fgets(buffer,0x200a,local_203c), pcVar5 != (char *)0x0) {
+    uVar8 = 0xffffffff;
+    pcVar5 = buffer;
+    do {
+      if (uVar8 == 0) break;
+      uVar8 = uVar8 - 1;
+      cVar2 = *pcVar5;
+      pcVar5 = pcVar5 + (uint)bVar9 * -2 + 1;
+    } while (cVar2 != '\0');
+    pcVar5 = buffer + (~uVar8 - 1);
+    while ((buffer < pcVar5 &&
+           (ppuVar4 = __ctype_b_loc(),
+           (*(byte *)((int)*ppuVar4 + (uint)(byte)pcVar5[-1] * 2 + 1) & 0x20) != 0))) {
+      pcVar5 = pcVar5 + -1;
+    }
+    *pcVar5 = '\0';
+    local_2040 = local_2040 + 1;
+    if (buffer[0] != '\0') {
+      ppVar6 = add_pattern(buffer,*patlastptr);
+      *patlastptr = ppVar6;
+      if (ppVar6 == (patstr *)0x0) {
+LAB_00011782:
+        BVar7 = 0;
+        goto LAB_00011818;
+      }
+      if (*patptr == (patstr *)0x0) {
+        *patptr = ppVar6;
+      }
+      while( true ) {
+        BVar7 = compile_pattern(*patlastptr,pcre_options,popts,1,filename,local_2040);
+        if (BVar7 == 0) goto LAB_00011782;
+        (*patlastptr)->string = (char *)0x0;
+        if ((*patlastptr)->next == (patstr *)0x0) break;
+        *patlastptr = (*patlastptr)->next;
+      }
+    }
+  }
+  BVar7 = 1;
+  if (local_203c != stdin) {
+    fclose(local_203c);
+    BVar7 = 1;
+  }
+LAB_00011818:
+  if (iVar1 != *(int *)(in_GS_OFFSET + 0x14)) {
+    BVar7 = __stack_chk_fail_local();
+  }
+  return BVar7;
+}
+

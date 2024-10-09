@@ -1,0 +1,36 @@
+
+hashtab_elem * hashtab_find(hashtab *ht,void *key,uint len)
+
+{
+  hashtab_elem *phVar1;
+  uint __n;
+  uint uVar2;
+  int iVar3;
+  char *pcVar4;
+  char *pcVar5;
+  
+  if (ht->table != (hashtab_elem **)0x0) {
+    __n = get_key_len((char *)key,len,ht->numeric);
+    if (__n == 0) {
+      iVar3 = 0;
+    }
+    else {
+      uVar2 = 0;
+      pcVar4 = (char *)key;
+      do {
+        pcVar5 = pcVar4 + 1;
+        uVar2 = uVar2 * 0x1f + (int)*pcVar4;
+        pcVar4 = pcVar5;
+      } while (pcVar5 != (char *)((int)key + __n));
+      iVar3 = uVar2 % ht->table_size << 2;
+    }
+    for (phVar1 = *(hashtab_elem **)((int)ht->table + iVar3); phVar1 != (hashtab_elem *)0x0;
+        phVar1 = phVar1->next) {
+      if ((phVar1->key_len == __n) && (iVar3 = memcmp(phVar1->key,key,__n), iVar3 == 0)) {
+        return phVar1;
+      }
+    }
+  }
+  return (hashtab_elem *)0x0;
+}
+

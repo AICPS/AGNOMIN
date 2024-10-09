@@ -1,0 +1,17 @@
+
+file_rd_info * file_reader_init(int record_size,int buffered_records,int backwards)
+
+{
+  file_rd_info *__s;
+  void *pvVar1;
+  
+  __s = (file_rd_info *)xmalloc(0x38);
+  memset(__s,0,0x38);
+  __s->record_size = record_size;
+  __s->buffered_records = buffered_records;
+  pvVar1 = xmalloc(buffered_records * record_size);
+  __s->buffer = pvVar1;
+  __s->backwards = backwards;
+  return __s;
+}
+

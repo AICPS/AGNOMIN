@@ -1,0 +1,23 @@
+
+omstr * add_number(int n,omstr *after)
+
+{
+  omstr *poVar1;
+  omstr *poVar2;
+  
+  poVar2 = (omstr *)malloc(0x10);
+  if (poVar2 != (omstr *)0x0) {
+    poVar2->next = (omstr *)0x0;
+    poVar2->groupnum = n;
+    if (after != (omstr *)0x0) {
+      poVar1 = after->next;
+      after->next = poVar2;
+      poVar2->next = poVar1;
+    }
+    return poVar2;
+  }
+  fwrite("pcregrep: malloc failed\n",1,0x18,stderr);
+                    /* WARNING: Subroutine does not return */
+  pcregrep_exit(2);
+}
+

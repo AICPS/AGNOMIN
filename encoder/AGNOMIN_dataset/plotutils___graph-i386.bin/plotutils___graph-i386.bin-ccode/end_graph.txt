@@ -1,0 +1,8 @@
+
+void end_graph(Multigrapher *multigrapher)
+
+{
+  pl_restorestate_r();
+  return;
+}
+

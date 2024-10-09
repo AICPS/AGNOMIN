@@ -1,0 +1,12 @@
+
+void __do_global_dtors_aux(void)
+
+{
+  if (completed_6670 == '\0') {
+    __cxa_finalize(__dso_handle);
+    deregister_tm_clones();
+    completed_6670 = '\x01';
+  }
+  return;
+}
+

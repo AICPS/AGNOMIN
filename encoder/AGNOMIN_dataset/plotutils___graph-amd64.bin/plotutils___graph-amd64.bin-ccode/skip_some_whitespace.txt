@@ -1,0 +1,25 @@
+
+bool skip_some_whitespace(FILE *stream)
+
+{
+  uint __c;
+  ushort **ppuVar1;
+  int iVar2;
+  
+  iVar2 = 0;
+  do {
+    __c = _IO_getc((_IO_FILE *)stream);
+    if (__c == 10) {
+      iVar2 = iVar2 + 1;
+    }
+    else {
+      if (__c == 0xffffffff) {
+        return false;
+      }
+    }
+    ppuVar1 = __ctype_b_loc();
+  } while (((*(byte *)((long)*ppuVar1 + ((ulong)__c & 0xff) * 2 + 1) & 0x20) != 0) && (iVar2 < 2));
+  ungetc(__c,(FILE *)stream);
+  return (bool)(uint)(iVar2 == 2);
+}
+

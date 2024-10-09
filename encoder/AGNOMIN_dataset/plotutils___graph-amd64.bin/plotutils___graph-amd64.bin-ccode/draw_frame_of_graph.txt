@@ -1,0 +1,550 @@
+
+void draw_frame_of_graph(Multigrapher *multigrapher,bool draw_canvas)
+
+{
+  int *piVar1;
+  double dVar2;
+  grid_type gVar3;
+  bool bVar4;
+  undefined8 uVar5;
+  int iVar6;
+  char *pcVar7;
+  int iVar8;
+  double dVar9;
+  double dVar10;
+  double extraout_XMM0_Qa;
+  double extraout_XMM0_Qa_00;
+  double dVar11;
+  undefined auVar12 [16];
+  double yend;
+  double local_840;
+  char labelbuf [2048];
+  
+  pl_savestate_r(multigrapher->plotter);
+  if (multigrapher->frame_color != (char *)0x0) {
+    pl_pencolorname_r(multigrapher->plotter);
+  }
+  pl_flinewidth_r(multigrapher->plotter);
+  pl_linemod_r(multigrapher->plotter);
+  pl_filltype_r();
+  if (draw_canvas != false) {
+    pl_savestate_r(multigrapher->plotter);
+    iVar8 = pl_havecap_r(multigrapher->plotter,"SETTABLE_BACKGROUND");
+    if ((iVar8 == 0) || (pcVar7 = multigrapher->bg_color, pcVar7 == (char *)0x0)) {
+      pcVar7 = "white";
+    }
+    pl_colorname_r(multigrapher->plotter,pcVar7);
+    pl_filltype_r(multigrapher->plotter);
+    pl_fbox_r(multigrapher->plotter);
+    pl_restorestate_r();
+  }
+  gVar3 = multigrapher->grid_spec;
+  if (gVar3 == NO_AXES) goto LAB_00409aa0;
+  if ((((multigrapher->y_axis).switch_axis_end == false) && (multigrapher->title != (char *)0x0)) &&
+     (*multigrapher->title != '\0')) {
+    pl_fontname_r(multigrapher->plotter,multigrapher->title_font_name);
+    pl_ffontsize_r(multigrapher->plotter);
+    pl_fmove_r(multigrapher->plotter);
+    pl_alabel_r(multigrapher->plotter,99,0x62);
+    gVar3 = multigrapher->grid_spec;
+    if (gVar3 < AXES_AT_ORIGIN) {
+      if (gVar3 < AXES_AND_BOX) {
+        if (gVar3 == AXES) {
+LAB_004097dd:
+          pl_fmove_r(multigrapher->plotter);
+          pl_fcont_r(multigrapher->plotter);
+          pl_fcont_r();
+          gVar3 = multigrapher->grid_spec;
+        }
+      }
+      else {
+LAB_00409b28:
+        pl_fbox_r();
+        gVar3 = multigrapher->grid_spec;
+      }
+    }
+    else {
+      if (gVar3 == AXES_AT_ORIGIN) {
+LAB_0040b811:
+        pl_fline_r(multigrapher->plotter);
+        pl_fline_r();
+        gVar3 = multigrapher->grid_spec;
+      }
+    }
+    if (gVar3 == NO_AXES) goto LAB_00409aa0;
+  }
+  else {
+    if (gVar3 < AXES_AT_ORIGIN) {
+      if (AXES < gVar3) goto LAB_00409b28;
+      if (gVar3 == AXES) goto LAB_004097dd;
+    }
+    else {
+      if (gVar3 == AXES_AT_ORIGIN) goto LAB_0040b811;
+    }
+  }
+  if (((multigrapher->x_axis).omit_ticks == false) &&
+     ((multigrapher->x_axis).user_specified_subsubticks == false)) {
+    dVar10 = (multigrapher->x_trans).input_max - (multigrapher->x_trans).input_min;
+    pl_fontname_r(multigrapher->plotter);
+    pl_ffontsize_r();
+    iVar8 = (multigrapher->x_axis).min_tick_count;
+    if ((multigrapher->x_axis).max_tick_count < iVar8) {
+      gVar3 = multigrapher->grid_spec;
+    }
+    else {
+      gVar3 = multigrapher->grid_spec;
+      dVar9 = dVar10 * 1e-06;
+      do {
+        dVar11 = (double)iVar8 * (multigrapher->x_axis).tick_spacing;
+        if ((dVar11 < (multigrapher->x_trans).input_min - dVar9) ||
+           (dVar9 + (multigrapher->x_trans).input_max < dVar11)) goto LAB_0040b4b8;
+        if ((multigrapher->y_axis).switch_axis_end == false) {
+          if ((((gVar3 != AXES_AT_ORIGIN) ||
+               ((double)((ulong)(multigrapher->x_trans).input_range & 0x7fffffffffffffff) * 1e-06 <=
+                dVar11 - (multigrapher->x_axis).other_axis_loc)) ||
+              (dVar2 = (multigrapher->y_axis).other_axis_loc,
+              dVar2 == (multigrapher->y_trans).input_min)) ||
+             (dVar2 == (multigrapher->y_trans).input_max)) {
+            pl_fmove_r(multigrapher->plotter);
+            if ((multigrapher->x_axis).type == 1) {
+              pow(10.0,dVar11);
+            }
+            print_tick_label();
+            uVar5 = 0x74;
+            goto LAB_0040b2f8;
+          }
+LAB_0040b35e:
+          pl_fmove_r();
+          pl_fcont_r();
+          gVar3 = multigrapher->grid_spec;
+        }
+        else {
+          if (((gVar3 != AXES_AT_ORIGIN) ||
+              ((double)((ulong)(multigrapher->x_trans).input_range & 0x7fffffffffffffff) * 1e-06 <=
+               dVar11 - (multigrapher->x_axis).other_axis_loc)) ||
+             ((dVar2 = (multigrapher->y_axis).other_axis_loc,
+              dVar2 == (multigrapher->y_trans).input_min ||
+              (dVar2 == (multigrapher->y_trans).input_max)))) {
+            pl_fmove_r(multigrapher->plotter);
+            if ((multigrapher->x_axis).type == 1) {
+              pow(10.0,dVar11);
+            }
+            print_tick_label();
+            uVar5 = 0x62;
+LAB_0040b2f8:
+            pl_alabel_r(multigrapher->plotter,99,uVar5);
+            gVar3 = multigrapher->grid_spec;
+            piVar1 = &(multigrapher->x_axis).labelled_ticks;
+            *piVar1 = *piVar1 + 1;
+            if (gVar3 != AXES_AND_BOX) {
+              if (gVar3 < AXES_AND_BOX_AND_GRID) {
+                if (gVar3 == AXES) {
+LAB_0040b339:
+                  bVar4 = (multigrapher->y_axis).switch_axis_end;
+                  goto LAB_0040b34e;
+                }
+              }
+              else {
+                if (gVar3 == AXES_AND_BOX_AND_GRID) {
+                  pl_linemod_r(multigrapher->plotter,"dotted");
+                  pl_fmove_r(multigrapher->plotter);
+                  pl_fcont_r(multigrapher->plotter);
+                  pl_linemod_r(multigrapher->plotter);
+                  goto LAB_0040bf7d;
+                }
+                if (gVar3 == AXES_AT_ORIGIN) goto LAB_0040b339;
+              }
+              goto LAB_0040b4b8;
+            }
+LAB_0040bf7d:
+            if ((multigrapher->y_axis).switch_axis_end == false) {
+              pl_fmove_r(multigrapher->plotter);
+            }
+            else {
+              pl_fmove_r(multigrapher->plotter);
+            }
+            pl_fcont_r(multigrapher->plotter);
+            bVar4 = (multigrapher->y_axis).switch_axis_end;
+LAB_0040b34e:
+            if (bVar4 == false) goto LAB_0040b35e;
+          }
+          pl_fmove_r(multigrapher->plotter);
+          pl_fcont_r();
+          gVar3 = multigrapher->grid_spec;
+        }
+LAB_0040b4b8:
+        iVar8 = iVar8 + 1;
+      } while (iVar8 <= (multigrapher->x_axis).max_tick_count);
+    }
+    if (((multigrapher->x_axis).have_lin_subticks != false) &&
+       (iVar8 = (multigrapher->x_axis).min_lin_subtick_count,
+       iVar8 <= (multigrapher->x_axis).max_lin_subtick_count)) {
+      dVar10 = dVar10 * 1e-06;
+      do {
+        dVar9 = (double)iVar8 * (multigrapher->x_axis).lin_subtick_spacing;
+        if (((multigrapher->x_trans).input_min - dVar10 <= dVar9) &&
+           (dVar9 <= (multigrapher->x_trans).input_max + dVar10)) {
+          if (gVar3 < AXES_AT_ORIGIN) {
+            if (gVar3 < AXES_AND_BOX) {
+              if (gVar3 != AXES) goto LAB_0040b6f0;
+            }
+            else {
+              if ((multigrapher->y_axis).switch_axis_end == false) {
+                pl_fmove_r(multigrapher->plotter);
+                pl_fcont_r(multigrapher->plotter);
+              }
+              else {
+                pl_fmove_r(multigrapher->plotter);
+                pl_fcont_r(multigrapher->plotter);
+              }
+            }
+          }
+          else {
+            if (gVar3 != AXES_AT_ORIGIN) goto LAB_0040b6f0;
+          }
+          if ((multigrapher->y_axis).switch_axis_end == false) {
+            pl_fmove_r(multigrapher->plotter);
+            pl_fcont_r();
+            gVar3 = multigrapher->grid_spec;
+          }
+          else {
+            pl_fmove_r(multigrapher->plotter);
+            pl_fcont_r();
+            gVar3 = multigrapher->grid_spec;
+          }
+        }
+LAB_0040b6f0:
+        iVar8 = iVar8 + 1;
+      } while (iVar8 <= (multigrapher->x_axis).max_lin_subtick_count);
+    }
+    if (gVar3 == AXES_AT_ORIGIN) goto LAB_00409be2;
+    if (((multigrapher->x_axis).type == 0) &&
+       ((multigrapher->x_trans).input_min * (multigrapher->x_trans).input_max < 0.0)) {
+      pl_linemod_r(multigrapher->plotter,"dotted");
+      pl_fline_r(multigrapher->plotter);
+      pl_linemod_r();
+      gVar3 = multigrapher->grid_spec;
+    }
+    if (gVar3 != NO_AXES) goto LAB_00409be2;
+LAB_00409cc3:
+    if (multigrapher->grid_spec != NO_AXES) {
+LAB_00409cd8:
+      if ((multigrapher->x_axis).user_specified_subsubticks != false) {
+LAB_0040a160:
+        if ((multigrapher->x_axis).omit_ticks == false) {
+          dVar10 = (multigrapher->x_trans).input_min;
+          dVar9 = ((multigrapher->x_trans).input_max - dVar10) * 1e-06;
+          dVar10 = pow(10.0,dVar10 - dVar9);
+          dVar10 = floor(dVar10 / (multigrapher->x_axis).subsubtick_spacing);
+          iVar8 = (int)dVar10;
+          dVar9 = pow(10.0,dVar9 + (multigrapher->x_trans).input_max);
+          dVar10 = (multigrapher->x_axis).subsubtick_spacing;
+          dVar9 = ceil(dVar9 / dVar10);
+          if (iVar8 <= (int)dVar9) {
+            while( true ) {
+              dVar11 = (double)iVar8;
+              iVar8 = iVar8 + 1;
+              dVar10 = log10(dVar11 * dVar10);
+              plot_abscissa_log_subsubtick(multigrapher,dVar10);
+              if ((int)dVar9 < iVar8) break;
+              dVar10 = (multigrapher->x_axis).subsubtick_spacing;
+            }
+          }
+          if (multigrapher->grid_spec == NO_AXES) goto LAB_00409aa0;
+        }
+      }
+      goto LAB_00409ce6;
+    }
+LAB_00409f89:
+    if (multigrapher->grid_spec == NO_AXES) goto LAB_00409aa0;
+  }
+  else {
+LAB_00409be2:
+    if (((multigrapher->y_axis).omit_ticks == false) &&
+       ((multigrapher->y_axis).user_specified_subsubticks == false)) {
+      dVar10 = (multigrapher->y_trans).input_max - (multigrapher->y_trans).input_min;
+      pl_fontname_r(multigrapher->plotter);
+      pl_ffontsize_r(multigrapher->plotter);
+      iVar8 = (multigrapher->y_axis).min_tick_count;
+      if ((multigrapher->y_axis).max_tick_count < iVar8) {
+        gVar3 = multigrapher->grid_spec;
+      }
+      else {
+        gVar3 = multigrapher->grid_spec;
+        dVar9 = dVar10 * 1e-06;
+        do {
+          dVar11 = (double)iVar8 * (multigrapher->y_axis).tick_spacing;
+          if ((dVar11 < (multigrapher->y_trans).input_min - dVar9) ||
+             (dVar9 + (multigrapher->y_trans).input_max < dVar11)) goto LAB_0040ae40;
+          if ((multigrapher->x_axis).switch_axis_end == false) {
+            if ((((gVar3 != AXES_AT_ORIGIN) ||
+                 ((double)((ulong)(multigrapher->y_trans).input_range & 0x7fffffffffffffff) * 1e-06
+                  <= (double)((ulong)(dVar11 - (multigrapher->y_axis).other_axis_loc) &
+                             0x7fffffffffffffff))) ||
+                (dVar2 = (multigrapher->x_axis).other_axis_loc,
+                dVar2 == (multigrapher->x_trans).input_min)) ||
+               (dVar2 == (multigrapher->x_trans).input_max)) {
+              pl_fmove_r(multigrapher->plotter);
+              if ((multigrapher->y_axis).type == 1) {
+                pow(10.0,dVar11);
+              }
+              print_tick_label();
+              pl_flabelwidth_r(multigrapher->plotter,labelbuf);
+              uVar5 = 0x72;
+              local_840 = extraout_XMM0_Qa_00;
+              goto LAB_0040ac70;
+            }
+LAB_0040acef:
+            pl_fmove_r();
+            pl_fcont_r(multigrapher->plotter);
+            gVar3 = multigrapher->grid_spec;
+          }
+          else {
+            if (((gVar3 != AXES_AT_ORIGIN) ||
+                ((double)((ulong)(multigrapher->y_trans).input_range & 0x7fffffffffffffff) * 1e-06
+                 <= (double)((ulong)(dVar11 - (multigrapher->y_axis).other_axis_loc) &
+                            0x7fffffffffffffff))) ||
+               ((dVar2 = (multigrapher->x_axis).other_axis_loc,
+                dVar2 == (multigrapher->x_trans).input_min ||
+                (dVar2 == (multigrapher->x_trans).input_max)))) {
+              pl_fmove_r(multigrapher->plotter);
+              if ((multigrapher->y_axis).type == 1) {
+                pow(10.0,dVar11);
+              }
+              print_tick_label();
+              pl_flabelwidth_r(multigrapher->plotter,labelbuf);
+              uVar5 = 0x6c;
+              local_840 = extraout_XMM0_Qa;
+LAB_0040ac70:
+              pl_alabel_r(multigrapher->plotter,uVar5,99);
+              dVar11 = (multigrapher->y_axis).max_label_width;
+              gVar3 = multigrapher->grid_spec;
+              piVar1 = &(multigrapher->y_axis).labelled_ticks;
+              *piVar1 = *piVar1 + 1;
+              if (dVar11 <= local_840) {
+                dVar11 = local_840;
+              }
+              (multigrapher->y_axis).max_label_width = dVar11;
+              if (gVar3 != AXES_AND_BOX) {
+                if (gVar3 < AXES_AND_BOX_AND_GRID) {
+                  if (gVar3 == AXES) {
+LAB_0040acc6:
+                    bVar4 = (multigrapher->x_axis).switch_axis_end;
+                    goto LAB_0040acdf;
+                  }
+                }
+                else {
+                  if (gVar3 == AXES_AND_BOX_AND_GRID) {
+                    pl_linemod_r(multigrapher->plotter,"dotted");
+                    pl_fmove_r(multigrapher->plotter);
+                    pl_fcont_r(multigrapher->plotter);
+                    pl_linemod_r(multigrapher->plotter);
+                    goto LAB_0040bcd3;
+                  }
+                  if (gVar3 == AXES_AT_ORIGIN) goto LAB_0040acc6;
+                }
+                goto LAB_0040ae40;
+              }
+LAB_0040bcd3:
+              if ((multigrapher->x_axis).switch_axis_end == false) {
+                pl_fmove_r(multigrapher->plotter);
+              }
+              else {
+                pl_fmove_r(multigrapher->plotter);
+              }
+              pl_fcont_r(multigrapher->plotter);
+              bVar4 = (multigrapher->x_axis).switch_axis_end;
+LAB_0040acdf:
+              if (bVar4 == false) goto LAB_0040acef;
+            }
+            pl_fmove_r(multigrapher->plotter);
+            pl_fcont_r(multigrapher->plotter);
+            gVar3 = multigrapher->grid_spec;
+          }
+LAB_0040ae40:
+          iVar8 = iVar8 + 1;
+        } while (iVar8 <= (multigrapher->y_axis).max_tick_count);
+      }
+      if (((multigrapher->y_axis).have_lin_subticks != false) &&
+         (iVar8 = (multigrapher->y_axis).min_lin_subtick_count,
+         iVar8 <= (multigrapher->y_axis).max_lin_subtick_count)) {
+        auVar12 = ZEXT816((ulong)(dVar10 * 1e-06));
+        do {
+          dVar10 = (double)iVar8 * (multigrapher->y_axis).lin_subtick_spacing;
+          if (((multigrapher->y_trans).input_min - SUB168(auVar12,0) <= dVar10) &&
+             (dVar10 <= (multigrapher->y_trans).input_max + SUB168(auVar12,0))) {
+            if (gVar3 < AXES_AT_ORIGIN) {
+              if (gVar3 < AXES_AND_BOX) {
+                if (gVar3 != AXES) goto LAB_0040b080;
+              }
+              else {
+                if ((multigrapher->x_axis).switch_axis_end == false) {
+                  pl_fmove_r(multigrapher->plotter);
+                  pl_fcont_r(multigrapher->plotter);
+                }
+                else {
+                  pl_fmove_r(multigrapher->plotter);
+                  pl_fcont_r(multigrapher->plotter);
+                }
+              }
+            }
+            else {
+              if (gVar3 != AXES_AT_ORIGIN) goto LAB_0040b080;
+            }
+            if ((multigrapher->x_axis).switch_axis_end == false) {
+              pl_fmove_r(multigrapher->plotter);
+              pl_fcont_r(multigrapher->plotter);
+              gVar3 = multigrapher->grid_spec;
+              auVar12 = auVar12 & (undefined  [16])0xffffffffffffffff;
+            }
+            else {
+              pl_fmove_r(multigrapher->plotter);
+              pl_fcont_r(multigrapher->plotter);
+              gVar3 = multigrapher->grid_spec;
+              auVar12 = auVar12 & (undefined  [16])0xffffffffffffffff;
+            }
+          }
+LAB_0040b080:
+          iVar8 = iVar8 + 1;
+        } while (iVar8 <= (multigrapher->y_axis).max_lin_subtick_count);
+      }
+      if (gVar3 != AXES_AT_ORIGIN) {
+        if (((multigrapher->y_axis).type == 0) &&
+           ((multigrapher->y_trans).input_min * (multigrapher->y_trans).input_max < 0.0)) {
+          pl_linemod_r(multigrapher->plotter,"dotted");
+          pl_fline_r(multigrapher->plotter);
+          pl_linemod_r(multigrapher->plotter);
+          gVar3 = multigrapher->grid_spec;
+        }
+        if (gVar3 == NO_AXES) goto LAB_00409aa0;
+      }
+    }
+    if ((multigrapher->x_axis).have_normal_subsubticks == false) goto LAB_00409cd8;
+    if ((multigrapher->x_axis).user_specified_subsubticks != false) goto LAB_0040a160;
+    if ((multigrapher->x_axis).omit_ticks == false) {
+      dVar10 = (multigrapher->x_trans).input_max;
+      dVar9 = (multigrapher->x_trans).input_min;
+      dVar11 = (dVar10 - dVar9) * 1e-06;
+      dVar9 = floor(dVar9 - dVar11);
+      iVar8 = (int)dVar9;
+      dVar10 = ceil(dVar10 + dVar11);
+      if (iVar8 < (int)dVar10) {
+        do {
+          iVar6 = 1;
+          do {
+            dVar9 = (double)iVar6;
+            iVar6 = iVar6 + 1;
+            dVar9 = log10(dVar9);
+            plot_abscissa_log_subsubtick(multigrapher,dVar9 + (double)iVar8);
+          } while (iVar6 != 10);
+          iVar8 = iVar8 + 1;
+        } while (iVar8 != (int)dVar10);
+        goto LAB_00409cc3;
+      }
+    }
+LAB_00409ce6:
+    if ((multigrapher->y_axis).have_normal_subsubticks == false) {
+LAB_00409dc8:
+      if ((multigrapher->y_axis).user_specified_subsubticks != false) {
+LAB_0040a230:
+        if ((multigrapher->y_axis).omit_ticks == false) {
+          dVar10 = (multigrapher->y_trans).input_min;
+          dVar9 = ((multigrapher->y_trans).input_max - dVar10) * 1e-06;
+          dVar10 = pow(10.0,dVar10 - dVar9);
+          dVar10 = floor(dVar10 / (multigrapher->y_axis).subsubtick_spacing);
+          iVar8 = (int)dVar10;
+          dVar9 = pow(10.0,dVar9 + (multigrapher->y_trans).input_max);
+          dVar10 = (multigrapher->y_axis).subsubtick_spacing;
+          dVar9 = ceil(dVar9 / dVar10);
+          if (iVar8 <= (int)dVar9) {
+            while( true ) {
+              dVar11 = (double)iVar8;
+              iVar8 = iVar8 + 1;
+              dVar10 = log10(dVar11 * dVar10);
+              plot_ordinate_log_subsubtick(multigrapher,dVar10);
+              if ((int)dVar9 < iVar8) break;
+              dVar10 = (multigrapher->y_axis).subsubtick_spacing;
+            }
+          }
+          if (multigrapher->grid_spec == NO_AXES) goto LAB_00409aa0;
+        }
+      }
+    }
+    else {
+      if ((multigrapher->y_axis).user_specified_subsubticks != false) goto LAB_0040a230;
+      if ((multigrapher->y_axis).omit_ticks == false) {
+        dVar10 = (multigrapher->y_trans).input_max;
+        dVar9 = (multigrapher->y_trans).input_min;
+        dVar11 = (dVar10 - dVar9) * 1e-06;
+        dVar9 = floor(dVar9 - dVar11);
+        iVar8 = (int)dVar9;
+        dVar10 = ceil(dVar10 + dVar11);
+        if (iVar8 < (int)dVar10) {
+          do {
+            iVar6 = 1;
+            do {
+              dVar9 = (double)iVar6;
+              iVar6 = iVar6 + 1;
+              dVar9 = log10(dVar9);
+              plot_ordinate_log_subsubtick(multigrapher,dVar9 + (double)iVar8);
+            } while (iVar6 != 10);
+            iVar8 = iVar8 + 1;
+          } while (iVar8 != (int)dVar10);
+          if (multigrapher->grid_spec == NO_AXES) goto LAB_00409aa0;
+          goto LAB_00409dc8;
+        }
+      }
+    }
+    if ((multigrapher->x_axis).label != (char *)0x0) {
+      pl_fontname_r(multigrapher->plotter,(multigrapher->x_axis).font_name);
+      pl_ffontsize_r(multigrapher->plotter);
+      if ((multigrapher->y_axis).switch_axis_end == false) {
+        pl_fmove_r(multigrapher->plotter);
+        pl_alabel_r(multigrapher->plotter,99,0x74);
+      }
+      else {
+        pl_fmove_r(multigrapher->plotter);
+        pl_alabel_r(multigrapher->plotter,99,0x62);
+      }
+      goto LAB_00409f89;
+    }
+  }
+  pcVar7 = (multigrapher->y_axis).label;
+  if ((pcVar7 != (char *)0x0) && (*pcVar7 != '\0')) {
+    pl_fontname_r(multigrapher->plotter,(multigrapher->y_axis).font_name);
+    pl_ffontsize_r(multigrapher->plotter);
+    if ((multigrapher->x_axis).switch_axis_end == false) {
+      pl_fmove_r(multigrapher->plotter);
+      if (multigrapher->no_rotate_y_label != false) {
+        pl_alabel_r(multigrapher->plotter,0x72,99);
+        goto LAB_00409aa0;
+      }
+      pl_textangle_r(multigrapher->plotter,0x5a);
+      uVar5 = 0x78;
+    }
+    else {
+      pl_fmove_r();
+      if (multigrapher->no_rotate_y_label != false) {
+        pl_alabel_r(multigrapher->plotter,0x6c,99);
+        goto LAB_00409aa0;
+      }
+      pl_textangle_r(multigrapher->plotter,0x5a);
+      uVar5 = 0x74;
+    }
+    pl_alabel_r(multigrapher->plotter,99,uVar5);
+    pl_textangle_r(multigrapher->plotter);
+  }
+LAB_00409aa0:
+  pl_flushpl_r(multigrapher->plotter);
+  pl_restorestate_r(multigrapher->plotter);
+  if (((multigrapher->grid_spec != NO_AXES) && (draw_frame_of_graph::tick_warning_printed == false))
+     && ((((multigrapher->x_axis).omit_ticks == false && ((multigrapher->x_axis).labelled_ticks < 3)
+          ) || (((multigrapher->y_axis).omit_ticks == false &&
+                ((multigrapher->y_axis).labelled_ticks < 3)))))) {
+    fprintf(stderr,"%s: the tick spacing is adjusted, as there were too few labelled axis ticks\n",
+            progname);
+    draw_frame_of_graph::tick_warning_printed = true;
+  }
+  return;
+}
+

@@ -1,0 +1,14 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+void __do_global_dtors_aux(void)
+
+{
+  if (completed_6288 == '\0') {
+    __cxa_finalize(__dso_handle);
+    deregister_tm_clones();
+    completed_6288 = '\x01';
+  }
+  return;
+}
+

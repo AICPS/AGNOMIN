@@ -1,0 +1,13 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+void * xmemdup(void *p,size_t s)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = xmalloc(s);
+  pvVar1 = memcpy(pvVar1,p,s);
+  return pvVar1;
+}
+

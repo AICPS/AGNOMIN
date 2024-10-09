@@ -1,0 +1,114 @@
+
+/* WARNING: Could not reconcile some variable overlaps */
+
+BOOL compile_pattern(patstr *p,int options,int popts,int fromfile,char *fromtext,int count)
+
+{
+  char cVar1;
+  long lVar2;
+  patstr *ppVar3;
+  char *pcVar4;
+  pcre *ppVar5;
+  int iVar6;
+  long lVar7;
+  char *pcVar8;
+  ulong uVar9;
+  int iVar10;
+  long in_FS_OFFSET;
+  byte bVar11;
+  int errptr;
+  char *error;
+  char buffer [8202];
+  
+  bVar11 = 0;
+  lVar7 = -1;
+  pcVar8 = p->string;
+  lVar2 = *(long *)(in_FS_OFFSET + 0x28);
+  pcVar4 = pcVar8;
+  do {
+    if (lVar7 == 0) break;
+    lVar7 = lVar7 + -1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  iVar6 = ~(uint)lVar7 - 1;
+  if (p->compiled == (pcre *)0x0) {
+    uVar9 = (ulong)(uint)options;
+    if ((popts & 4U) != 0) {
+      pcVar4 = end_of_line(pcVar8,pcVar8 + iVar6,(int *)&error);
+      if ((int)error != 0) {
+        ppVar3 = add_pattern(pcVar4,p);
+        if (ppVar3 == (patstr *)0x0) goto LAB_001028d1;
+        iVar6 = ((int)pcVar4 - (int)pcVar8) - (int)error;
+      }
+    }
+    pcVar4 = prefix[popts];
+    __sprintf_chk(buffer,1,0x200a,"%s%.*s%s",pcVar4,iVar6,pcVar8,suffix[popts]);
+    ppVar5 = (pcre *)pcre_compile(buffer,uVar9,&error);
+    p->compiled = ppVar5;
+    if (ppVar5 == (pcre *)0x0) {
+      lVar7 = -1;
+      do {
+        if (lVar7 == 0) break;
+        lVar7 = lVar7 + -1;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + (ulong)bVar11 * -2 + 1;
+      } while (cVar1 != '\0');
+      iVar10 = errptr + 2 + (int)lVar7;
+      if (iVar6 < iVar10) {
+        iVar10 = iVar6;
+      }
+      if (fromfile == 0) {
+        if (count == 0) {
+          __fprintf_chk(stderr,1,"pcregrep: Error in %s regex at offset %d: %s\n",fromtext,iVar10,
+                        CONCAT44(error._4_4_,(int)error));
+          ppVar3 = (patstr *)0x0;
+        }
+        else {
+          __sprintf_chk(ordin::buffer,1,8,"%d",count,pcVar8);
+          for (pcVar8 = ordin::buffer; *pcVar8 != '\0'; pcVar8 = (char *)((long)pcVar8 + 1)) {
+          }
+          iVar6 = count % 10;
+          if (iVar6 == 2) {
+            *(undefined2 *)pcVar8 = 0x646e;
+            *(undefined *)((long)pcVar8 + 2) = 0;
+          }
+          else {
+            if (iVar6 == 3) {
+              *(undefined2 *)pcVar8 = 0x6472;
+              *(undefined *)((long)pcVar8 + 2) = 0;
+            }
+            else {
+              if (iVar6 == 1) {
+                *(undefined2 *)pcVar8 = 0x7473;
+                *(undefined *)((long)pcVar8 + 2) = 0;
+              }
+              else {
+                *(undefined2 *)pcVar8 = 0x6874;
+                *(undefined *)((long)pcVar8 + 2) = 0;
+              }
+            }
+          }
+          __fprintf_chk(stderr,1,"pcregrep: Error in %s %s regex at offset %d: %s\n",ordin::buffer,
+                        fromtext,iVar10,CONCAT44(error._4_4_,(int)error),
+                        (long)count / 10 & 0xffffffff);
+          ppVar3 = (patstr *)0x0;
+        }
+      }
+      else {
+        __fprintf_chk(stderr,1,"pcregrep: Error in regex in line %d of %s at offset %d: %s\n",count,
+                      fromtext,iVar10,CONCAT44(error._4_4_,(int)error),uVar9);
+        ppVar3 = (patstr *)0x0;
+      }
+      goto LAB_001028d1;
+    }
+  }
+  ppVar3 = (patstr *)0x1;
+LAB_001028d1:
+  if (lVar2 != *(long *)(in_FS_OFFSET + 0x28)) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail();
+  }
+  return (BOOL)ppVar3;
+}
+

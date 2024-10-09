@@ -1,0 +1,28 @@
+
+BOOL test_incexc(char *path,patstr *ip,patstr *ep)
+
+{
+  size_t sVar1;
+  int iVar2;
+  
+  sVar1 = strlen(path);
+  if (ep != (patstr *)0x0) {
+    do {
+      iVar2 = pcre_exec(ep->compiled,0,path,sVar1,0,0,0,0);
+      if (-1 < iVar2) {
+        return 0;
+      }
+      ep = ep->next;
+    } while (ep != (patstr *)0x0);
+  }
+  if (ip != (patstr *)0x0) {
+    while (iVar2 = pcre_exec(ip->compiled,0,path,sVar1,0,0,0,0), iVar2 < 0) {
+      ip = ip->next;
+      if (ip == (patstr *)0x0) {
+        return 0;
+      }
+    }
+  }
+  return 1;
+}
+

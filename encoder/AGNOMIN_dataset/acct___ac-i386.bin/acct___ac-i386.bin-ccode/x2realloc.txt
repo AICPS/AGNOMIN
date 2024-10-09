@@ -1,0 +1,27 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+void * x2realloc(void *p,size_t *pn)
+
+{
+  uint n;
+  void *pvVar1;
+  
+  n = *pn;
+  if (p == (void *)0x0) {
+    if (n == 0) {
+      n = 0x40;
+    }
+  }
+  else {
+    if (0xaaaaaaa9 < n) {
+                    /* WARNING: Subroutine does not return */
+      xalloc_die();
+    }
+    n = n + (n + 1 >> 1);
+  }
+  *pn = n;
+  pvVar1 = xrealloc(p,n);
+  return pvVar1;
+}
+

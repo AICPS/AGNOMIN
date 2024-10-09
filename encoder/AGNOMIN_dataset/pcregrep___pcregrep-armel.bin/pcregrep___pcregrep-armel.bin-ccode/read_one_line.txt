@@ -1,0 +1,30 @@
+
+uint read_one_line(char *buffer,int length,FILE *f)
+
+{
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  char *pcVar4;
+  bool bVar5;
+  
+  pcVar4 = buffer + -1;
+  uVar3 = 0;
+  do {
+    iVar2 = fgetc((FILE *)f);
+    if (iVar2 == -1) {
+      return uVar3;
+    }
+    pcVar4 = pcVar4 + 1;
+    *pcVar4 = (char)iVar2;
+    uVar3 = uVar3 + 1;
+    bVar5 = SBORROW4(iVar2,10);
+    iVar1 = iVar2 + -10;
+    if (iVar2 != 10) {
+      bVar5 = SBORROW4(uVar3,length);
+      iVar1 = uVar3 - length;
+    }
+  } while (iVar1 < 0 != bVar5);
+  return uVar3;
+}
+

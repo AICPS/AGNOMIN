@@ -1,0 +1,13 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+int _getopt_long_r(int argc,char **argv,char *options,rpl_option *long_options,int *opt_index,
+                  _getopt_data *d)
+
+{
+  int iVar1;
+  
+  iVar1 = _getopt_internal_r(argc,argv,options,long_options,opt_index,0,d,0);
+  return iVar1;
+}
+

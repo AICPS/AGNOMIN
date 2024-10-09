@@ -1,0 +1,1411 @@
+
+/* WARNING: Could not reconcile some variable overlaps */
+
+int main(int argc,char **argv)
+
+{
+  byte bVar1;
+  bool bVar2;
+  bool bVar3;
+  int iVar4;
+  FILE *pFVar5;
+  char *pcVar6;
+  byte *pbVar7;
+  int iVar8;
+  FILE **input;
+  FILE **input_00;
+  int iVar9;
+  char *pcVar10;
+  uint uVar11;
+  byte *pbVar12;
+  byte *pbVar13;
+  byte *pbVar14;
+  uint uVar15;
+  byte *pbVar16;
+  undefined uVar17;
+  FILE *__stream;
+  FILE *__stream_00;
+  FILE *__stream_01;
+  FILE *__stream_02;
+  FILE *__stream_03;
+  FILE *__stream_04;
+  FILE *__stream_05;
+  FILE *__stream_06;
+  FILE *__stream_07;
+  FILE *__stream_08;
+  FILE *__stream_09;
+  FILE *__stream_10;
+  FILE *__stream_11;
+  FILE *__stream_12;
+  FILE *__stream_13;
+  FILE *__stream_14;
+  FILE *__stream_15;
+  undefined4 extraout_s0;
+  FILE *__stream_16;
+  FILE *__stream_17;
+  FILE *__stream_18;
+  double dVar18;
+  double in_stack_fffffca8;
+  double dVar19;
+  double dVar20;
+  double in_stack_fffffcb0;
+  double trans_x;
+  bool in_stack_fffffcb8;
+  bool bVar21;
+  bool in_stack_fffffcbc;
+  bool bVar22;
+  grid_type in_stack_fffffcc0;
+  char *in_stack_fffffcc4;
+  int in_stack_fffffcc8;
+  char *in_stack_fffffccc;
+  int in_stack_fffffcd0;
+  undefined4 in_stack_fffffcd4;
+  undefined4 in_stack_fffffcd8;
+  bool in_stack_fffffcdc;
+  char *in_stack_fffffce0;
+  bool in_stack_fffffce4;
+  bool in_stack_fffffce8;
+  bool spec_y_spacing;
+  bool in_stack_fffffcec;
+  bool bVar23;
+  char *in_stack_fffffcf0;
+  char *in_stack_fffffcf4;
+  bool in_stack_fffffcf8;
+  char *in_stack_fffffd1c;
+  char *in_stack_fffffd2c;
+  undefined4 in_stack_fffffd30;
+  int iVar24;
+  char **no_rotate_y_label;
+  uint log_axis;
+  uint uVar25;
+  char *output_format;
+  bool omit_ticks;
+  bool clip_mode;
+  bool bVar26;
+  bool bVar27;
+  bool transpose_axes;
+  uint local_2a0;
+  bool local_29c;
+  Multigrapher *local_298;
+  char *local_294;
+  bool local_290;
+  uint local_28c;
+  bool local_288;
+  grid_type local_284;
+  int local_280;
+  int local_27c;
+  int local_278;
+  char *local_274;
+  char *local_270;
+  Reader *local_268;
+  char *local_264;
+  bool local_260;
+  bool local_25c;
+  data_type local_258;
+  uint local_254;
+  char *local_250;
+  char *local_24c;
+  char *local_248;
+  char *local_244;
+  char *local_240;
+  char *local_23c;
+  char *local_238;
+  uint local_234;
+  uint local_230;
+  uint local_22c;
+  uint local_228;
+  bool local_224;
+  char *local_218;
+  char *local_214;
+  char *local_210;
+  char *local_20c;
+  char *local_208;
+  char *local_204;
+  uint local_200;
+  int local_1fc;
+  bool local_1e8;
+  bool local_1e4;
+  double local_1e0;
+  double local_1d8;
+  double local_1d0;
+  double local_1c8;
+  bool local_1c0;
+  bool local_1bc;
+  bool local_1b8;
+  bool local_1b4;
+  double local_1a8;
+  char *local_1a0;
+  bool local_19c;
+  int opt_index;
+  int linemode_index;
+  int local_grid_style;
+  int local_symbol_index;
+  int local_clip_mode;
+  Point *p;
+  int points_length;
+  int no_of_points;
+  double margin_below;
+  double margin_left;
+  double plot_height;
+  double plot_width;
+  double tick_size;
+  double blankout_fraction;
+  double local_x_start;
+  double local_delta_x;
+  double local_symbol_size;
+  double local_font_size;
+  double local_title_font_size;
+  double local_frame_line_width;
+  double local_plot_line_width;
+  double local_min_x;
+  double local_min_y;
+  double local_max_x;
+  double local_max_y;
+  double local_spacing_x;
+  double local_spacing_y;
+  double local_fill_fraction;
+  double final_min_x;
+  double final_max_x;
+  double final_min_y;
+  double final_max_y;
+  double reposition_trans_x;
+  double reposition_trans_y;
+  double reposition_scale;
+  char name [32];
+  
+  dVar18 = 0.0;
+  no_of_points = 0;
+  linemode_index = 1;
+  local_1fc = 1;
+  local_1a8 = 0.0;
+  local_1c8 = 0.0;
+  local_1d0 = 0.0;
+  local_1d8 = 0.0;
+  local_1e0 = 0.0;
+  no_rotate_y_label = &progname;
+  transpose_axes = true;
+  log_axis = 1;
+  local_250 = (char *)0x0;
+  local_1e8 = false;
+  local_1e4 = false;
+  local_1b4 = false;
+  local_1b8 = false;
+  local_1bc = false;
+  local_1c0 = false;
+  bVar2 = true;
+  local_22c = 0;
+  local_254 = 0;
+  uVar15 = 1;
+  local_25c = false;
+  local_260 = false;
+  bVar27 = false;
+  clip_mode = false;
+  local_290 = false;
+  bVar26 = false;
+  local_23c = (char *)0x0;
+  local_240 = (char *)0x0;
+  local_244 = (char *)0x0;
+  local_270 = (char *)0x0;
+  local_248 = (char *)0x0;
+  local_234 = 0;
+  local_230 = 0;
+  local_228 = 0;
+  local_28c = 0;
+  local_2a0 = 0;
+  local_19c = false;
+  local_204 = (char *)0x0;
+  local_208 = (char *)0x0;
+  local_1a0 = (char *)0x0;
+  local_20c = (char *)0x0;
+  local_210 = (char *)0x0;
+  local_214 = (char *)0x0;
+  local_218 = (char *)0x0;
+  local_298 = (Multigrapher *)0x0;
+  local_294 = (char *)0x0;
+  omit_ticks = false;
+  local_27c = 0;
+  local_288 = false;
+  local_258 = T_ASCII;
+  local_268 = (Reader *)0x0;
+  local_280 = 0;
+  local_24c = (char *)0x0;
+  local_278 = 0;
+  local_274 = (char *)0x0;
+  local_284 = NO_AXES;
+  local_224 = false;
+  local_29c = false;
+  bVar3 = false;
+  iVar24 = 0;
+  local_264 = "ZapfDingbats";
+  final_min_x = 0.0;
+  final_max_x = 0.0;
+  final_min_y = 0.0;
+  final_max_y = 0.0;
+  reposition_trans_x = 0.0;
+  reposition_trans_y = 0.0;
+  plot_height._0_4_ = 0x33333333;
+  plot_height._4_4_ = (char *)0x3fe33333;
+  plot_width._0_4_ = 0x33333333;
+  plot_width._4_4_ = (char *)0x3fe33333;
+  local_238 = "black";
+  local_200 = 2;
+  reposition_scale = 1.0;
+  margin_below._0_4_ = -0x66666666;
+  margin_below._4_4_ = 0x3fc99999;
+  margin_left._0_4_ = 0x9999999a;
+  margin_left._4_4_ = 0x3fc99999;
+  output_format = "meta";
+  tick_size = 0.02;
+  blankout_fraction._0_4_ = 0xcccccccd;
+  blankout_fraction._4_4_ = 0x3ff4cccc;
+  points_length = 0x400;
+  uVar25 = 0;
+  dVar20 = 0.0525;
+  iVar8 = local_1fc;
+LAB_00011710:
+  do {
+    local_1fc = iVar8;
+    dVar19 = dVar20;
+    spec_y_spacing = SUB84(dVar19,0);
+    bVar23 = (bool)((ulonglong)dVar19 >> 0x20);
+    dVar20 = dVar19;
+    iVar8 = local_1fc;
+    if (bVar2) {
+      in_stack_fffffca8 =
+           (double)((ulonglong)in_stack_fffffca8 & 0xffffffff00000000 | ZEXT48(&opt_index));
+      pcVar6 = (char *)getopt_long(argc,argv,no_rotate_y_label[1],long_options,&opt_index);
+      pcVar10 = optarg;
+      if (pcVar6 == (char *)0xffffffff) {
+        bVar2 = false;
+        goto LAB_00011718;
+      }
+      if (pcVar6 == (char *)0x1) {
+        if (((*optarg == '-') && (pFVar5 = stdin, optarg[1] == '\0')) ||
+           (pFVar5 = (FILE *)fopen(optarg,"r"), pFVar5 != (FILE *)0x0)) goto LAB_0001178c;
+        open_file_for_reading(pcVar10,input_00);
+LAB_00011d78:
+        if (pcVar10 == (char *)0x6500) {
+          local_210 = xstrdup(optarg);
+        }
+        else {
+          if ((int)pcVar10 < 0x6501) {
+            if (pcVar10 == (char *)0x5700) {
+              iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&local_frame_line_width);
+              uVar17 = iVar4 < 0;
+              if (iVar4 < 1) {
+                iVar24 = 1;
+                fprintf(__stream_10,(char *)stderr,
+                        "%s: error: the line thickness for the frame should be a number, but it was `%s\'\n"
+                        ,*no_rotate_y_label);
+              }
+              if ((bool)uVar17) {
+                in_stack_fffffca8 = local_frame_line_width;
+                fprintf(stderr,"%s: the negative frame line thickness `%f\' is disregarded\n",
+                        *no_rotate_y_label);
+              }
+LAB_00011d10:
+              if (iVar24 != 0) goto LAB_00011d1c;
+            }
+            else {
+              if ((int)pcVar10 < 0x5701) {
+                if (pcVar10 != (char *)0x5400) {
+                  if (pcVar10 == (char *)0x5600) {
+                    display_version(progname,written,copyright);
+                    return 0;
+                  }
+                  goto LAB_00011d1c;
+                }
+LAB_00012fcc:
+                output_format = xstrdup(optarg);
+              }
+              else {
+                if (pcVar10 == (char *)0x5a00) {
+                  local_270 = xstrdup(optarg);
+                }
+                else {
+                  if (pcVar10 != (char *)0x6200) goto LAB_00011d1c;
+                  iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&blankout_fraction);
+                  if (iVar4 < 1) {
+                    fprintf(__stream_09,(char *)stderr,
+                            "%s: error: the fractional blankout should be a number, but it was `%s\'\n"
+                            ,*no_rotate_y_label,optarg);
+                    goto LAB_00011d1c;
+                  }
+                }
+              }
+            }
+          }
+          else {
+            if (pcVar10 == (char *)0x6c00) {
+              iVar8 = list_fonts(output_format,progname);
+              uVar25 = count_leading_zeroes(iVar8);
+              return uVar25 >> 5;
+            }
+            if ((int)pcVar10 < 0x6c01) {
+              if (pcVar10 == (char *)0x6600) {
+                iVar8 = display_fonts(output_format,progname);
+                uVar25 = count_leading_zeroes(iVar8);
+                return uVar25 >> 5;
+              }
+              if (pcVar10 == (char *)0x6800) {
+                display_usage(progname,hidden_options,usage_appendage,2);
+                return 0;
+              }
+              goto LAB_00011d1c;
+            }
+            if (pcVar10 == (char *)0x7100) {
+              local_218 = xstrdup(optarg);
+            }
+            else {
+              if (pcVar10 == (char *)0x7200) {
+                local_204 = xstrdup(optarg);
+              }
+              else {
+                pbVar16 = (byte *)optarg;
+                if (pcVar10 != (char *)0x7000) goto LAB_00011d1c;
+                while (uVar11 = (uint)*pbVar16, uVar11 != 0) {
+                  if (uVar11 == 0x3a) {
+                    pbVar16 = pbVar16 + 1;
+                  }
+                  else {
+                    if (9 < uVar11 - 0x30) {
+LAB_00012ea8:
+                      fprintf(stderr,"%s: the unparseable pen string `%s\' is disregarded\n",
+                              *no_rotate_y_label,optarg);
+                      break;
+                    }
+                    iVar4 = 0;
+                    do {
+                      pbVar14 = pbVar16;
+                      iVar9 = iVar4 * 10 + uVar11;
+                      uVar11 = (uint)pbVar14[1];
+                      iVar4 = iVar9 + -0x30;
+                      pbVar16 = pbVar14 + 1;
+                    } while (uVar11 - 0x30 < 10);
+                    if ((4 < iVar9 - 0x31U) || (uVar11 != 0x3d)) goto LAB_00012ea8;
+                    pbVar16 = pbVar14 + 2;
+                    pbVar7 = (byte *)((int)&reposition_scale + 7);
+                    iVar4 = 0;
+                    pbVar12 = pbVar16;
+                    do {
+                      bVar1 = *pbVar12;
+                      pbVar13 = pbVar12 + 1;
+                      if (bVar1 == 0x3a) {
+                        name[iVar4] = '\0';
+                        pbVar16 = pbVar13;
+                        break;
+                      }
+                      if (bVar1 == 0) {
+                        name[iVar4] = '\0';
+                        pbVar16 = pbVar12;
+                        break;
+                      }
+                      iVar4 = iVar4 + 1;
+                      pbVar7 = pbVar7 + 1;
+                      *pbVar7 = bVar1;
+                      pbVar12 = pbVar13;
+                    } while (pbVar13 != pbVar14 + 0x22);
+                    pcVar10 = xstrdup(name);
+                    colorstyle[iVar9 + -0x31] = pcVar10;
+                  }
+                }
+              }
+            }
+          }
+        }
+        goto LAB_00011710;
+      }
+      if (pcVar6 != (char *)0x72) {
+        if ((int)pcVar6 < 0x73) {
+          if (pcVar6 != (char *)0x53) {
+            if ((int)pcVar6 < 0x54) {
+              if (pcVar6 == (char *)0x49) {
+                bVar1 = *optarg;
+                if (bVar1 == 0x49) {
+LAB_000120d8:
+                  local_258 = T_INTEGER;
+                  goto LAB_00011710;
+                }
+                if (bVar1 < 0x4a) {
+                  if (bVar1 == 0x45) goto LAB_00013064;
+                  if (bVar1 < 0x46) {
+                    if (bVar1 == 0x41) goto LAB_00013128;
+                    if (bVar1 == 0x44) goto LAB_000129dc;
+                  }
+                  else {
+                    if (bVar1 == 0x46) {
+LAB_000130f4:
+                      local_258 = T_SINGLE;
+                      goto LAB_00011710;
+                    }
+                    if (bVar1 == 0x47) goto LAB_00012334;
+                  }
+                }
+                else {
+                  if (bVar1 == 0x65) {
+LAB_00013064:
+                    local_258 = T_ASCII_ERRORBAR;
+                    goto LAB_00011710;
+                  }
+                  if (bVar1 < 0x66) {
+                    if (bVar1 == 0x61) {
+LAB_00013128:
+                      local_258 = T_ASCII;
+                      goto LAB_00011710;
+                    }
+                    if (bVar1 == 100) {
+LAB_000129dc:
+                      local_258 = T_DOUBLE;
+                      goto LAB_00011710;
+                    }
+                  }
+                  else {
+                    if (bVar1 == 0x67) {
+LAB_00012334:
+                      local_258 = T_GNUPLOT;
+                      goto LAB_00011710;
+                    }
+                    if (bVar1 < 0x67) goto LAB_000130f4;
+                    if (bVar1 == 0x69) goto LAB_000120d8;
+                  }
+                }
+                fprintf(stderr,"%s: error: `%s\' is an unrecognized data option\n",
+                        *no_rotate_y_label);
+                goto LAB_00011d1c;
+              }
+              if ((int)pcVar6 < 0x4a) {
+                if (pcVar6 != (char *)0x45) {
+                  if ((int)pcVar6 < 0x46) {
+                    if (pcVar6 == (char *)0x42) {
+                      transpose_axes = transpose_axes ^ 1;
+                    }
+                    else {
+                      if (pcVar6 != (char *)0x43) goto LAB_00011d1c;
+                      omit_ticks = omit_ticks ^ 1;
+                      local_280 = 1;
+                    }
+                  }
+                  else {
+                    if (pcVar6 == (char *)0x46) {
+                      local_248 = xstrdup(optarg);
+                    }
+                    else {
+                      if (pcVar6 != (char *)0x48) goto LAB_00011d1c;
+                      uVar25 = uVar25 ^ 1;
+                    }
+                  }
+                  goto LAB_00011710;
+                }
+                bVar1 = *optarg;
+                if (bVar1 == 0x59) {
+LAB_00012470:
+                  local_230 = local_230 ^ 1;
+                  goto LAB_00011710;
+                }
+                if (bVar1 < 0x5a) {
+                  if (bVar1 != 0x58) goto LAB_00012dfc;
+LAB_00012a98:
+                  local_230 = local_230 ^ 2;
+                  goto LAB_00011710;
+                }
+                if (bVar1 == 0x78) goto LAB_00012a98;
+                if (bVar1 == 0x79) goto LAB_00012470;
+              }
+              else {
+                if (pcVar6 == (char *)0x4e) {
+                  bVar1 = *optarg;
+                  if (bVar1 == 0x59) {
+LAB_00011c20:
+                    local_234 = local_234 ^ 2;
+                    goto LAB_00011710;
+                  }
+                  if (bVar1 < 0x5a) {
+                    if (bVar1 == 0x58) {
+LAB_00012ab0:
+                      local_234 = local_234 ^ 1;
+                      goto LAB_00011710;
+                    }
+                  }
+                  else {
+                    if (bVar1 == 0x78) goto LAB_00012ab0;
+                    if (bVar1 == 0x79) goto LAB_00011c20;
+                  }
+                }
+                else {
+                  if ((int)pcVar6 < 0x4f) {
+                    if (pcVar6 == (char *)0x4b) {
+                      iVar8 = __isoc99_sscanf(optarg,&DAT_0001c980,&local_clip_mode);
+                      if ((iVar8 < 1) || (iVar8 = local_clip_mode, 2 < (uint)local_clip_mode)) {
+                        fprintf(__stream_12,(char *)stderr,
+                                "%s: the bad clip mode `%s\' is disregarded (it should be 0, 1, or 2)\n"
+                                ,*no_rotate_y_label,optarg);
+                        iVar8 = local_1fc;
+                      }
+                    }
+                    else {
+                      if (pcVar6 != (char *)0x4c) goto LAB_00011d1c;
+                      local_23c = xstrdup(optarg);
+                    }
+                    goto LAB_00011710;
+                  }
+                  if (pcVar6 == (char *)0x51) {
+                    local_2a0 = local_2a0 ^ 1;
+                    goto LAB_00011710;
+                  }
+                  if ((int)pcVar6 < 0x52) {
+                    if (pcVar6 != (char *)0x4f) goto LAB_00011d1c;
+                    local_1a0 = "yes";
+                    goto LAB_00011710;
+                  }
+                  bVar1 = *optarg;
+                  if (bVar1 == 0x59) {
+LAB_00012e44:
+                    local_228 = local_228 ^ 2;
+                    goto LAB_00011710;
+                  }
+                  if (bVar1 < 0x5a) {
+                    if (bVar1 != 0x58) goto LAB_00012dfc;
+LAB_00012f0c:
+                    local_228 = local_228 ^ 1;
+                    goto LAB_00011710;
+                  }
+                  if (bVar1 == 0x78) goto LAB_00012f0c;
+                  if (bVar1 == 0x79) goto LAB_00012e44;
+                }
+              }
+            }
+            else {
+              if (pcVar6 == (char *)0x66) {
+                iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&local_font_size);
+                if (iVar4 < 1) {
+                  fprintf(__stream_03,(char *)stderr,
+                          "%s: error: the font size should be a number, but it was `%s\'\n",progname
+                          ,optarg);
+                  goto LAB_00011d1c;
+                }
+                if (iVar4 < 0) {
+                  dVar20 = local_font_size;
+                  if (iVar4 < 0) {
+                    in_stack_fffffca8 = local_font_size;
+                    fprintf(__stream_03,(char *)stderr,
+                            "%s: the negative font size `%f\' is disregarded\n",*no_rotate_y_label);
+                    dVar20 = dVar19;
+                  }
+                }
+                else {
+                  in_stack_fffffca8 = local_font_size;
+                  fprintf(__stream_03,(char *)stderr,
+                          "%s: the too-large font size `%f\' is disregarded (it should be less than 1.0)\n"
+                          ,*no_rotate_y_label);
+                }
+                goto LAB_00011710;
+              }
+              if ((int)pcVar6 < 0x67) {
+                if (pcVar6 == (char *)0x58) {
+                  local_244 = xstrdup(optarg);
+                  goto LAB_00011710;
+                }
+                if ((int)pcVar6 < 0x59) {
+                  if (pcVar6 == (char *)0x54) goto LAB_00012fcc;
+                  if (pcVar6 == (char *)0x57) {
+                    iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&local_plot_line_width);
+                    uVar17 = iVar4 < 0;
+                    if (iVar4 < 1) {
+                      iVar24 = 1;
+                      fprintf(__stream_16,(char *)stderr,
+                              "%s: error: the line thickness for the plot should be a number, but it was `%s\'\n"
+                              ,*no_rotate_y_label);
+                    }
+                    if ((bool)uVar17) {
+                      in_stack_fffffca8 = local_plot_line_width;
+                      fprintf(stderr,"%s: the negative plot line thickness `%f\' is disregarded\n",
+                              *no_rotate_y_label);
+                    }
+                    else {
+                      local_278 = 1;
+                    }
+                    goto LAB_00011d10;
+                  }
+                  goto LAB_00011d1c;
+                }
+                if (pcVar6 != (char *)0x59) {
+                  if (pcVar6 != (char *)0x61) goto LAB_00011d1c;
+                  if (optind < argc) {
+                    iVar4 = __isoc99_sscanf(argv[optind],&DAT_0001c8bc,&local_delta_x);
+                    if (0 < iVar4) {
+                      optind = optind + 1;
+                      if (iVar4 == 0) {
+                        local_288 = false;
+                        goto LAB_00011710;
+                      }
+                      if ((optind < argc) &&
+                         (iVar4 = __isoc99_sscanf(extraout_s0,argv[optind],&DAT_0001c8bc,
+                                                  &local_x_start), 0 < iVar4)) {
+                        local_288 = true;
+                        optind = optind + 1;
+                        goto LAB_00011710;
+                      }
+                    }
+                  }
+                  local_288 = true;
+                  goto LAB_00011710;
+                }
+                local_240 = xstrdup(optarg);
+                goto LAB_00011710;
+              }
+              if (pcVar6 == (char *)0x6b) {
+                iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&tick_size);
+                if (iVar4 < 1) {
+                  fprintf(__stream_01,(char *)stderr,
+                          "%s: error: the tick size should be a number, but it was `%s\'\n",
+                          *no_rotate_y_label,optarg);
+                  goto LAB_00011d1c;
+                }
+                goto LAB_00011710;
+              }
+              if ((int)pcVar6 < 0x6c) {
+                if (pcVar6 == (char *)0x67) {
+                  iVar4 = __isoc99_sscanf(optarg,&DAT_0001c980,&local_grid_style);
+                  if (iVar4 < 1) {
+                    fprintf(__stream_14,(char *)stderr,
+                            "%s: error: the grid style should be a (small) integer, but it was `%s\'\n"
+                            ,*no_rotate_y_label,optarg);
+                    goto LAB_00011d1c;
+                  }
+                  switch(local_grid_style) {
+                  case 0:
+                    local_200 = 0;
+                    break;
+                  case 1:
+                    local_200 = 1;
+                    break;
+                  case 2:
+                    local_200 = 2;
+                    break;
+                  case 3:
+                    local_200 = 3;
+                    break;
+                  case 4:
+                    local_200 = 4;
+                    break;
+                  default:
+                    fprintf(__stream_14,(char *)stderr,
+                            "%s: error: the grid style number `%s\' is out of bounds\n",
+                            *no_rotate_y_label,optarg);
+                    goto LAB_00011d1c;
+                  }
+                }
+                else {
+                  if (pcVar6 != (char *)0x68) goto LAB_00011d1c;
+                  iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&plot_height);
+                  if (iVar4 < 1) {
+                    fprintf(__stream_13,(char *)stderr,
+                            "%s: error: the plot height should be a number, but it was `%s\'\n",
+                            *no_rotate_y_label,optarg);
+                    goto LAB_00011d1c;
+                  }
+                }
+                goto LAB_00011710;
+              }
+              if (pcVar6 == (char *)0x6d) {
+                iVar4 = __isoc99_sscanf(optarg,&DAT_0001c980,&linemode_index);
+                if (iVar4 < 1) {
+                  fprintf(__stream_07,(char *)stderr,
+                          "%s: error: the linemode should be a (small) integer, but it was `%s\'\n",
+                          *no_rotate_y_label,optarg);
+                  goto LAB_00011d1c;
+                }
+                local_274 = (char *)0x1;
+                goto LAB_00011710;
+              }
+              if (0x6c < (int)pcVar6) {
+                if (pcVar6 != (char *)0x71) goto LAB_00011d1c;
+                iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&local_fill_fraction);
+                if (iVar4 < 1) {
+                  fprintf(__stream_00,(char *)stderr,
+                          "%s: error: the fill fraction should be a number, but it was `%s\'\n",
+                          *no_rotate_y_label,optarg);
+                  goto LAB_00011d1c;
+                }
+                if (iVar4 < 1) {
+                  local_24c = (char *)0x1;
+                }
+                else {
+                  in_stack_fffffca8 = local_fill_fraction;
+                  fprintf(__stream_00,(char *)stderr,
+                          "%s: the region fill fraction `%f\' was disregarded (it should be less than or equal to 1.0)\n"
+                          ,*no_rotate_y_label);
+                }
+                goto LAB_00011710;
+              }
+              bVar1 = *optarg;
+              if (bVar1 == 0x59) {
+LAB_00012e98:
+                local_28c = local_28c ^ 2;
+                goto LAB_00011710;
+              }
+              if (0x59 < bVar1) {
+                if (bVar1 != 0x78) {
+                  if (bVar1 == 0x79) goto LAB_00012e98;
+                  goto LAB_00012dfc;
+                }
+LAB_00012efc:
+                local_28c = local_28c ^ 1;
+                goto LAB_00011710;
+              }
+              if (bVar1 == 0x58) goto LAB_00012efc;
+            }
+LAB_00012dfc:
+            fprintf(stderr,"%s: the unrecognized axis specification `%s\' is disregarded\n",
+                    *no_rotate_y_label);
+            goto LAB_00011710;
+          }
+          if ((argc <= optind) ||
+             (iVar4 = __isoc99_sscanf(argv[optind],&DAT_0001c980,&local_symbol_index), iVar4 < 1)) {
+            local_27c = 1;
+            local_29c = true;
+            goto LAB_00011710;
+          }
+          local_27c = local_symbol_index;
+          if (0xff < (uint)local_symbol_index) {
+            local_27c = 1;
+            fprintf(__stream_15,(char *)stderr,
+                    "%s: the symbol type `%d\' is disregarded (it should be in the range 0..255)\n",
+                    progname,local_symbol_index);
+          }
+          optind = optind + 1;
+          if (optind < argc) {
+            iVar4 = __isoc99_sscanf(argv[optind],&DAT_0001c8bc,&local_symbol_size);
+            if (0 < iVar4) {
+              if (iVar4 < 0) {
+                in_stack_fffffca8 = local_symbol_size;
+                fprintf(__stream_17,(char *)stderr,
+                        "%s: the negative symbol size `%f\' is disregarded\n",*no_rotate_y_label);
+              }
+              else {
+                if (iVar4 == 0) {
+                  fprintf(__stream_17,(char *)stderr,
+                          "%s: the request for a zero symbol size is disregarded\n",
+                          *no_rotate_y_label);
+                }
+                else {
+                  local_224 = true;
+                }
+              }
+              local_29c = true;
+              optind = optind + 1;
+              goto LAB_00011710;
+            }
+          }
+          local_29c = true;
+          goto LAB_00011710;
+        }
+        if (pcVar6 != (char *)0x5200) {
+          pcVar10 = pcVar6;
+          if (0x5200 < (int)pcVar6) goto LAB_00011d78;
+          if (pcVar6 == (char *)0x79) {
+            if (optind < argc) {
+              pcVar10 = argv[optind];
+              if ((*pcVar10 != '-') || (local_290 = (bool)(byte)pcVar10[1], local_290 != false)) {
+                iVar4 = __isoc99_sscanf(pcVar10,&DAT_0001c8bc,&local_min_y);
+                if (iVar4 < 1) goto LAB_00011fe4;
+                local_1d8 = local_min_y;
+                local_290 = true;
+              }
+              optind = optind + 1;
+              if (optind < argc) {
+                pcVar10 = argv[optind];
+                if ((*pcVar10 != '-') || (bVar27 = (bool)(byte)pcVar10[1], bVar27 != false)) {
+                  iVar4 = __isoc99_sscanf(pcVar10,&DAT_0001c8bc,&local_max_y);
+                  if (iVar4 < 1) goto LAB_00012db4;
+                  bVar27 = true;
+                  local_1c8 = local_max_y;
+                }
+                optind = optind + 1;
+                if (optind < argc) {
+                  pcVar10 = argv[optind];
+                  if ((*pcVar10 != '-') || (local_25c = (bool)(byte)pcVar10[1], local_25c != false))
+                  {
+                    iVar4 = __isoc99_sscanf(pcVar10,&DAT_0001c8bc,&local_spacing_y);
+                    if (iVar4 < 1) goto LAB_000132b4;
+                    local_25c = true;
+                    local_1a8 = local_spacing_y;
+                  }
+LAB_00013308:
+                  optind = optind + 1;
+                }
+                else {
+LAB_000132b4:
+                  local_25c = false;
+                }
+              }
+              else {
+LAB_00012db4:
+                local_25c = false;
+                bVar27 = false;
+              }
+            }
+            else {
+LAB_00011fe4:
+              local_25c = false;
+              bVar27 = false;
+              local_290 = false;
+            }
+          }
+          else {
+            if ((int)pcVar6 < 0x7a) {
+              if (pcVar6 == (char *)0x75) {
+                iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&margin_below);
+                if (iVar4 < 1) {
+                  fprintf(__stream_08,(char *)stderr,
+                          "%s: error: the upward displacement for the plot should be a number, but it was `%s\'\n"
+                          ,*no_rotate_y_label,optarg);
+                  goto LAB_00011d1c;
+                }
+              }
+              else {
+                if ((int)pcVar6 < 0x76) {
+                  if (pcVar6 == (char *)0x73) {
+                    local_19c = true;
+                  }
+                  else {
+                    if (pcVar6 != (char *)0x74) goto LAB_00011d1c;
+                    local_294 = (char *)((uint)local_294 ^ 1);
+                  }
+                }
+                else {
+                  if (pcVar6 == (char *)0x77) {
+                    iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&plot_width);
+                    if (iVar4 < 1) {
+                      fprintf(__stream_11,(char *)stderr,
+                              "%s: error: the plot width should be a number, but it was `%s\'\n",
+                              *no_rotate_y_label,optarg);
+                      goto LAB_00011d1c;
+                    }
+                  }
+                  else {
+                    if (pcVar6 != (char *)0x78) goto LAB_00011d1c;
+                    if (optind < argc) {
+                      pcVar10 = argv[optind];
+                      if ((*pcVar10 != '-') || (bVar26 = (bool)(byte)pcVar10[1], bVar26 != false)) {
+                        iVar4 = __isoc99_sscanf(pcVar10,&DAT_0001c8bc,&local_min_x);
+                        if (iVar4 < 1) goto LAB_00012ed0;
+                        bVar26 = true;
+                        local_1e0 = local_min_x;
+                      }
+                      optind = optind + 1;
+                      if (optind < argc) {
+                        pcVar10 = argv[optind];
+                        if ((*pcVar10 != '-') ||
+                           (clip_mode = (bool)(byte)pcVar10[1], clip_mode != false)) {
+                          iVar4 = __isoc99_sscanf(pcVar10,&DAT_0001c8bc,&local_max_x);
+                          if (iVar4 < 1) goto LAB_00012da4;
+                          clip_mode = true;
+                          local_1d0 = local_max_x;
+                        }
+                        optind = optind + 1;
+                        if (optind < argc) {
+                          pcVar10 = argv[optind];
+                          if ((*pcVar10 != '-') ||
+                             (local_260 = (bool)(byte)pcVar10[1], local_260 != false)) {
+                            iVar4 = __isoc99_sscanf(pcVar10,&DAT_0001c8bc,&local_spacing_x);
+                            if (iVar4 < 1) goto LAB_00013318;
+                            local_260 = true;
+                          }
+                          goto LAB_00013308;
+                        }
+LAB_00013318:
+                        local_260 = false;
+                      }
+                      else {
+LAB_00012da4:
+                        local_260 = false;
+                        clip_mode = false;
+                      }
+                    }
+                    else {
+LAB_00012ed0:
+                      local_260 = false;
+                      clip_mode = false;
+                      bVar26 = false;
+                    }
+                  }
+                }
+              }
+            }
+            else {
+              if (pcVar6 == (char *)0x4600) {
+                iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&local_title_font_size);
+                uVar17 = iVar4 == 0;
+                if (iVar4 < 1) {
+                  iVar24 = 1;
+                  fprintf(__stream,(char *)stderr,
+                          "%s: error: the font size for the title should be a number, but it was `%s\'\n"
+                          ,*no_rotate_y_label);
+                }
+                else {
+                  if (iVar4 < 0) {
+                    if (iVar4 < 0) {
+                      in_stack_fffffca8 = local_title_font_size;
+                      fprintf(__stream,(char *)stderr,
+                              "%s: the negative title font size `%f\' is disregarded\n",
+                              *no_rotate_y_label);
+                    }
+                  }
+                  else {
+                    in_stack_fffffca8 = local_title_font_size;
+                    fprintf(__stream,(char *)stderr,
+                            "%s: the too-large title font size `%f\' is disregarded (it should be less than 1.0)\n"
+                            ,*no_rotate_y_label);
+                  }
+                }
+                if ((bool)uVar17) {
+                  fprintf(stderr,"%s: the request for a zero title font size is disregarded\n",
+                          *no_rotate_y_label);
+                }
+                goto LAB_00011d10;
+              }
+              if ((int)pcVar6 < 0x4601) {
+                if (pcVar6 == (char *)0x4200) {
+                  local_214 = xstrdup(optarg);
+                }
+                else {
+                  if (pcVar6 != (char *)0x4300) goto LAB_00011d1c;
+                  local_238 = xstrdup(optarg);
+                }
+              }
+              else {
+                if (pcVar6 == (char *)0x4d00) {
+                  local_20c = xstrdup(optarg);
+                }
+                else {
+                  if (pcVar6 == (char *)0x5000) {
+                    local_208 = xstrdup(optarg);
+                  }
+                  else {
+                    if (pcVar6 != (char *)0x4700) goto LAB_00011d1c;
+                    local_284 = AXES;
+                    local_264 = xstrdup(optarg);
+                  }
+                }
+              }
+            }
+          }
+          goto LAB_00011710;
+        }
+        iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&reposition_trans_x);
+        if (iVar4 < 1) {
+          fprintf(__stream_04,(char *)stderr,
+                  "%s: error: the x repositioning should be a number, but it was `%s\'\n",progname,
+                  optarg);
+          return 1;
+        }
+        __stream_18 = __stream_04;
+        if (optind < argc) {
+          iVar4 = __isoc99_sscanf(__stream_04,argv[optind],&DAT_0001c8bc,&reposition_trans_y);
+          if (iVar4 < 1) {
+            fprintf(__stream_05,(char *)stderr,
+                    "%s: error: the y repositioning should be a number, but it was `%s\'\n",progname
+                    ,argv[optind]);
+            return 1;
+          }
+          optind = optind + 1;
+          __stream_18 = __stream_05;
+          if (optind < argc) {
+            iVar4 = __isoc99_sscanf(__stream_05,argv[optind],&DAT_0001c8bc,&reposition_scale);
+            if (iVar4 < 1) {
+              fprintf(__stream_06,(char *)stderr,
+                      "%s: error: the reposition scale factor should be a number, but it was `%s\'\n"
+                      ,progname,optarg);
+              return 1;
+            }
+            if (iVar4 == 0) {
+              fprintf(__stream_06,(char *)stderr,
+                      "%s: error: the reposition scale factor should not be zero\n",progname);
+              return 1;
+            }
+            optind = optind + 1;
+            if (uVar15 == 0) {
+              if (!bVar3) {
+                dVar19 = (double)CONCAT44(&final_min_y,&final_min_x);
+                trans_x = (double)CONCAT44(&final_max_y,&final_max_x);
+                bVar21 = local_1c0;
+                bVar22 = local_1bc;
+                array_bounds(p,no_of_points,(bool)local_250,local_1fc,&final_min_x,&final_min_y,
+                             &final_max_x,&final_max_y,local_1c0,local_1bc,local_1b8,local_1b4);
+                if (log_axis != 0) {
+                  dVar19 = (double)CONCAT44(local_1a0,local_20c);
+                  trans_x = (double)CONCAT44(local_204,local_208);
+                  bVar21 = local_19c;
+                  local_298 = new_multigrapher(output_format,local_218,local_214,local_210,local_20c
+                                               ,local_1a0,local_208,local_204,local_19c);
+                  if (local_298 == (Multigrapher *)0x0) {
+                    fprintf(stderr,"%s: error: the graphing device could not be opened\n",progname);
+                    return 1;
+                  }
+                }
+                begin_graph(local_298,dVar19,trans_x,(double)CONCAT44(bVar22,bVar21));
+                pcVar10 = local_248;
+                if (local_248 != (char *)0x0) {
+                  pcVar10 = (char *)0x1;
+                }
+                if (local_270 != (char *)0x0) {
+                  pcVar10 = (char *)0x0;
+                }
+                if (pcVar10 != (char *)0x0) {
+                  local_270 = local_248;
+                }
+                in_stack_fffffca8 =
+                     (double)((ulonglong)dVar19 & 0xffffffff00000000 | (ulonglong)local_200);
+                in_stack_fffffcb0 = dVar18;
+                in_stack_fffffcb8 = local_1e4;
+                in_stack_fffffcbc = local_1e8;
+                in_stack_fffffcc0 = plot_width._0_4_;
+                in_stack_fffffcc4 = plot_width._4_4_;
+                in_stack_fffffcc8 = plot_height._0_4_;
+                in_stack_fffffccc = plot_height._4_4_;
+                in_stack_fffffcd0 = margin_below._0_4_;
+                in_stack_fffffcd4 = margin_below._4_4_;
+                in_stack_fffffcd8 = margin_left._0_4_;
+                in_stack_fffffcdc = margin_left._4_4_;
+                in_stack_fffffce0 = local_248;
+                in_stack_fffffcf0 = local_244;
+                in_stack_fffffcf4 = local_248;
+                in_stack_fffffcf8 = spec_y_spacing;
+                set_graph_parameters
+                          (local_298,in_stack_fffffca8,local_238,local_23c,local_270,dVar18,
+                           (double)CONCAT44(local_1e8,local_1e4),plot_width._0_4_,
+                           (double)CONCAT44(plot_height._0_4_,plot_width._4_4_),
+                           (double)CONCAT44(margin_below._0_4_,plot_height._4_4_),
+                           (double)CONCAT44(margin_left._0_4_,margin_below._4_4_),
+                           (double)CONCAT44(local_248,margin_left._4_4_),
+                           (double)CONCAT44(spec_y_spacing,in_stack_fffffce4),
+                           (double)CONCAT44(local_244,bVar23),(bool)local_248,spec_y_spacing,
+                           (double)CONCAT44(local_240,bVar23),(double)CONCAT44(local_254,local_2a0),
+                           (double)CONCAT44(local_230,local_22c),
+                           (double)CONCAT44(local_1fc,local_234),in_stack_fffffd1c,
+                           (double)CONCAT44(blankout_fraction._4_4_,blankout_fraction._0_4_),
+                           local_250,in_stack_fffffd2c,(double)CONCAT44(iVar24,in_stack_fffffd30),
+                           (char *)argv,(bool)no_rotate_y_label,log_axis,uVar25,(int)output_format,
+                           omit_ticks,clip_mode,(double)CONCAT44(bVar27,bVar26),transpose_axes);
+                draw_frame_of_graph(local_298,log_axis ^ 1);
+                plot_point_array(local_298,p,no_of_points);
+                free(p);
+                no_of_points = 0;
+                in_stack_fffffce8 = spec_y_spacing;
+                in_stack_fffffcec = bVar23;
+              }
+              if (uVar25 != 0) {
+                end_polyline_and_flush(local_298);
+                draw_frame_of_graph(local_298,false);
+              }
+              log_axis = 0;
+              uVar15 = 1;
+              end_graph(local_298);
+            }
+            else {
+              uVar15 = 1;
+            }
+            goto LAB_00011710;
+          }
+        }
+        fprintf(__stream_18,(char *)stderr,
+                "%s: error: one or more arguments to the --reposition option were missing\n",
+                progname);
+        return 1;
+      }
+      iVar4 = __isoc99_sscanf(optarg,&DAT_0001c8bc,&margin_left);
+      if (iVar4 < 1) {
+        fprintf(__stream_02,(char *)stderr,
+                "%s: error: the rightward displacement for the plot should be a number, but it was `%s\'\n"
+                ,progname,optarg);
+LAB_00011d1c:
+        fprintf(stderr,"Try `%s --help\' for more information\n",progname);
+        return 1;
+      }
+      goto LAB_00011710;
+    }
+LAB_00011718:
+    pFVar5 = stdin;
+    if (optind < argc) {
+      pcVar10 = argv[optind];
+      if ((*pcVar10 != '-') || (pcVar10[1] != '\0')) {
+        pFVar5 = (FILE *)fopen(pcVar10,"r");
+        if (pFVar5 == (FILE *)0x0) {
+          open_file_for_reading(pcVar10,input);
+          dVar18 = local_1c8;
+          goto LAB_00013760;
+        }
+        pcVar10 = argv[optind];
+      }
+      optind = optind + 1;
+      optarg = pcVar10;
+    }
+    else {
+      if ((log_axis & uVar15) == 0) {
+        if (uVar15 == 0) {
+          if (!bVar3) {
+            dVar20 = (double)CONCAT44(&final_min_y,&final_min_x);
+            dVar19 = (double)CONCAT44(&final_max_y,&final_max_x);
+            uVar15 = uVar25;
+            array_bounds(p,no_of_points,(bool)local_250,local_1fc,&final_min_x,&final_min_y,
+                         &final_max_x,&final_max_y,local_1c0,local_1bc,local_1b8,local_1b4);
+            if (log_axis != 0) {
+              dVar20 = (double)CONCAT44(local_1a0,local_20c);
+              dVar19 = (double)CONCAT44(local_204,local_208);
+              local_298 = new_multigrapher(output_format,local_218,local_214,local_210,local_20c,
+                                           local_1a0,local_208,local_204,local_19c);
+              local_1c0 = local_19c;
+              if (local_298 == (Multigrapher *)0x0) goto LAB_00012a64;
+            }
+            begin_graph(local_298,dVar20,dVar19,(double)CONCAT44(local_1bc,local_1c0));
+            pcVar10 = local_248;
+            if (local_248 != (char *)0x0) {
+              pcVar10 = (char *)0x1;
+            }
+            if (local_270 != (char *)0x0) {
+              pcVar10 = (char *)0x0;
+            }
+            if (pcVar10 != (char *)0x0) {
+              local_270 = local_248;
+            }
+            set_graph_parameters
+                      (local_298,
+                       (double)((ulonglong)dVar20 & 0xffffffff00000000 | (ulonglong)local_200),
+                       local_238,local_23c,local_270,dVar18,(double)CONCAT44(local_1e8,local_1e4),
+                       plot_width._0_4_,(double)CONCAT44(plot_height._0_4_,plot_width._4_4_),
+                       (double)CONCAT44(margin_below._0_4_,plot_height._4_4_),
+                       (double)CONCAT44(margin_left._0_4_,margin_below._4_4_),
+                       (double)CONCAT44(local_248,margin_left._4_4_),
+                       (double)CONCAT44(spec_y_spacing,in_stack_fffffce4),
+                       (double)CONCAT44(local_244,bVar23),(bool)local_248,spec_y_spacing,
+                       (double)CONCAT44(local_240,bVar23),(double)CONCAT44(local_254,local_2a0),
+                       (double)CONCAT44(local_230,local_22c),(double)CONCAT44(local_1fc,local_234),
+                       in_stack_fffffd1c,
+                       (double)CONCAT44(blankout_fraction._4_4_,blankout_fraction._0_4_),local_250,
+                       in_stack_fffffd2c,(double)CONCAT44(iVar24,in_stack_fffffd30),(char *)argv,
+                       (bool)no_rotate_y_label,log_axis,uVar15,(int)output_format,omit_ticks,
+                       clip_mode,(double)CONCAT44(bVar27,bVar26),transpose_axes);
+            draw_frame_of_graph(local_298,log_axis ^ 1);
+            plot_point_array(local_298,p,no_of_points);
+            free(p);
+            no_of_points = 0;
+          }
+          if (uVar25 != 0) {
+            end_polyline_and_flush(local_298);
+            draw_frame_of_graph(local_298,false);
+          }
+          end_graph(local_298);
+        }
+        iVar8 = delete_multigrapher(local_298);
+        if (iVar8 < 0) {
+          fprintf(stderr,"%s: error: the graphing device could not be closed\n",progname);
+          return 1;
+        }
+        return 0;
+      }
+    }
+LAB_0001178c:
+    if (uVar15 != 0) {
+      if ((local_28c & 1) != 0) {
+        if (bVar26 != false) {
+          dVar18 = local_1e0;
+          if ((int)bVar26 < 1) goto LAB_00013760;
+          local_1e0 = log10(in_stack_fffffca8);
+        }
+        if (clip_mode != false) {
+          dVar18 = local_1d0;
+          if ((int)clip_mode < 1) goto LAB_00013760;
+          local_1d0 = log10(in_stack_fffffca8);
+        }
+      }
+      if ((local_28c & 2) != 0) {
+        if (local_290 != false) {
+          dVar18 = local_1d8;
+          if (local_290 == false) goto LAB_00013760;
+          local_1d8 = log10(in_stack_fffffca8);
+        }
+        if (bVar27 != false) {
+          dVar18 = local_1c8;
+          if ((int)bVar27 < 1) {
+LAB_00013760:
+            fprintf(stderr,"%s: error: the limit %g on a logarithmic axis is nonpositive\n",progname
+                    ,&progname,dVar18);
+            return 1;
+          }
+          local_1c8 = log10(in_stack_fffffca8);
+        }
+      }
+      local_22c = local_228;
+      if ((clip_mode | bVar26) == 0) {
+        local_22c = local_228 | 1;
+      }
+      final_min_x = local_1e0;
+      final_max_x = local_1d0;
+      if ((bVar27 | local_290) == 0) {
+        local_22c = local_22c | 2;
+      }
+      final_min_y = local_1d8;
+      bVar3 = bVar26 != false && clip_mode != false;
+      final_max_y = local_1c8;
+      if (bVar26 != false && clip_mode != false) {
+        if (local_290 == false || bVar27 == false) {
+          bVar3 = false;
+        }
+        else {
+          bVar3 = true;
+        }
+      }
+      local_250 = local_294;
+      local_1e8 = local_25c;
+      local_1e4 = local_260;
+      local_1bc = local_290;
+      local_254 = local_28c;
+      dVar18 = local_1a8;
+      local_1c0 = bVar26;
+      local_1b8 = clip_mode;
+      local_1b4 = bVar27;
+    }
+    if (bVar3) {
+      if (uVar15 == 0) {
+        in_stack_fffffca8 = (double)CONCAT44(local_264,local_27c);
+        in_stack_fffffcb0 = (double)CONCAT44(omit_ticks,linemode_index);
+        alter_reader_parameters
+                  (local_268,pFVar5,local_258,local_288,in_stack_fffffca8,in_stack_fffffcb0,
+                   local_29c,(double)CONCAT44(local_284,local_224),local_274,local_278,
+                   (double)CONCAT44(local_280,local_24c),
+                   (double)CONCAT44(in_stack_fffffcd8,in_stack_fffffcd4),in_stack_fffffcdc,
+                   (bool)in_stack_fffffce0,in_stack_fffffce4,in_stack_fffffce8,in_stack_fffffcec,
+                   (bool)in_stack_fffffcf0,(bool)in_stack_fffffcf4,in_stack_fffffcf8);
+      }
+      else {
+        local_224 = omit_ticks;
+        if (log_axis != 0) {
+          in_stack_fffffca8 = (double)CONCAT44(local_1a0,local_20c);
+          in_stack_fffffcb0 = (double)CONCAT44(local_204,local_208);
+          in_stack_fffffcb8 = local_19c;
+          local_298 = new_multigrapher(output_format,local_218,local_214,local_210,local_20c,
+                                       local_1a0,local_208,local_204,local_19c);
+          local_224 = omit_ticks;
+          if (local_298 == (Multigrapher *)0x0) {
+LAB_00012a64:
+            fprintf(stderr,"%s: error: the graphing device could not be opened\n",progname);
+            return 1;
+          }
+        }
+        begin_graph(local_298,in_stack_fffffca8,in_stack_fffffcb0,
+                    (double)CONCAT44(in_stack_fffffcbc,in_stack_fffffcb8));
+        pcVar10 = local_248;
+        if (local_248 != (char *)0x0) {
+          pcVar10 = (char *)0x1;
+        }
+        if (local_270 != (char *)0x0) {
+          pcVar10 = (char *)0x0;
+        }
+        if (pcVar10 != (char *)0x0) {
+          local_270 = local_248;
+        }
+        local_284 = plot_width._0_4_;
+        local_274 = plot_width._4_4_;
+        local_278 = plot_height._0_4_;
+        local_24c = plot_height._4_4_;
+        local_280 = margin_below._0_4_;
+        in_stack_fffffcd4 = margin_below._4_4_;
+        in_stack_fffffcd8 = margin_left._0_4_;
+        in_stack_fffffcdc = margin_left._4_4_;
+        in_stack_fffffce0 = local_248;
+        in_stack_fffffcf0 = local_244;
+        in_stack_fffffcf4 = local_248;
+        in_stack_fffffcf8 = spec_y_spacing;
+        set_graph_parameters
+                  (local_298,
+                   (double)((ulonglong)in_stack_fffffca8 & 0xffffffff00000000 | (ulonglong)local_200
+                           ),local_238,local_23c,local_270,dVar18,
+                   (double)CONCAT44(local_1e8,local_1e4),plot_width._0_4_,
+                   (double)CONCAT44(plot_height._0_4_,plot_width._4_4_),
+                   (double)CONCAT44(margin_below._0_4_,plot_height._4_4_),
+                   (double)CONCAT44(margin_left._0_4_,margin_below._4_4_),
+                   (double)CONCAT44(local_248,margin_left._4_4_),
+                   (double)CONCAT44(spec_y_spacing,in_stack_fffffce4),
+                   (double)CONCAT44(local_244,bVar23),(bool)local_248,spec_y_spacing,
+                   (double)CONCAT44(local_240,bVar23),(double)CONCAT44(local_254,local_2a0),
+                   (double)CONCAT44(local_230,local_22c),(double)CONCAT44(local_1fc,local_234),
+                   in_stack_fffffd1c,
+                   (double)CONCAT44(blankout_fraction._4_4_,blankout_fraction._0_4_),local_250,
+                   in_stack_fffffd2c,(double)CONCAT44(iVar24,in_stack_fffffd30),(char *)argv,
+                   (bool)no_rotate_y_label,log_axis,uVar25,(int)output_format,local_224,clip_mode,
+                   (double)CONCAT44(bVar27,bVar26),transpose_axes);
+        draw_frame_of_graph(local_298,log_axis ^ 1);
+        in_stack_fffffca8 = (double)CONCAT44(transpose_axes,local_254);
+        in_stack_fffffcb0 = (double)CONCAT44(local_264,local_27c);
+        local_29c = linemode_index;
+        omit_ticks = local_224;
+        local_268 = new_reader(pFVar5,local_258,local_288,in_stack_fffffca8,in_stack_fffffcb0,
+                               (bool)local_250,linemode_index,local_224,local_284,
+                               (double)CONCAT44(local_278,local_274),local_24c,local_280,
+                               (double)CONCAT44(in_stack_fffffcd8,in_stack_fffffcd4),
+                               (double)CONCAT44(in_stack_fffffce0,in_stack_fffffcdc),
+                               in_stack_fffffce4);
+        in_stack_fffffce8 = spec_y_spacing;
+        in_stack_fffffcec = bVar23;
+      }
+      read_and_plot_file(local_268,local_298);
+      in_stack_fffffcb8 = local_29c;
+      in_stack_fffffcbc = local_224;
+      in_stack_fffffcc0 = local_284;
+      in_stack_fffffcc4 = local_274;
+      in_stack_fffffcc8 = local_278;
+      in_stack_fffffccc = local_24c;
+      in_stack_fffffcd0 = local_280;
+    }
+    else {
+      if (uVar15 == 0) {
+        in_stack_fffffca8 = (double)CONCAT44(local_264,local_27c);
+        in_stack_fffffcb0 = (double)CONCAT44(omit_ticks,linemode_index);
+        alter_reader_parameters
+                  (local_268,pFVar5,local_258,local_288,in_stack_fffffca8,in_stack_fffffcb0,
+                   local_29c,(double)CONCAT44(local_284,local_224),local_274,local_278,
+                   (double)CONCAT44(local_280,local_24c),
+                   (double)CONCAT44(in_stack_fffffcd8,in_stack_fffffcd4),in_stack_fffffcdc,
+                   (bool)in_stack_fffffce0,in_stack_fffffce4,in_stack_fffffce8,in_stack_fffffcec,
+                   (bool)in_stack_fffffcf0,(bool)in_stack_fffffcf4,in_stack_fffffcf8);
+        in_stack_fffffcb8 = local_29c;
+        in_stack_fffffcbc = local_224;
+        in_stack_fffffcc0 = local_284;
+        in_stack_fffffcc4 = local_274;
+        in_stack_fffffcc8 = local_278;
+        in_stack_fffffccc = local_24c;
+        in_stack_fffffcd0 = local_280;
+      }
+      else {
+        in_stack_fffffcbc = omit_ticks;
+        p = (Point *)xmalloc(points_length * 0x68);
+        in_stack_fffffcb0 = (double)CONCAT44(local_264,local_27c);
+        in_stack_fffffca8 = (double)CONCAT44(transpose_axes,local_254);
+        in_stack_fffffcb8 = linemode_index;
+        omit_ticks = in_stack_fffffcbc;
+        local_268 = new_reader(pFVar5,local_258,local_288,in_stack_fffffca8,in_stack_fffffcb0,
+                               (bool)local_250,linemode_index,in_stack_fffffcbc,in_stack_fffffcc0,
+                               (double)CONCAT44(in_stack_fffffcc8,in_stack_fffffcc4),
+                               in_stack_fffffccc,in_stack_fffffcd0,
+                               (double)CONCAT44(in_stack_fffffcd8,in_stack_fffffcd4),
+                               (double)CONCAT44(in_stack_fffffce0,in_stack_fffffcdc),
+                               in_stack_fffffce4);
+      }
+      read_file(local_268,&p,&points_length,&no_of_points);
+    }
+    pcVar10 = optarg;
+    if ((stdin != pFVar5) && (iVar4 = fclose((FILE *)pFVar5), iVar4 < 0)) {
+      fprintf(stderr,"%s: the input file `%s\' could not be closed\n",*no_rotate_y_label,pcVar10);
+    }
+    uVar15 = 0;
+    local_280 = 0;
+    local_24c = (char *)0x0;
+    local_278 = 0;
+    local_274 = (char *)0x0;
+    local_284 = NO_AXES;
+    local_224 = false;
+    local_29c = false;
+  } while( true );
+}
+

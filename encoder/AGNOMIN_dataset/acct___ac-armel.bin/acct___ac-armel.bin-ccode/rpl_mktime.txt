@@ -1,0 +1,10 @@
+
+time_t rpl_mktime(tm *tp)
+
+{
+  time_t tVar1;
+  
+  tVar1 = mktime_internal(tp,localtime_r,&localtime_offset);
+  return tVar1;
+}
+

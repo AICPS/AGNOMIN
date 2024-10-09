@@ -1,0 +1,125 @@
+
+char * file_reader_get_entry(file_rd_info *fri)
+
+{
+  uint uVar1;
+  size_t sVar2;
+  char *pcVar3;
+  int iVar4;
+  void *pvVar5;
+  size_t __n;
+  int iVar6;
+  uint uVar7;
+  uint uVar8;
+  FILE *__stream;
+  int iVar9;
+  bool bVar10;
+  bool bVar11;
+  __off64_t _Var12;
+  longlong lVar13;
+  
+  __n = *(size_t *)&fri->recs_left;
+  uVar8 = *(uint *)((int)&fri->recs_left + 4);
+  if ((__n | uVar8) != 0) {
+LAB_00012520:
+    iVar6 = fri->backwards;
+joined_r0x000125bc:
+    if (iVar6 == 0) {
+      pcVar3 = (char *)(fri->record_size * (*(int *)&fri->recs_read - __n) + (int)fri->buffer);
+      *(size_t *)&fri->recs_left = __n - 1;
+      *(uint *)((int)&fri->recs_left + 4) = uVar8 - (__n == 0);
+    }
+    else {
+      pvVar5 = fri->buffer;
+      iVar6 = fri->record_size;
+      *(size_t *)&fri->recs_left = __n - 1;
+      *(uint *)((int)&fri->recs_left + 4) = uVar8 - (__n == 0);
+      pcVar3 = (char *)(iVar6 * (__n - 1) + (int)pvVar5);
+    }
+    fri->rec_number = fri->rec_number + 1;
+    return pcVar3;
+  }
+  __stream = fri->fp;
+  if (__stream == (FILE *)0x0) goto LAB_00012410;
+  if (fri->backwards != 0) goto LAB_0001245c;
+  do {
+    __n = fread(fri->buffer,fri->record_size,fri->buffered_records,(FILE *)__stream);
+    if (__n == 0xffffffff) {
+      fatal("get_entry: couldn\'t read from file");
+    }
+    else {
+      if (__n != 0) {
+        iVar6 = fri->backwards;
+        uVar8 = (int)__n >> 0x1f;
+        *(size_t *)&fri->recs_read = __n;
+        *(uint *)((int)&fri->recs_read + 4) = uVar8;
+        *(size_t *)&fri->recs_left = __n;
+        *(uint *)((int)&fri->recs_left + 4) = uVar8;
+        goto joined_r0x000125bc;
+      }
+    }
+    while( true ) {
+      fclose((FILE *)fri->fp);
+      do {
+        fri->fp = (FILE *)0x0;
+        fri->the_files = fri->the_files->next;
+LAB_00012410:
+        if (fri->the_files == (file_list *)0x0) {
+          return (char *)0x0;
+        }
+        __stream = file_open(fri->the_files->name,0);
+        fri->fp = __stream;
+      } while (__stream == (FILE *)0x0);
+      iVar6 = fri->backwards;
+      if (iVar6 != 0) {
+        fseek((FILE *)__stream,0,2);
+        iVar6 = fri->backwards;
+        __stream = fri->fp;
+      }
+      fri->rec_number = 0;
+      fri->name = fri->the_files->name;
+      if (iVar6 == 0) break;
+LAB_0001245c:
+      _Var12 = ftello64((FILE *)__stream);
+      iVar4 = (int)((ulonglong)_Var12 >> 0x20);
+      iVar6 = (int)_Var12;
+      if ((int)(iVar4 - (uint)(iVar6 == 0)) < 0 ==
+          (_Var12 < 0 && (int)(iVar4 + -1 + (uint)(iVar6 != 0)) < 0 != _Var12 < 0)) {
+        iVar9 = fri->record_size;
+        lVar13 = __aeabi_ldivmod(iVar6,iVar4,iVar9,iVar9 >> 0x1f);
+        uVar8 = (uint)((ulonglong)lVar13 >> 0x20);
+        __n = (size_t)lVar13;
+        uVar7 = fri->buffered_records;
+        uVar1 = (int)uVar7 >> 0x1f;
+        bVar11 = (int)uVar1 < 0 == -1 < lVar13 &&
+                 (int)(uVar1 + ~uVar8 + (uint)(__n <= uVar7)) < 0 != (int)uVar1 < 0;
+        bVar10 = (int)(uVar1 - (uVar8 + (__n > uVar7))) < 0;
+        if (bVar10 != bVar11) {
+          __n = uVar7;
+        }
+        if (bVar10 != bVar11) {
+          uVar8 = uVar1;
+        }
+        fseek((FILE *)fri->fp,-iVar9 * __n,1);
+        if (debugging_enabled != 0) {
+          _Var12 = ftello64((FILE *)fri->fp);
+          __fprintf_chk(stdout,1,"Did seek in file %ld --> %ld\n",iVar6,(int)_Var12);
+        }
+        sVar2 = fread(fri->buffer,fri->record_size,__n,(FILE *)fri->fp);
+        if (sVar2 == 0xffffffff) {
+          fatal("get_entry: couldn\'t read from file");
+        }
+        if (debugging_enabled != 0) {
+          __fprintf_chk(stdout,1,"Got %ld records from file\n",__n);
+        }
+        fseek((FILE *)fri->fp,-fri->record_size * __n,1);
+        *(size_t *)&fri->recs_read = __n;
+        *(uint *)((int)&fri->recs_read + 4) = uVar8;
+        *(size_t *)&fri->recs_left = __n;
+        *(uint *)((int)&fri->recs_left + 4) = uVar8;
+        goto LAB_00012520;
+      }
+    }
+  } while( true );
+}
+

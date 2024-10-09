@@ -1,0 +1,7 @@
+
+void * hashtab_get_key(hashtab_elem *he)
+
+{
+  return he->key;
+}
+

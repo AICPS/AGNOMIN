@@ -1,0 +1,159 @@
+
+char * end_of_line(char *p,char *endptr,int *lenptr)
+
+{
+  uint uVar1;
+  int iVar2;
+  byte *pbVar3;
+  uint uVar4;
+  uint uVar5;
+  char *pcVar6;
+  uint uVar7;
+  
+  switch(endlinetype) {
+  case 1:
+    if (p < endptr) {
+      if (*p != '\r') {
+        pcVar6 = p + 1;
+        do {
+          p = pcVar6;
+          if (p == endptr) goto LAB_00013658;
+          pcVar6 = p + 1;
+        } while (*p != '\r');
+      }
+      p = p + 1;
+      goto LAB_00013750;
+    }
+    break;
+  case 2:
+    pcVar6 = p + 1;
+    do {
+      if ((endptr <= p) || (*p == '\r')) {
+        if (endptr <= pcVar6) break;
+        if (*pcVar6 == '\n') {
+          *lenptr = 2;
+          return p + 2;
+        }
+      }
+      p = p + 1;
+      pcVar6 = pcVar6 + 1;
+    } while( true );
+  case 3:
+    if (p < endptr) {
+      uVar4 = utf8;
+      if (utf8 != 0) {
+        uVar4 = 1;
+      }
+      do {
+        uVar7 = (uint)(byte)*p;
+        if (uVar7 < 0xc0) {
+          uVar1 = 0;
+        }
+        else {
+          uVar1 = uVar4 & 1;
+        }
+        if (uVar1 == 0) {
+LAB_00013788:
+          iVar2 = 1;
+        }
+        else {
+          uVar5 = (uint)(byte)utf8_table4[uVar7 & 0x3f];
+          uVar1 = (short)(ushort)(byte)utf8_table4[uVar7 & 0x3f] * 6;
+          uVar7 = (uVar7 & utf8_table3[uVar5]) << (uVar1 & 0xff);
+          pbVar3 = (byte *)p;
+          if (uVar5 == 0) goto LAB_00013788;
+          do {
+            uVar1 = uVar1 - 6;
+            uVar7 = uVar7 | (pbVar3[1] & 0x3f) << (uVar1 & 0xff);
+            pbVar3 = pbVar3 + 1;
+          } while (uVar1 != 0);
+          iVar2 = uVar5 + 1;
+        }
+        p = (char *)((byte *)p + iVar2);
+        if (uVar7 == 0xd) goto LAB_00013764;
+        if ((int)uVar7 < 0xe) {
+          if (9 < (int)uVar7) goto LAB_00013750;
+        }
+        else {
+          if (uVar7 == 0x85) {
+            if (uVar4 == 0) {
+              iVar2 = 1;
+            }
+            else {
+              iVar2 = 2;
+            }
+            *lenptr = iVar2;
+            return p;
+          }
+          if ((0x84 < (int)uVar7) && (uVar7 - 0x2028 < 2)) {
+            *lenptr = 3;
+            return p;
+          }
+        }
+      } while (p < endptr);
+    }
+    break;
+  case 4:
+    if (p < endptr) {
+      uVar4 = utf8;
+      if (utf8 != 0) {
+        uVar4 = 1;
+      }
+      do {
+        uVar7 = (uint)(byte)*p;
+        if (uVar7 < 0xc0) {
+          uVar1 = 0;
+        }
+        else {
+          uVar1 = uVar4 & 1;
+        }
+        if (uVar1 == 0) {
+LAB_0001375c:
+          iVar2 = 1;
+        }
+        else {
+          uVar5 = (uint)(byte)utf8_table4[uVar7 & 0x3f];
+          uVar1 = (short)(ushort)(byte)utf8_table4[uVar7 & 0x3f] * 6;
+          uVar7 = (uVar7 & utf8_table3[uVar5]) << (uVar1 & 0xff);
+          pbVar3 = (byte *)p;
+          if (uVar5 == 0) goto LAB_0001375c;
+          do {
+            uVar1 = uVar1 - 6;
+            uVar7 = uVar7 | (pbVar3[1] & 0x3f) << (uVar1 & 0xff);
+            pbVar3 = pbVar3 + 1;
+          } while (uVar1 != 0);
+          iVar2 = uVar5 + 1;
+        }
+        p = (char *)((byte *)p + iVar2);
+        if (uVar7 == 10) goto LAB_00013750;
+        if (uVar7 == 0xd) goto LAB_00013764;
+      } while (p < endptr);
+    }
+    break;
+  default:
+    if (p < endptr) {
+      if (*p != '\n') {
+        pcVar6 = p + 1;
+        do {
+          p = pcVar6;
+          if (p == endptr) goto LAB_00013658;
+          pcVar6 = p + 1;
+        } while (*p != '\n');
+      }
+      *lenptr = 1;
+      return p + 1;
+    }
+  }
+LAB_00013658:
+  *lenptr = 0;
+  return (char *)(byte *)endptr;
+LAB_00013764:
+  if ((p < endptr) && (*p == 10)) {
+    *lenptr = 2;
+    return (char *)((byte *)p + 1);
+  }
+LAB_00013750:
+  *lenptr = 1;
+  return p;
+}
+

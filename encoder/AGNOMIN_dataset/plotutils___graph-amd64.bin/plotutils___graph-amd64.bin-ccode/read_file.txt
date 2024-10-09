@@ -1,0 +1,52 @@
+
+void read_file(Reader *reader,Point **p_addr,int *length,int *no_of_points)
+
+{
+  int iVar1;
+  bool bVar2;
+  dataset_status_t dVar3;
+  Point *p;
+  int iVar4;
+  
+  p = *p_addr;
+  do {
+    while( true ) {
+      iVar4 = *no_of_points;
+      while( true ) {
+        iVar1 = *length;
+        if (iVar1 <= iVar4) {
+          iVar4 = iVar1 * 2;
+          if (9999999 < (ulong)((long)iVar1 * 0x70)) {
+            iVar4 = iVar1 + 0x15cc5;
+          }
+          p = (Point *)xrealloc(p,(long)iVar4 * 0x70);
+          *length = iVar4;
+          iVar4 = *no_of_points;
+        }
+        dVar3 = read_point(reader,p + iVar4);
+        if (dVar3 != IN_PROGRESS) break;
+        iVar4 = *no_of_points + 1;
+        *no_of_points = iVar4;
+      }
+      *p_addr = p;
+      if (dVar3 != ENDED_BY_MODE_CHANGE) break;
+      bVar2 = reader->auto_bump;
+      reader->need_break = true;
+      reader->auto_bump = false;
+      if (reader->auto_abscissa != false) {
+        reader->abscissa = reader->initial_abscissa;
+      }
+      reader->auto_bump = bVar2;
+    }
+    reader->need_break = true;
+    if (reader->auto_bump != false) {
+      iVar4 = reader->linemode;
+      reader->linemode = ((0 < iVar4) - 1) + (uint)(0 < iVar4) + iVar4;
+    }
+    if (reader->auto_abscissa != false) {
+      reader->abscissa = reader->initial_abscissa;
+    }
+  } while (dVar3 != ENDED_BY_EOF);
+  return;
+}
+

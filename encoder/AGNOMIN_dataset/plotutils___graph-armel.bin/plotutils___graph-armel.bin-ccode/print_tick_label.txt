@@ -1,0 +1,125 @@
+
+void print_tick_label(char *labelbuf,Axis *axis,Transform *transform,double val)
+
+{
+  char *pcVar1;
+  undefined4 uVar2;
+  char *pcVar3;
+  int iVar4;
+  undefined4 uVar5;
+  char *pcVar6;
+  char *__format;
+  char cVar8;
+  undefined uVar9;
+  bool bVar10;
+  char cVar11;
+  double dVar12;
+  double dVar13;
+  double in_stack_fffffee8;
+  undefined4 in_stack_fffffef0;
+  undefined4 in_stack_fffffef4;
+  undefined4 local_fc;
+  undefined local_f8 [8];
+  char acStack240 [64];
+  char acStack176 [64];
+  char acStack112 [64];
+  undefined auStack48 [4];
+  char *pcVar7;
+  
+  iVar4 = axis->type;
+  cVar11 = SBORROW4(iVar4,1);
+  cVar8 = iVar4 + -1 < 0;
+  uVar9 = iVar4 == 1;
+  if ((bool)uVar9) {
+    dVar13 = pow(in_stack_fffffee8,(double)CONCAT44(in_stack_fffffef4,in_stack_fffffef0));
+    iVar4 = axis->type;
+    cVar11 = SBORROW4(iVar4,1);
+    cVar8 = iVar4 + -1 < 0;
+    uVar9 = iVar4 == 1;
+    if ((bool)uVar9) {
+      pow(in_stack_fffffee8,(double)CONCAT44(in_stack_fffffef4,in_stack_fffffef0));
+    }
+  }
+  else {
+    dVar13 = transform->input_min;
+  }
+  if (((!(bool)uVar9) && (dVar12 = log10(in_stack_fffffee8), cVar8 == cVar11)) ||
+     ((!(bool)uVar9 && (dVar12 = log10(in_stack_fffffee8), cVar8 == cVar11)))) {
+    __format = acStack240;
+    sprintf(SUB84(ABS(dVar12),0),__format,&DAT_0001d930);
+    pcVar1 = strchr(__format,0x65);
+    if (pcVar1 == (char *)0x0) {
+      return;
+    }
+    bVar10 = axis->type == 1;
+    if ((bVar10) && (bVar10 = axis->user_specified_subsubticks == false, bVar10)) {
+      pcVar1 = (char *)__isoc99_sscanf(pcVar1 + 1,&DAT_0001c980,&local_fc);
+      sprintf(pcVar1,labelbuf,"10\\sp%d\\ep",local_fc);
+      return;
+    }
+    if (!bVar10) {
+      pcVar3 = acStack112;
+      pcVar7 = __format;
+      if (__format < pcVar1) {
+        do {
+          pcVar6 = pcVar7 + 1;
+          *pcVar3 = *pcVar7;
+          pcVar3 = pcVar3 + 1;
+          pcVar7 = pcVar6;
+        } while (pcVar6 != pcVar1);
+        __format = __format + (int)(pcVar6 + (0xc0 - (int)auStack48));
+        pcVar3 = acStack112 + (int)(pcVar6 + (0xc0 - (int)auStack48));
+      }
+      *pcVar3 = '\0';
+      uVar2 = __isoc99_sscanf(acStack112,&DAT_0001c8bc,local_f8);
+      __isoc99_sscanf(uVar2,__format + 1,&DAT_0001c980,&local_fc);
+      bVar10 = axis->type == 0;
+      if (bVar10) {
+        dVar13 = axis->tick_spacing;
+      }
+      if (!bVar10) {
+        dVar13 = axis->subsubtick_spacing;
+      }
+      dVar12 = pow(in_stack_fffffee8,(double)CONCAT44(in_stack_fffffef4,in_stack_fffffef0));
+      sprintf(SUB84(dVar12,0),acStack176,&DAT_0001d8fc,SUB84(dVar13 / dVar12,0),
+              (int)((ulonglong)(dVar13 / dVar12) >> 0x20));
+      pcVar1 = strchr(acStack176,0x2e);
+      if (pcVar1 != (char *)0x0) {
+        do {
+          pcVar1 = pcVar1 + 1;
+        } while (*pcVar1 != '\0');
+      }
+      sprintf(labelbuf,"%.*f\\r6\\mu10\\sp%d\\ep");
+      return;
+    }
+    *labelbuf = '0';
+    labelbuf[1] = '\0';
+    return;
+  }
+  if (axis->type == 1) {
+    if (axis->user_specified_subsubticks == false) {
+      sprintf(labelbuf,"%.9g");
+      return;
+    }
+  }
+  else {
+    if (axis->type == 0) {
+      uVar2 = *(undefined4 *)&axis->tick_spacing;
+      uVar5 = *(undefined4 *)((int)&axis->tick_spacing + 4);
+      goto LAB_00015c34;
+    }
+  }
+  uVar2 = *(undefined4 *)&axis->subsubtick_spacing;
+  uVar5 = *(undefined4 *)((int)&axis->subsubtick_spacing + 4);
+LAB_00015c34:
+  sprintf(acStack176,"%.9f",uVar2,uVar5);
+  pcVar1 = strchr(acStack176,0x2e);
+  if (pcVar1 != (char *)0x0) {
+    do {
+      pcVar1 = pcVar1 + 1;
+    } while (*pcVar1 != '\0');
+  }
+  sprintf(labelbuf,"%.*f");
+  return;
+}
+

@@ -1,0 +1,59 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+BOOL __regparm2
+match_patterns(char *matchptr,size_t length,uint options,int startoffset,int *offsets,int *mrc)
+
+{
+  int iVar1;
+  patstr *ppVar2;
+  int iVar3;
+  size_t local_24;
+  char *local_20;
+  
+  if (length < 0xc9) {
+    local_20 = "this text:\n\n";
+    local_24 = length;
+  }
+  else {
+    local_20 = "text that starts:\n\n";
+    local_24 = 200;
+  }
+  if (patterns != (patstr *)0x0) {
+    iVar3 = 1;
+    ppVar2 = patterns;
+    do {
+      iVar1 = pcre_exec(ppVar2->compiled,ppVar2->hint,matchptr,length,startoffset,options,offsets,99
+                       );
+      *mrc = iVar1;
+      if (-1 < iVar1) {
+        return 1;
+      }
+      if (iVar1 != -1) {
+        __fprintf_chk(stderr,1,"pcregrep: pcre_exec() gave error %d while matching ",iVar1);
+        if (patterns->next != (patstr *)0x0) {
+          __fprintf_chk(stderr,1,"pattern number %d to ",iVar3);
+        }
+        fputs(local_20,stderr);
+        fwrite(matchptr,1,local_24,stderr);
+        fwrite("\n\n",1,2,stderr);
+        iVar3 = *mrc;
+        if ((iVar3 == -0x15 || iVar3 == -8) || (iVar3 == -0x1b)) {
+          resource_error = 1;
+        }
+        if (error_count < 0x15) {
+          error_count = error_count + 1;
+          return invert;
+        }
+        error_count = error_count + 1;
+        fwrite("pcregrep: Too many errors - abandoned.\n",1,0x27,stderr);
+                    /* WARNING: Subroutine does not return */
+        pcregrep_exit(2);
+      }
+      ppVar2 = ppVar2->next;
+      iVar3 = iVar3 + 1;
+    } while (ppVar2 != (patstr *)0x0);
+  }
+  return 0;
+}
+

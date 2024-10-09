@@ -1,0 +1,376 @@
+
+/* WARNING: Removing unreachable block (ram,0x0804cf78) */
+/* WARNING: Could not reconcile some variable overlaps */
+
+dataset_status_t read_point(Reader *reader,Point *point)
+
+{
+  FILE *__stream;
+  FILE *pFVar1;
+  bool bVar2;
+  int *in_EAX;
+  size_t sVar3;
+  dataset_status_t dVar4;
+  ushort **ppuVar5;
+  uint uVar6;
+  bool bVar7;
+  int iVar8;
+  double *in_EDX;
+  double dVar9;
+  undefined4 uVar10;
+  undefined4 uVar11;
+  undefined4 uVar12;
+  undefined4 uVar13;
+  char directive;
+  char c;
+  double x;
+  float fy;
+  undefined4 uStack32;
+  
+  uVar6 = in_EAX[3];
+  dVar9 = *(double *)(in_EAX + 0xb);
+  *(int *)((int)in_EDX + 0x3c) = in_EAX[10];
+  iVar8 = in_EAX[0xd];
+  in_EDX[8] = dVar9;
+  dVar9 = *(double *)(in_EAX + 0xf);
+  *(int *)(in_EDX + 9) = iVar8;
+  iVar8 = in_EAX[0xe];
+  in_EDX[10] = dVar9;
+  *(int *)((int)in_EDX + 0x4c) = iVar8;
+  iVar8 = in_EAX[0x13];
+  dVar9 = *(double *)(in_EAX + 0x11);
+  *(undefined4 *)(in_EDX + 2) = 0;
+  in_EDX[0xb] = dVar9;
+  *(int *)(in_EDX + 0xc) = iVar8;
+  *(uint *)((int)in_EDX + 0x14) = (uint)(uVar6 == 5);
+  do {
+    if (uVar6 == 4) {
+      pFVar1 = (FILE *)in_EAX[2];
+      while( true ) {
+        bVar7 = skip_some_whitespace(pFVar1);
+        if (bVar7 != false) goto LAB_0804ca95;
+        iVar8 = _IO_getc((_IO_FILE *)pFVar1);
+        ungetc(iVar8,(FILE *)pFVar1);
+        if (iVar8 == 0x69) break;
+        if (0x69 < iVar8) {
+          if (iVar8 != 0x6f) {
+            if (iVar8 != 0x75) goto LAB_0804cbb0;
+            do {
+              sVar3 = fread(&c,1,1,(FILE *)pFVar1);
+              if ((int)sVar3 < 1) goto LAB_0804ca55;
+            } while (c != '\n');
+            goto LAB_0804cbfd;
+          }
+          break;
+        }
+        if ((iVar8 == 0x23) || (iVar8 == 0x43)) {
+          do {
+            sVar3 = fread(&c,1,1,(FILE *)pFVar1);
+            if ((int)sVar3 < 1) goto LAB_0804c910;
+          } while (c != '\n');
+          ungetc(10,(FILE *)pFVar1);
+        }
+        else {
+LAB_0804cbb0:
+          iVar8 = __isoc99_fscanf(pFVar1,"%lf %lf %c",&x,&fy,&directive);
+          if (iVar8 != 3) goto LAB_0804ca55;
+          if (directive == 'o' || directive == 'i') {
+            if (directive != 'u') goto LAB_0804cc9d;
+          }
+          else {
+            if (directive != 'u') goto LAB_0804ca55;
+          }
+LAB_0804cbfd:
+          in_EAX[0x14] = 1;
+        }
+      }
+      iVar8 = __isoc99_fscanf(pFVar1,"%c x=%lf y=%lf",&directive,&x,&fy);
+      if (iVar8 != 3) {
+LAB_0804ca55:
+        fprintf(stderr,"%s: an input file in gnuplot format could not be parsed\n",progname);
+        goto LAB_0804c910;
+      }
+LAB_0804cc9d:
+      *in_EDX = (double)CONCAT44(x._4_4_,x._0_4_);
+      in_EDX[1] = (double)CONCAT44(uStack32,fy);
+    }
+    else {
+      if (uVar6 < 5) {
+        if (uVar6 == 0) {
+LAB_0804cad0:
+          pFVar1 = (FILE *)in_EAX[2];
+          while( true ) {
+            bVar7 = skip_some_whitespace(pFVar1);
+            if (bVar7 != false) {
+              return ENDED_BY_DATASET_TERMINATOR;
+            }
+            iVar8 = feof((FILE *)pFVar1);
+            if (iVar8 != 0) goto LAB_0804c910;
+            iVar8 = _IO_getc((_IO_FILE *)pFVar1);
+            ungetc(iVar8,(FILE *)pFVar1);
+            if (iVar8 != 0x23) break;
+            iVar8 = __isoc99_fscanf(pFVar1,"# m = %d, S = %d",&fy,&x);
+            if (iVar8 == 2) {
+LAB_0804d043:
+              in_EAX[0xe] = (int)fy;
+              in_EAX[10] = x._0_4_;
+              return ENDED_BY_MODE_CHANGE;
+            }
+            do {
+              sVar3 = fread(&c,1,1,(FILE *)pFVar1);
+              if ((int)sVar3 < 1) goto LAB_0804c910;
+            } while (c != '\n');
+            ungetc(10,(FILE *)pFVar1);
+          }
+          if (in_EAX[4] == 0) {
+            iVar8 = __isoc99_fscanf(pFVar1,"%lf",in_EDX);
+            if (iVar8 != 1) goto LAB_0804c910;
+          }
+          else {
+            dVar9 = *(double *)(in_EAX + 0x15);
+            *in_EDX = dVar9;
+            *(double *)(in_EAX + 0x15) = dVar9 + *(double *)(in_EAX + 5);
+          }
+          iVar8 = __isoc99_fscanf(pFVar1,"%lf",in_EDX + 1);
+          if (iVar8 != 1) {
+            if (in_EAX[4] == 0) {
+              fprintf(stderr,"%s: an input file terminated prematurely\n",progname);
+              return ENDED_BY_EOF;
+            }
+            goto LAB_0804c910;
+          }
+        }
+        else {
+          __stream = (FILE *)in_EAX[2];
+          if (in_EAX[4] == 0) {
+            if (uVar6 == 1) {
+              sVar3 = fread(&fy,4,1,__stream);
+              dVar9 = (double)fy;
+              *in_EDX = dVar9;
+              if ((int)sVar3 < 1) goto LAB_0804c910;
+LAB_0804cf2a:
+              if (dVar9 == 3.402823466385289e+38) {
+                return ENDED_BY_DATASET_TERMINATOR;
+              }
+              sVar3 = fread(&fy,4,1,__stream);
+              in_EDX[1] = (double)fy;
+            }
+            else {
+              if (uVar6 != 3) {
+                sVar3 = fread(in_EDX,8,1,__stream);
+                if (0 < (int)sVar3) goto joined_r0x0804cc3b;
+                goto LAB_0804c910;
+              }
+              sVar3 = fread(&fy,4,1,__stream);
+              dVar9 = (double)(int)fy;
+              *in_EDX = dVar9;
+              if ((int)sVar3 < 1) goto LAB_0804c910;
+LAB_0804cfa0:
+              if (dVar9 == 2147483647.0) {
+                return ENDED_BY_DATASET_TERMINATOR;
+              }
+              sVar3 = fread(&fy,4,1,__stream);
+              in_EDX[1] = (double)(int)fy;
+            }
+          }
+          else {
+            dVar9 = *(double *)(in_EAX + 0x15);
+            *in_EDX = dVar9;
+            *(double *)(in_EAX + 0x15) = dVar9 + *(double *)(in_EAX + 5);
+joined_r0x0804cc3b:
+            if (uVar6 == 2) {
+              if (*in_EDX == 1.797693134862316e+308) {
+                return ENDED_BY_DATASET_TERMINATOR;
+              }
+            }
+            else {
+              if (uVar6 == 1) {
+                dVar9 = *in_EDX;
+                goto LAB_0804cf2a;
+              }
+              if (uVar6 == 3) {
+                dVar9 = *in_EDX;
+                goto LAB_0804cfa0;
+              }
+            }
+            sVar3 = fread(in_EDX + 1,8,1,__stream);
+          }
+          if (sVar3 != 1) {
+            if (in_EAX[4] == 0) {
+              fprintf(stderr,"%s: an input file (in binary format) terminated prematurely\n",
+                      progname);
+              return ENDED_BY_EOF;
+            }
+            goto LAB_0804c910;
+          }
+        }
+      }
+      else {
+        if (uVar6 != 5) goto LAB_0804cad0;
+        pFVar1 = (FILE *)in_EAX[2];
+        bVar7 = skip_some_whitespace(pFVar1);
+        while( true ) {
+          if (bVar7 != false) {
+            return ENDED_BY_DATASET_TERMINATOR;
+          }
+          iVar8 = feof((FILE *)pFVar1);
+          if (iVar8 != 0) goto LAB_0804c910;
+          iVar8 = _IO_getc((_IO_FILE *)pFVar1);
+          ungetc(iVar8,(FILE *)pFVar1);
+          if (iVar8 != 0x23) break;
+          iVar8 = __isoc99_fscanf(pFVar1,"# m = %d, S = %d",&fy,&x);
+          if (iVar8 == 2) goto LAB_0804d043;
+          do {
+            sVar3 = fread(&c,1,1,(FILE *)pFVar1);
+            if ((int)sVar3 < 1) goto LAB_0804c910;
+          } while (c != '\n');
+          ungetc(10,(FILE *)pFVar1);
+          bVar7 = skip_some_whitespace(pFVar1);
+        }
+        if (in_EAX[4] == 0) {
+          iVar8 = __isoc99_fscanf(pFVar1,"%lf",in_EDX);
+          if (iVar8 != 1) goto LAB_0804c910;
+        }
+        else {
+          dVar9 = *(double *)(in_EAX + 0x15);
+          *in_EDX = dVar9;
+          *(double *)(in_EAX + 0x15) = dVar9 + *(double *)(in_EAX + 5);
+        }
+        iVar8 = __isoc99_fscanf(pFVar1,"%lf",in_EDX + 1);
+        if (iVar8 != 1) {
+          if (in_EAX[4] == 0) {
+LAB_0804d09a:
+            fprintf(stderr,"%s: an input file (in errorbar format) terminated prematurely\n",
+                    progname);
+            return ENDED_BY_EOF;
+          }
+          goto LAB_0804c910;
+        }
+        iVar8 = __isoc99_fscanf(pFVar1,"%lf",&fy);
+        if (iVar8 != 1) goto LAB_0804d09a;
+        in_EDX[5] = in_EDX[1] - (double)CONCAT44(uStack32,fy);
+        in_EDX[6] = (double)CONCAT44(uStack32,fy) + in_EDX[1];
+        in_EDX[3] = 0.0;
+        in_EDX[4] = 0.0;
+      }
+    }
+    uVar6 = in_EAX[1];
+    if ((uVar6 & 1) == 0) {
+LAB_0804cd3c:
+      if ((uVar6 & 2) == 0) goto LAB_0804ce28;
+      dVar9 = in_EDX[1];
+      if (dVar9 <= 0.0) {
+        if (*(int *)((int)in_EDX + 0x14) != 0) {
+          bVar2 = true;
+          goto LAB_0804cd76;
+        }
+      }
+      else {
+        dVar9 = log10(dVar9);
+        in_EDX[1] = dVar9;
+        if (*(int *)((int)in_EDX + 0x14) == 0) {
+LAB_0804ce28:
+          if (*in_EAX != 0) {
+            dVar9 = *in_EDX;
+            uVar11 = *(undefined4 *)((int)in_EDX + 0x14);
+            *(undefined4 *)((int)in_EDX + 0x14) = *(undefined4 *)(in_EDX + 2);
+            *in_EDX = in_EDX[1];
+            *(undefined4 *)(in_EDX + 2) = uVar11;
+            in_EDX[1] = dVar9;
+            dVar9 = in_EDX[3];
+            in_EDX[3] = in_EDX[5];
+            in_EDX[5] = dVar9;
+            dVar9 = in_EDX[4];
+            in_EDX[4] = in_EDX[6];
+            in_EDX[6] = dVar9;
+          }
+          *(uint *)(in_EDX + 7) = (uint)(in_EAX[0x14] == 0);
+          in_EAX[0x14] = 0;
+          return IN_PROGRESS;
+        }
+        bVar2 = false;
+LAB_0804cd76:
+        if (in_EDX[5] <= 0.0) {
+          if (0.0 < in_EDX[6]) {
+            dVar9 = log10(in_EDX[6]);
+            in_EDX[6] = dVar9;
+          }
+        }
+        else {
+          dVar9 = log10(in_EDX[5]);
+          in_EDX[5] = dVar9;
+          if (0.0 < in_EDX[6]) {
+            dVar9 = log10(in_EDX[6]);
+            in_EDX[6] = dVar9;
+            if (!bVar2) goto LAB_0804ce28;
+          }
+        }
+        dVar9 = in_EDX[1];
+      }
+      uVar12 = SUB84(dVar9,0);
+      uVar13 = (undefined4)((ulonglong)dVar9 >> 0x20);
+      uVar11 = *(undefined4 *)((int)in_EDX + 4);
+      uVar10 = *(undefined4 *)in_EDX;
+    }
+    else {
+      dVar9 = *in_EDX;
+      if (dVar9 <= 0.0) {
+        if (*(int *)(in_EDX + 2) != 0) {
+          bVar2 = true;
+          goto LAB_0804cce1;
+        }
+      }
+      else {
+        dVar9 = log10(dVar9);
+        *in_EDX = dVar9;
+        if (*(int *)(in_EDX + 2) == 0) {
+LAB_0804cd39:
+          uVar6 = in_EAX[1];
+          goto LAB_0804cd3c;
+        }
+        bVar2 = false;
+LAB_0804cce1:
+        if (in_EDX[3] <= 0.0) {
+          if (0.0 < in_EDX[4]) {
+            dVar9 = log10(in_EDX[4]);
+            in_EDX[4] = dVar9;
+          }
+        }
+        else {
+          dVar9 = log10(in_EDX[3]);
+          in_EDX[3] = dVar9;
+          if (0.0 < in_EDX[4]) {
+            dVar9 = log10(in_EDX[4]);
+            in_EDX[4] = dVar9;
+            if (!bVar2) goto LAB_0804cd39;
+          }
+        }
+        dVar9 = *in_EDX;
+      }
+      uVar13 = *(undefined4 *)((int)in_EDX + 0xc);
+      uVar12 = *(undefined4 *)(in_EDX + 1);
+      uVar10 = SUB84(dVar9,0);
+      uVar11 = (undefined4)((ulonglong)dVar9 >> 0x20);
+    }
+    fprintf(stderr,"%s: the inappropriate point (%g,%g) is dropped, as this is a log plot\n",
+            progname,uVar10,uVar11,uVar12,uVar13);
+    in_EAX[0x14] = 1;
+    uVar6 = in_EAX[3];
+  } while( true );
+  while (ppuVar5 = __ctype_b_loc(), (*(byte *)((int)*ppuVar5 + (uVar6 & 0xff) * 2 + 1) & 0x20) != 0)
+  {
+LAB_0804ca95:
+    uVar6 = _IO_getc((_IO_FILE *)pFVar1);
+    if (uVar6 == 0xffffffff) goto LAB_0804caa8;
+  }
+  ungetc(uVar6,(FILE *)pFVar1);
+LAB_0804caa8:
+  iVar8 = feof((FILE *)pFVar1);
+  dVar4 = ENDED_BY_DATASET_TERMINATOR;
+  if (iVar8 != 0) {
+LAB_0804c910:
+    dVar4 = ENDED_BY_EOF;
+  }
+  return dVar4;
+}
+

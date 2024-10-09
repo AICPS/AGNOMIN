@@ -1,0 +1,288 @@
+
+void plot_errorbar(Multigrapher *multigrapher,Point *p)
+
+{
+  double dVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  bool bVar6;
+  bool bVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  
+  pl_savestate_r(multigrapher->plotter);
+  pl_linemod_r(multigrapher->plotter,"solid");
+  if (p->have_x_errorbar != false) {
+    bVar6 = (multigrapher->y_trans).reverse;
+    dVar1 = (multigrapher->y_trans).output_min;
+    dVar2 = (multigrapher->y_trans).squeezed_min;
+    if (bVar6 == false) {
+      dVar11 = (p->y - (multigrapher->y_trans).input_min) / (multigrapher->y_trans).input_range;
+      dVar8 = dVar11;
+    }
+    else {
+      dVar8 = (p->y - (multigrapher->y_trans).input_min) / (multigrapher->y_trans).input_range;
+      dVar11 = 1.0 - dVar8;
+    }
+    dVar12 = (multigrapher->y_trans).squeezed_range;
+    bVar7 = (multigrapher->x_trans).reverse;
+    dVar3 = (multigrapher->x_trans).output_range;
+    dVar4 = (multigrapher->y_trans).output_range;
+    dVar5 = (multigrapher->x_trans).squeezed_range;
+    dVar17 = dVar12 * dVar4;
+    dVar15 = dVar3 * dVar5;
+    dVar16 = (multigrapher->x_trans).output_min;
+    dVar14 = (multigrapher->x_trans).squeezed_min;
+    dVar10 = dVar15;
+    if (dVar17 <= dVar15) {
+      dVar10 = dVar17;
+    }
+    if (bVar7 == false) {
+      dVar9 = (p->xmin - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+      dVar13 = dVar9;
+    }
+    else {
+      dVar13 = (p->xmin - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+      dVar9 = 1.0 - dVar13;
+    }
+    if (bVar6 != false) {
+      dVar8 = 1.0 - dVar8;
+    }
+    if (dVar17 <= dVar15) {
+      dVar15 = dVar17;
+    }
+    if (bVar7 != false) {
+      dVar13 = 1.0 - dVar13;
+    }
+    pl_fline_r((dVar5 * dVar13 + dVar14) * dVar3 + dVar16,
+               ((dVar2 + dVar8 * dVar12) * dVar4 + dVar1) - p->symbol_size * dVar15 * 0.5,
+               (dVar9 * dVar5 + dVar14) * dVar3 + dVar16,
+               dVar10 * p->symbol_size * 0.5 + (dVar11 * dVar12 + dVar2) * dVar4 + dVar1,
+               multigrapher->plotter);
+    bVar6 = (multigrapher->y_trans).reverse;
+    dVar1 = (multigrapher->y_trans).output_min;
+    dVar2 = (multigrapher->y_trans).squeezed_min;
+    if (bVar6 == false) {
+      dVar11 = (p->y - (multigrapher->y_trans).input_min) / (multigrapher->y_trans).input_range;
+      dVar8 = dVar11;
+    }
+    else {
+      dVar8 = (p->y - (multigrapher->y_trans).input_min) / (multigrapher->y_trans).input_range;
+      dVar11 = 1.0 - dVar8;
+    }
+    dVar12 = (multigrapher->y_trans).squeezed_range;
+    bVar7 = (multigrapher->x_trans).reverse;
+    dVar3 = (multigrapher->y_trans).output_range;
+    dVar4 = (multigrapher->x_trans).output_min;
+    dVar5 = (multigrapher->x_trans).squeezed_min;
+    dVar16 = (multigrapher->x_trans).input_min;
+    dVar14 = (multigrapher->x_trans).input_range;
+    if (bVar7 == false) {
+      dVar10 = (p->xmax - dVar16) / dVar14;
+    }
+    else {
+      dVar10 = 1.0 - (p->xmax - dVar16) / dVar14;
+    }
+    dVar15 = (multigrapher->x_trans).squeezed_range;
+    dVar17 = (multigrapher->x_trans).output_range;
+    if (bVar6 != false) {
+      dVar8 = 1.0 - dVar8;
+    }
+    if (bVar7 == false) {
+      dVar14 = (p->xmin - dVar16) / dVar14;
+    }
+    else {
+      dVar14 = 1.0 - (p->xmin - dVar16) / dVar14;
+    }
+    pl_fline_r(dVar17 * (dVar15 * dVar14 + dVar5) + dVar4,(dVar12 * dVar8 + dVar2) * dVar3 + dVar1,
+               (dVar10 * dVar15 + dVar5) * dVar17 + dVar4,(dVar11 * dVar12 + dVar2) * dVar3 + dVar1,
+               multigrapher->plotter);
+    bVar6 = (multigrapher->y_trans).reverse;
+    dVar1 = (multigrapher->y_trans).output_min;
+    dVar2 = (multigrapher->y_trans).squeezed_min;
+    if (bVar6 == false) {
+      dVar11 = (p->y - (multigrapher->y_trans).input_min) / (multigrapher->y_trans).input_range;
+      dVar8 = dVar11;
+    }
+    else {
+      dVar8 = (p->y - (multigrapher->y_trans).input_min) / (multigrapher->y_trans).input_range;
+      dVar11 = 1.0 - dVar8;
+    }
+    dVar12 = (multigrapher->y_trans).squeezed_range;
+    bVar7 = (multigrapher->x_trans).reverse;
+    dVar3 = (multigrapher->x_trans).output_range;
+    dVar4 = (multigrapher->y_trans).output_range;
+    dVar5 = (multigrapher->x_trans).squeezed_range;
+    dVar17 = dVar12 * dVar4;
+    dVar15 = dVar3 * dVar5;
+    dVar16 = (multigrapher->x_trans).output_min;
+    dVar14 = (multigrapher->x_trans).squeezed_min;
+    dVar10 = dVar15;
+    if (dVar17 <= dVar15) {
+      dVar10 = dVar17;
+    }
+    if (bVar7 == false) {
+      dVar9 = (p->xmax - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+      dVar13 = dVar9;
+    }
+    else {
+      dVar13 = (p->xmax - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+      dVar9 = 1.0 - dVar13;
+    }
+    if (bVar6 != false) {
+      dVar8 = 1.0 - dVar8;
+    }
+    if (dVar17 <= dVar15) {
+      dVar15 = dVar17;
+    }
+    if (bVar7 != false) {
+      dVar13 = 1.0 - dVar13;
+    }
+    pl_fline_r((dVar5 * dVar13 + dVar14) * dVar3 + dVar16,
+               ((dVar2 + dVar8 * dVar12) * dVar4 + dVar1) - p->symbol_size * dVar15 * 0.5,
+               (dVar9 * dVar5 + dVar14) * dVar3 + dVar16,
+               dVar10 * p->symbol_size * 0.5 + (dVar11 * dVar12 + dVar2) * dVar4 + dVar1,
+               multigrapher->plotter);
+  }
+  if (p->have_y_errorbar != false) {
+    bVar6 = (multigrapher->y_trans).reverse;
+    dVar1 = (multigrapher->y_trans).output_min;
+    dVar2 = (multigrapher->y_trans).squeezed_min;
+    if (bVar6 == false) {
+      dVar11 = (p->ymin - (multigrapher->y_trans).input_min) / (multigrapher->y_trans).input_range;
+      dVar8 = dVar11;
+    }
+    else {
+      dVar8 = (p->ymin - (multigrapher->y_trans).input_min) / (multigrapher->y_trans).input_range;
+      dVar11 = 1.0 - dVar8;
+    }
+    dVar12 = (multigrapher->y_trans).squeezed_range;
+    bVar7 = (multigrapher->x_trans).reverse;
+    dVar3 = (multigrapher->y_trans).output_range;
+    dVar4 = (multigrapher->x_trans).output_min;
+    dVar5 = (multigrapher->x_trans).squeezed_min;
+    if (bVar7 == false) {
+      dVar14 = (p->x - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+      dVar16 = dVar14;
+    }
+    else {
+      dVar14 = (p->x - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+      dVar16 = 1.0 - dVar14;
+    }
+    dVar10 = (multigrapher->x_trans).squeezed_range;
+    dVar15 = (multigrapher->x_trans).output_range;
+    dVar9 = dVar12 * dVar3;
+    dVar13 = dVar10 * dVar15;
+    dVar17 = dVar13;
+    if (dVar9 <= dVar13) {
+      dVar17 = dVar9;
+    }
+    if (bVar6 != false) {
+      dVar8 = 1.0 - dVar8;
+    }
+    if (bVar7 != false) {
+      dVar14 = 1.0 - dVar14;
+    }
+    if (dVar9 <= dVar13) {
+      dVar13 = dVar9;
+    }
+    pl_fline_r(((dVar5 + dVar14 * dVar10) * dVar15 + dVar4) - p->symbol_size * dVar13 * 0.5,
+               (dVar2 + dVar8 * dVar12) * dVar3 + dVar1,
+               dVar17 * p->symbol_size * 0.5 + (dVar16 * dVar10 + dVar5) * dVar15 + dVar4,
+               (dVar11 * dVar12 + dVar2) * dVar3 + dVar1,multigrapher->plotter);
+    bVar6 = (multigrapher->y_trans).reverse;
+    dVar1 = (multigrapher->y_trans).output_min;
+    dVar2 = (multigrapher->y_trans).squeezed_min;
+    dVar8 = (multigrapher->y_trans).input_min;
+    dVar11 = (multigrapher->y_trans).input_range;
+    if (bVar6 == false) {
+      dVar12 = (p->ymax - dVar8) / dVar11;
+    }
+    else {
+      dVar12 = 1.0 - (p->ymax - dVar8) / dVar11;
+    }
+    dVar3 = (multigrapher->y_trans).squeezed_range;
+    bVar7 = (multigrapher->x_trans).reverse;
+    dVar4 = (multigrapher->y_trans).output_range;
+    dVar5 = (multigrapher->x_trans).output_min;
+    dVar16 = (multigrapher->x_trans).squeezed_min;
+    if (bVar7 == false) {
+      dVar10 = (p->x - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+      dVar14 = dVar10;
+    }
+    else {
+      dVar14 = (p->x - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+      dVar10 = 1.0 - dVar14;
+    }
+    dVar15 = (multigrapher->x_trans).squeezed_range;
+    dVar17 = (multigrapher->x_trans).output_range;
+    dVar11 = (p->ymin - dVar8) / dVar11;
+    if (bVar6 != false) {
+      dVar11 = 1.0 - dVar11;
+    }
+    if (bVar7 != false) {
+      dVar14 = 1.0 - dVar14;
+    }
+    pl_fline_r(dVar5 + (dVar16 + dVar15 * dVar14) * dVar17,dVar4 * (dVar3 * dVar11 + dVar2) + dVar1,
+               (dVar10 * dVar15 + dVar16) * dVar17 + dVar5,(dVar12 * dVar3 + dVar2) * dVar4 + dVar1,
+               multigrapher->plotter);
+    bVar6 = (multigrapher->y_trans).reverse;
+    dVar1 = (multigrapher->y_trans).output_min;
+    dVar2 = (multigrapher->y_trans).squeezed_min;
+    if (bVar6 == false) {
+      dVar11 = (p->ymax - (multigrapher->y_trans).input_min) / (multigrapher->y_trans).input_range;
+      dVar8 = dVar11;
+    }
+    else {
+      dVar8 = (p->ymax - (multigrapher->y_trans).input_min) / (multigrapher->y_trans).input_range;
+      dVar11 = 1.0 - dVar8;
+    }
+    dVar12 = (multigrapher->y_trans).squeezed_range;
+    bVar7 = (multigrapher->x_trans).reverse;
+    dVar3 = (multigrapher->y_trans).output_range;
+    dVar4 = (multigrapher->x_trans).output_min;
+    dVar5 = (multigrapher->x_trans).squeezed_min;
+    if (bVar7 == false) {
+      dVar14 = (p->x - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+      dVar16 = dVar14;
+    }
+    else {
+      dVar14 = (p->x - (multigrapher->x_trans).input_min) / (multigrapher->x_trans).input_range;
+      dVar16 = 1.0 - dVar14;
+    }
+    dVar10 = (multigrapher->x_trans).squeezed_range;
+    dVar15 = (multigrapher->x_trans).output_range;
+    dVar9 = dVar12 * dVar3;
+    dVar13 = dVar10 * dVar15;
+    dVar17 = dVar13;
+    if (dVar9 <= dVar13) {
+      dVar17 = dVar9;
+    }
+    if (bVar6 != false) {
+      dVar8 = 1.0 - dVar8;
+    }
+    if (bVar7 != false) {
+      dVar14 = 1.0 - dVar14;
+    }
+    if (dVar9 <= dVar13) {
+      dVar13 = dVar9;
+    }
+    pl_fline_r(((dVar5 + dVar14 * dVar10) * dVar15 + dVar4) - p->symbol_size * dVar13 * 0.5,
+               (dVar2 + dVar8 * dVar12) * dVar3 + dVar1,
+               dVar17 * p->symbol_size * 0.5 + (dVar16 * dVar10 + dVar5) * dVar15 + dVar4,
+               (dVar11 * dVar12 + dVar2) * dVar3 + dVar1,multigrapher->plotter);
+  }
+  pl_restorestate_r(multigrapher->plotter);
+  return;
+}
+

@@ -1,0 +1,8 @@
+
+void print_wtmp_file_location(void)
+
+{
+  __printf_chk(1,"\nThe system\'s default login accounting file is %s.\n","/var/log/wtmp");
+  return;
+}
+

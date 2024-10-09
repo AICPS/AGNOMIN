@@ -1,0 +1,30 @@
+
+void read_and_plot_file(Reader *reader,Multigrapher *multigrapher)
+
+{
+  bool bVar1;
+  dataset_status_t dVar2;
+  Reader *in_stack_ffffff74;
+  Point *in_stack_ffffff78;
+  Point point;
+  
+  do {
+    while( true ) {
+      while( true ) {
+        dVar2 = read_point(in_stack_ffffff74,in_stack_ffffff78);
+        if (dVar2 != IN_PROGRESS) break;
+        plot_point(multigrapher,&point);
+      }
+      if (dVar2 != ENDED_BY_MODE_CHANGE) break;
+      bVar1 = reader->auto_bump;
+      reader->auto_bump = false;
+      reset_reader(reader);
+      reader->auto_bump = bVar1;
+      end_polyline_and_flush(multigrapher);
+    }
+    reset_reader(reader);
+    end_polyline_and_flush(multigrapher);
+  } while (dVar2 != ENDED_BY_EOF);
+  return;
+}
+

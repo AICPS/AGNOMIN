@@ -1,0 +1,13 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+void * xzalloc(size_t s)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = xmalloc(s);
+  pvVar1 = memset(pvVar1,0,s);
+  return pvVar1;
+}
+

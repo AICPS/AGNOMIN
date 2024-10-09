@@ -1,0 +1,506 @@
+
+int _getopt_internal_r(int argc,char **argv,char *optstring,rpl_option *longopts,int *longind,
+                      int long_only,_getopt_data *d,int posixly_correct)
+
+{
+  char *pcVar1;
+  byte *pbVar2;
+  int iVar3;
+  size_t sVar4;
+  char **ppcVar5;
+  int iVar6;
+  char *pcVar7;
+  char cVar8;
+  int iVar9;
+  uint uVar10;
+  uint __c;
+  int iVar11;
+  byte *pbVar12;
+  rpl_option *prVar13;
+  rpl_option *prVar14;
+  byte *pbVar15;
+  byte bVar16;
+  rpl_option *prVar17;
+  bool bVar18;
+  char *local_5c;
+  int local_50;
+  byte *local_48;
+  int local_3c;
+  
+  iVar6 = d->rpl_opterr;
+  if (argc < 1) {
+    return 0xffffffff;
+  }
+  iVar9 = d->rpl_optind;
+  d->rpl_optarg = (char *)0x0;
+  local_5c = optstring;
+  if (iVar9 == 0) {
+    iVar9 = 1;
+    d->rpl_optind = 1;
+LAB_00013240:
+    d->__last_nonopt = iVar9;
+    d->__first_nonopt = iVar9;
+    pcVar7 = (char *)argc;
+    if (posixly_correct != 0) {
+      pcVar7 = (char *)0x1;
+    }
+    d->__nextchar = (char *)0x0;
+    if ((posixly_correct == 0) && (pcVar7 = getenv("POSIXLY_CORRECT"), pcVar7 != (char *)0x0)) {
+      pcVar7 = (char *)0x1;
+    }
+    d->__posixly_correct = (int)pcVar7;
+    if (*optstring == '-') {
+      d->__ordering = RETURN_IN_ORDER;
+      local_5c = optstring + 1;
+    }
+    else {
+      if (*optstring == '+') {
+        d->__ordering = REQUIRE_ORDER;
+        local_5c = optstring + 1;
+      }
+      else {
+        d->__ordering = (uint)(pcVar7 == (char *)0x0);
+      }
+    }
+    d->__initialized = 1;
+    cVar8 = *local_5c;
+  }
+  else {
+    if (d->__initialized == 0) goto LAB_00013240;
+    cVar8 = *optstring;
+    if ((cVar8 - 0x2bU & 0xfd) == 0) {
+      local_5c = optstring + 1;
+      cVar8 = optstring[1];
+    }
+  }
+  pbVar12 = (byte *)d->__nextchar;
+  if (cVar8 == ':') {
+    iVar6 = 0;
+  }
+  if ((pbVar12 != (byte *)0x0) && (*pbVar12 != 0)) {
+LAB_00013148:
+    if (longopts != (rpl_option *)0x0) {
+      local_48 = (byte *)d->rpl_optind;
+      pcVar7 = argv[(int)local_48];
+      uVar10 = (uint)(byte)pcVar7[1];
+      if ((uVar10 == 0x2d) ||
+         ((long_only != 0 &&
+          ((pcVar7[2] != '\0' || (pcVar1 = strchr(local_5c,uVar10), pcVar1 == (char *)0x0)))))) {
+        __c = (uint)*pbVar12;
+        pbVar15 = pbVar12;
+        if (__c != 0x3d && __c != 0) {
+          do {
+            pbVar15 = pbVar15 + 1;
+          } while (*pbVar15 != 0x3d && *pbVar15 != 0);
+        }
+        pcVar1 = longopts->name;
+        if (pcVar1 != (char *)0x0) {
+          local_3c = -1;
+          bVar18 = false;
+          iVar9 = 0;
+          prVar14 = longopts;
+          prVar13 = (rpl_option *)0x0;
+          do {
+            while (prVar17 = prVar14, iVar11 = iVar9,
+                  iVar9 = strncmp(pcVar1,(char *)pbVar12,(size_t)(pbVar15 + -(int)pbVar12)),
+                  iVar9 != 0) {
+LAB_000134a0:
+              pcVar1 = prVar17[1].name;
+              iVar9 = iVar11 + 1;
+              prVar14 = prVar17 + 1;
+              prVar17 = prVar13;
+              if (pcVar1 == (char *)0x0) goto LAB_000134f8;
+            }
+            pbVar2 = (byte *)strlen(pcVar1);
+            if (pbVar2 == pbVar15 + -(int)pbVar12) goto LAB_0001367c;
+            if (prVar13 != (rpl_option *)0x0) {
+              if (((long_only == 0) && (prVar13->has_arg == prVar17->has_arg)) &&
+                 (prVar13->flag == prVar17->flag)) {
+                if (prVar13->val != prVar17->val) {
+                  bVar18 = true;
+                }
+              }
+              else {
+                bVar18 = true;
+              }
+              goto LAB_000134a0;
+            }
+            pcVar1 = prVar17[1].name;
+            iVar9 = iVar11 + 1;
+            prVar14 = prVar17 + 1;
+            prVar13 = prVar17;
+            local_3c = iVar11;
+          } while (pcVar1 != (char *)0x0);
+LAB_000134f8:
+          if (bVar18) {
+            if (iVar6 != 0) {
+              __fprintf_chk(stderr,1,"%s: option \'%s\' is ambiguous\n",*argv,pcVar7);
+              local_48 = (byte *)d->rpl_optind;
+              pbVar12 = (byte *)d->__nextchar;
+            }
+            sVar4 = strlen((char *)pbVar12);
+            d->__nextchar = (char *)(pbVar12 + sVar4);
+            d->rpl_optind = (int)local_48 + 1;
+            d->rpl_optopt = 0;
+            return 0x3f;
+          }
+          iVar11 = local_3c;
+          if (prVar17 != (rpl_option *)0x0) {
+LAB_0001367c:
+            d->rpl_optind = (int)local_48 + 1;
+            if (*pbVar15 != 0) {
+              if (prVar17->has_arg == 0) {
+                if (iVar6 != 0) {
+                  if (argv[(int)local_48][1] == '-') {
+                    __fprintf_chk(stderr,1,"%s: option \'--%s\' doesn\'t allow an argument\n",*argv,
+                                  prVar17->name);
+                    pbVar12 = (byte *)d->__nextchar;
+                  }
+                  else {
+                    __fprintf_chk(stderr,1,"%s: option \'%c%s\' doesn\'t allow an argument\n",*argv,
+                                  *argv[(int)local_48],prVar17->name);
+                    pbVar12 = (byte *)d->__nextchar;
+                  }
+                }
+                sVar4 = strlen((char *)pbVar12);
+                iVar6 = prVar17->val;
+                d->__nextchar = (char *)(pbVar12 + sVar4);
+                d->rpl_optopt = iVar6;
+                return 0x3f;
+              }
+              d->rpl_optarg = (char *)(pbVar15 + 1);
+LAB_00013748:
+              sVar4 = strlen((char *)pbVar12);
+              d->__nextchar = (char *)(pbVar12 + sVar4);
+              if (longind != (int *)0x0) {
+                *longind = iVar11;
+              }
+              if (prVar17->flag == (int *)0x0) {
+                return prVar17->val;
+              }
+              *prVar17->flag = prVar17->val;
+              return 0;
+            }
+            if (prVar17->has_arg != 1) goto LAB_00013748;
+            if ((int)local_48 + 1 < argc) {
+              pcVar7 = argv[(int)local_48 + 1];
+              d->rpl_optind = (int)local_48 + 2;
+              d->rpl_optarg = pcVar7;
+              goto LAB_00013748;
+            }
+            if (iVar6 != 0) {
+              __fprintf_chk(stderr,1,"%s: option \'--%s\' requires an argument\n",*argv,
+                            prVar17->name);
+              pbVar12 = (byte *)d->__nextchar;
+            }
+            sVar4 = strlen((char *)pbVar12);
+            d->rpl_optopt = prVar17->val;
+            d->__nextchar = (char *)(pbVar12 + sVar4);
+            cVar8 = *local_5c;
+            goto joined_r0x00013d90;
+          }
+        }
+        if (long_only == 0) {
+          if (iVar6 == 0) goto LAB_0001390c;
+          if (uVar10 != 0x2d) {
+LAB_000138d0:
+            __fprintf_chk(stderr,1,"%s: unrecognized option \'%c%s\'\n",*argv,*pcVar7,pbVar12);
+            local_48 = (byte *)d->rpl_optind;
+            goto LAB_0001390c;
+          }
+        }
+        else {
+          if (uVar10 != 0x2d) {
+            pcVar1 = strchr(local_5c,__c);
+            if (pcVar1 == (char *)0x0) {
+              if (iVar6 == 0) goto LAB_0001390c;
+              goto LAB_000138d0;
+            }
+            goto LAB_000131ac;
+          }
+          if (iVar6 == 0) goto LAB_0001390c;
+        }
+        __fprintf_chk(stderr,1,"%s: unrecognized option \'--%s\'\n",*argv,pbVar12);
+        local_48 = (byte *)d->rpl_optind;
+LAB_0001390c:
+        d->rpl_optind = (int)local_48 + 1;
+        d->__nextchar = "";
+        d->rpl_optopt = 0;
+        return 0x3f;
+      }
+    }
+LAB_000131ac:
+    pbVar15 = pbVar12 + 1;
+    d->__nextchar = (char *)pbVar15;
+    uVar10 = (uint)*pbVar12;
+    pcVar7 = strchr(local_5c,uVar10);
+    if (*pbVar15 == 0) {
+      d->rpl_optind = d->rpl_optind + 1;
+    }
+    if (pcVar7 != (char *)0x0 && uVar10 == 0x3a || (pcVar7 == (char *)0x0 || uVar10 == 0x3b)) {
+      if (iVar6 != 0) {
+        __fprintf_chk(stderr,1,"%s: invalid option -- \'%c\'\n",*argv,uVar10);
+      }
+      d->rpl_optopt = uVar10;
+      return 0x3f;
+    }
+    if ((*pcVar7 != 'W') || (pcVar7[1] != ';')) {
+      if (pcVar7[1] == ':') {
+        if (pcVar7[2] == ':') {
+          if (*pbVar15 == 0) {
+            d->rpl_optarg = (char *)0x0;
+          }
+          else {
+            d->rpl_optarg = (char *)pbVar15;
+            d->rpl_optind = d->rpl_optind + 1;
+          }
+        }
+        else {
+          iVar9 = d->rpl_optind;
+          if (*pbVar15 == 0) {
+            if (iVar9 == argc) {
+              if (iVar6 != 0) {
+                __fprintf_chk(stderr,1,"%s: option requires an argument -- \'%c\'\n",*argv,uVar10);
+              }
+              d->rpl_optopt = uVar10;
+              if (*local_5c == ':') {
+                uVar10 = 0x3a;
+              }
+              else {
+                uVar10 = 0x3f;
+              }
+            }
+            else {
+              pcVar7 = argv[iVar9];
+              d->rpl_optind = iVar9 + 1;
+              d->rpl_optarg = pcVar7;
+            }
+          }
+          else {
+            d->rpl_optarg = (char *)pbVar15;
+            d->rpl_optind = iVar9 + 1;
+          }
+        }
+        d->__nextchar = (char *)0x0;
+        return uVar10;
+      }
+      return uVar10;
+    }
+    iVar9 = d->rpl_optind;
+    if (*pbVar15 == 0) {
+      if (iVar9 == argc) {
+        if (iVar6 != 0) {
+          __fprintf_chk(stderr,1,"%s: option requires an argument -- \'%c\'\n",*argv,uVar10);
+        }
+        d->rpl_optopt = uVar10;
+        if (*local_5c == ':') {
+          return 0x3a;
+        }
+        return 0x3f;
+      }
+      pbVar15 = (byte *)argv[iVar9];
+      d->rpl_optind = iVar9 + 1;
+      d->rpl_optarg = (char *)pbVar15;
+    }
+    else {
+      d->rpl_optarg = (char *)pbVar15;
+      d->rpl_optind = iVar9 + 1;
+    }
+    d->__nextchar = (char *)pbVar15;
+    bVar16 = *pbVar15;
+    local_48 = pbVar15;
+    if (bVar16 != 0x3d && bVar16 != 0) {
+      do {
+        local_48 = local_48 + 1;
+        bVar16 = *local_48;
+      } while (bVar16 != 0x3d && bVar16 != 0);
+    }
+    pcVar7 = longopts->name;
+    if (pcVar7 != (char *)0x0) {
+      iVar9 = 0;
+      local_50 = 0;
+      bVar18 = false;
+      prVar14 = (rpl_option *)0x0;
+      do {
+        iVar3 = strncmp(pcVar7,(char *)pbVar15,(size_t)(local_48 + -(int)pbVar15));
+        prVar13 = prVar14;
+        iVar11 = local_50;
+        if (iVar3 == 0) {
+          pbVar12 = (byte *)strlen(pcVar7);
+          prVar13 = longopts;
+          if (pbVar12 == local_48 + -(int)pbVar15) goto LAB_00013b70;
+          iVar11 = iVar9;
+          if (prVar14 != (rpl_option *)0x0) {
+            if (((long_only == 0) && (prVar14->has_arg == longopts->has_arg)) &&
+               (prVar14->flag == longopts->flag)) {
+              prVar13 = prVar14;
+              iVar11 = local_50;
+              if (prVar14->val != longopts->val) {
+                bVar18 = true;
+              }
+            }
+            else {
+              bVar18 = true;
+              prVar13 = prVar14;
+              iVar11 = local_50;
+            }
+          }
+        }
+        local_50 = iVar11;
+        longopts = longopts + 1;
+        pcVar7 = longopts->name;
+        iVar9 = iVar9 + 1;
+        prVar14 = prVar13;
+      } while (pcVar7 != (char *)0x0);
+      if (bVar18) {
+        if (iVar6 != 0) {
+          __fprintf_chk(stderr,1,"%s: option \'-W %s\' is ambiguous\n",*argv,pbVar15);
+          pbVar15 = (byte *)d->__nextchar;
+        }
+        sVar4 = strlen((char *)pbVar15);
+        d->__nextchar = (char *)(pbVar15 + sVar4);
+        d->rpl_optind = d->rpl_optind + 1;
+        return 0x3f;
+      }
+      iVar9 = local_50;
+      if (prVar13 != (rpl_option *)0x0) {
+LAB_00013b70:
+        if (bVar16 == 0) {
+          if (prVar13->has_arg == 1) {
+            iVar11 = d->rpl_optind;
+            if (argc <= iVar11) {
+              if (iVar6 != 0) {
+                __fprintf_chk(stderr,1,"%s: option \'-W %s\' requires an argument\n",*argv,
+                              prVar13->name);
+              }
+              pcVar7 = d->__nextchar;
+              sVar4 = strlen(pcVar7);
+              d->__nextchar = pcVar7 + sVar4;
+              cVar8 = *local_5c;
+joined_r0x00013d90:
+              if (cVar8 != ':') {
+                return 0x3f;
+              }
+              return 0x3a;
+            }
+            pcVar7 = argv[iVar11];
+            d->rpl_optind = iVar11 + 1;
+            d->rpl_optarg = pcVar7;
+          }
+          else {
+            d->rpl_optarg = (char *)0x0;
+          }
+        }
+        else {
+          if (prVar13->has_arg == 0) {
+            if (iVar6 != 0) {
+              __fprintf_chk(stderr,1,"%s: option \'-W %s\' doesn\'t allow an argument\n",*argv,
+                            prVar13->name);
+            }
+            pcVar7 = d->__nextchar;
+            sVar4 = strlen(pcVar7);
+            d->__nextchar = pcVar7 + sVar4;
+            return 0x3f;
+          }
+          d->rpl_optarg = (char *)(local_48 + 1);
+        }
+        sVar4 = strlen((char *)pbVar15);
+        d->__nextchar = (char *)(pbVar15 + sVar4);
+        if (longind != (int *)0x0) {
+          *longind = iVar9;
+        }
+        if (prVar13->flag != (int *)0x0) {
+          *prVar13->flag = prVar13->val;
+          return 0;
+        }
+        return prVar13->val;
+      }
+    }
+    d->__nextchar = (char *)0x0;
+    return 0x57;
+  }
+  iVar9 = d->rpl_optind;
+  if (iVar9 < d->__last_nonopt) {
+    d->__last_nonopt = iVar9;
+  }
+  if (iVar9 < d->__first_nonopt) {
+    d->__first_nonopt = iVar9;
+  }
+  if (d->__ordering == PERMUTE) {
+    iVar11 = iVar9;
+    if (d->__first_nonopt == d->__last_nonopt) {
+      if (iVar9 != d->__first_nonopt) {
+        d->__first_nonopt = iVar9;
+      }
+    }
+    else {
+      if (iVar9 != d->__last_nonopt) {
+        exchange(argv,d);
+        iVar11 = d->rpl_optind;
+      }
+    }
+    iVar9 = iVar11;
+    if (iVar11 < argc) {
+      ppcVar5 = argv + iVar11;
+      do {
+        if ((**ppcVar5 == '-') && ((*ppcVar5)[1] != '\0')) {
+          iVar9 = d->rpl_optind;
+          break;
+        }
+        iVar11 = iVar11 + 1;
+        d->rpl_optind = iVar11;
+        ppcVar5 = ppcVar5 + 1;
+        iVar9 = iVar11;
+      } while (iVar11 != argc);
+    }
+    d->__last_nonopt = iVar11;
+  }
+  if (argc == iVar9) {
+    argc = d->__last_nonopt;
+    iVar9 = d->__first_nonopt;
+LAB_00013358:
+    if (argc != iVar9) {
+      d->rpl_optind = iVar9;
+    }
+  }
+  else {
+    pcVar7 = argv[iVar9];
+    if (*pcVar7 == '-') {
+      if ((pcVar7[1] == '-') && (pcVar7[2] == '\0')) {
+        iVar9 = iVar9 + 1;
+        d->rpl_optind = iVar9;
+        if (d->__first_nonopt == d->__last_nonopt) {
+          d->__first_nonopt = iVar9;
+        }
+        else {
+          bVar18 = iVar9 != d->__last_nonopt;
+          iVar9 = d->__first_nonopt;
+          if (bVar18) {
+            exchange(argv,d);
+            iVar9 = d->__first_nonopt;
+          }
+        }
+        d->__last_nonopt = argc;
+        d->rpl_optind = argc;
+        goto LAB_00013358;
+      }
+      if ((byte)pcVar7[1] != 0) {
+        uVar10 = count_leading_zeroes((byte)pcVar7[1] - 0x2d);
+        uVar10 = uVar10 >> 5;
+        if (longopts == (rpl_option *)0x0) {
+          uVar10 = 0;
+        }
+        pbVar12 = (byte *)(pcVar7 + uVar10 + 1);
+        d->__nextchar = (char *)pbVar12;
+        goto LAB_00013148;
+      }
+    }
+    if (d->__ordering != REQUIRE_ORDER) {
+      d->rpl_optarg = pcVar7;
+      d->rpl_optind = iVar9 + 1;
+      return 1;
+    }
+  }
+  return 0xffffffff;
+}
+

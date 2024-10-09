@@ -1,0 +1,25 @@
+
+void hashtab_dump_keys(hashtab *ht,FILE *out)
+
+{
+  int iVar1;
+  hashtab_elem *phVar2;
+  int in_GS_OFFSET;
+  hashtab_order ho;
+  
+  iVar1 = *(int *)(in_GS_OFFSET + 0x14);
+  ho.which = 0;
+  ho.elem = (hashtab_elem *)0x0;
+  ho.ht = ht;
+  phVar2 = hashtab_next(&ho);
+  while (phVar2 != (hashtab_elem *)0x0) {
+    __fprintf_chk(stdout,1,"%s (%d)\n",phVar2->key,phVar2->key_len);
+    phVar2 = hashtab_next(&ho);
+  }
+  if (iVar1 == *(int *)(in_GS_OFFSET + 0x14)) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+

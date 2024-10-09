@@ -1,0 +1,155 @@
+
+int clip_line(double *x0_p,double *y0_p,double *x1_p,double *y1_p,double x_min_clip,
+             double x_max_clip,double y_min_clip,double y_max_clip,bool spec_min_x,bool spec_min_y,
+             bool spec_max_x,bool spec_max_y)
+
+{
+  double dVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  bool bVar5;
+  uint uVar6;
+  double dVar7;
+  double dVar8;
+  uint uVar9;
+  uint uVar10;
+  bool bVar11;
+  bool bVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  
+  dVar1 = *x0_p;
+  dVar2 = *y0_p;
+  bVar11 = spec_max_x == false;
+  dVar3 = *x1_p;
+  dVar4 = *y1_p;
+  if (((dVar1 <= x_max_clip) || (uVar10 = 4, bVar11)) &&
+     ((x_min_clip <= dVar1 || (uVar10 = 8, spec_min_x == false)))) {
+    uVar10 = 0;
+  }
+  bVar12 = spec_max_y != false;
+  if ((dVar2 <= y_max_clip) || (!bVar12)) {
+    if ((dVar2 < y_min_clip) && (spec_min_y != false)) {
+      uVar10 = uVar10 | 2;
+    }
+  }
+  else {
+    uVar10 = uVar10 | 1;
+  }
+  if (((dVar3 <= x_max_clip) || (uVar9 = 4, bVar11)) &&
+     ((x_min_clip <= dVar3 || (uVar9 = 8, spec_min_x == false)))) {
+    uVar9 = 0;
+  }
+  dVar7 = dVar1;
+  dVar8 = dVar2;
+  dVar15 = dVar4;
+  dVar14 = dVar3;
+  if ((dVar4 <= y_max_clip) || (!bVar12)) {
+    if ((dVar4 < y_min_clip) && (spec_min_y != false)) {
+      uVar9 = uVar9 | 2;
+    }
+  }
+  else {
+    uVar9 = uVar9 | 1;
+  }
+  do {
+    while( true ) {
+      if ((uVar9 | uVar10) == 0) {
+        if ((dVar1 == dVar7) && (dVar2 == dVar8)) {
+          uVar10 = 1;
+        }
+        else {
+          uVar10 = 3;
+        }
+        if ((dVar3 != dVar14) || (dVar4 != dVar15)) {
+          uVar10 = uVar10 | 4;
+        }
+        *x0_p = dVar7;
+        *y0_p = dVar8;
+        *x1_p = dVar14;
+        *y1_p = dVar15;
+        return (int)uVar10;
+      }
+      if ((uVar9 & uVar10) != 0) {
+        return 0;
+      }
+      dVar16 = x_max_clip;
+      if (uVar10 != 0) break;
+      uVar6 = uVar9;
+      if ((uVar9 & 4) == 0) goto LAB_0040473b;
+      dVar13 = ((x_max_clip - dVar7) * (dVar15 - dVar8)) / (dVar14 - dVar7) + dVar8;
+      if (uVar9 == 0) goto LAB_004045f0;
+      bVar5 = y_max_clip < dVar13 && bVar12;
+LAB_004046fe:
+      if ((x_min_clip <= dVar16) || (uVar9 = 8, spec_min_x == false)) {
+        uVar9 = 0;
+      }
+      if (bVar5) {
+LAB_00404720:
+        dVar15 = dVar13;
+        dVar14 = dVar16;
+        uVar9 = uVar9 | 1;
+      }
+      else {
+LAB_004047aa:
+        dVar15 = dVar13;
+        dVar14 = dVar16;
+        if ((dVar13 < y_min_clip) && (spec_min_y != false)) {
+          uVar9 = uVar9 | 2;
+        }
+      }
+    }
+    uVar6 = uVar10;
+    if ((uVar10 & 4) == 0) {
+LAB_0040473b:
+      if ((uVar6 & 8) == 0) {
+        if ((uVar6 & 1) == 0) {
+          bVar5 = y_max_clip < y_min_clip;
+          dVar16 = ((dVar14 - dVar7) * (y_min_clip - dVar8)) / (dVar15 - dVar8) + dVar7;
+          dVar13 = y_min_clip;
+          goto LAB_0040477f;
+        }
+        bVar5 = false;
+        dVar16 = ((dVar14 - dVar7) * (y_max_clip - dVar8)) / (dVar15 - dVar8) + dVar7;
+        dVar13 = y_max_clip;
+      }
+      else {
+        dVar13 = ((x_min_clip - dVar7) * (dVar15 - dVar8)) / (dVar14 - dVar7) + dVar8;
+        bVar5 = y_max_clip < dVar13;
+        dVar16 = x_min_clip;
+LAB_0040477f:
+        bVar5 = bVar5 && bVar12;
+      }
+      if (uVar10 != uVar6) {
+        if ((dVar16 <= x_max_clip) || (bVar11)) goto LAB_004046fe;
+        uVar9 = 4;
+        if (bVar5) goto LAB_00404720;
+        goto LAB_004047aa;
+      }
+      if ((dVar16 <= x_max_clip) || (uVar10 = 4, bVar11)) goto LAB_00404603;
+    }
+    else {
+      dVar13 = ((x_max_clip - dVar7) * (dVar15 - dVar8)) / (dVar14 - dVar7) + dVar8;
+LAB_004045f0:
+      bVar5 = y_max_clip < dVar13 && bVar12;
+LAB_00404603:
+      if ((x_min_clip <= dVar16) || (uVar10 = 8, spec_min_x == false)) {
+        uVar10 = 0;
+      }
+    }
+    dVar7 = dVar16;
+    dVar8 = dVar13;
+    if (bVar5) {
+      uVar10 = uVar10 | 1;
+    }
+    else {
+      if ((dVar13 < y_min_clip) && (spec_min_y != false)) {
+        uVar10 = uVar10 | 2;
+      }
+    }
+  } while( true );
+}
+

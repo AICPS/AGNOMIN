@@ -1,0 +1,223 @@
+
+int main(int argc,char **argv)
+
+{
+  bool bVar1;
+  undefined4 uVar2;
+  time_t tVar3;
+  long lVar4;
+  time_t current_time;
+  char *date_string;
+  long in_FS_OFFSET;
+  int option_index;
+  undefined8 local_20;
+  
+  bVar1 = false;
+  local_20 = *(undefined8 *)(in_FS_OFFSET + 0x28);
+  program_name = *argv;
+  utmp_init(0);
+  do {
+    option_index = 0;
+    uVar2 = getopt_long(argc,argv,"adf:hpVyz",main::lexical_block_0::long_options,&option_index);
+    switch(uVar2) {
+    case 0:
+    case 9:
+    case 0x11:
+    case 0x12:
+    case 0x13:
+    case 0x14:
+    case 0x15:
+    case 0x16:
+    case 0x17:
+    case 0x18:
+    case 0x19:
+    case 0x1a:
+    case 0x1b:
+    case 0x1c:
+    case 0x1d:
+    case 0x1e:
+    case 0x1f:
+    case 0x20:
+    case 0x21:
+    case 0x22:
+    case 0x23:
+    case 0x24:
+    case 0x25:
+    case 0x26:
+    case 0x27:
+    case 0x28:
+    case 0x29:
+    case 0x2a:
+    case 0x2b:
+    case 0x2c:
+    case 0x2d:
+    case 0x2e:
+    case 0x2f:
+    case 0x30:
+    case 0x31:
+    case 0x32:
+    case 0x33:
+    case 0x34:
+    case 0x35:
+    case 0x36:
+    case 0x37:
+    case 0x38:
+    case 0x39:
+    case 0x3a:
+    case 0x3b:
+    case 0x3c:
+    case 0x3d:
+    case 0x3e:
+    case 0x3f:
+    case 0x40:
+    case 0x41:
+    case 0x42:
+    case 0x43:
+    case 0x44:
+    case 0x45:
+    case 0x46:
+    case 0x47:
+    case 0x48:
+    case 0x49:
+    case 0x4a:
+    case 0x4b:
+    case 0x4c:
+    case 0x4d:
+    case 0x4e:
+    case 0x4f:
+    case 0x50:
+    case 0x51:
+    case 0x52:
+    case 0x53:
+    case 0x54:
+    case 0x55:
+    case 0x57:
+    case 0x58:
+    case 0x59:
+    case 0x5a:
+    case 0x5b:
+    case 0x5c:
+    case 0x5d:
+    case 0x5e:
+    case 0x5f:
+    case 0x60:
+    case 0x62:
+    case 99:
+    case 0x65:
+    case 0x67:
+    case 0x68:
+    case 0x69:
+    case 0x6a:
+    case 0x6b:
+    case 0x6c:
+    case 0x6d:
+    case 0x6e:
+    case 0x6f:
+    case 0x71:
+    case 0x72:
+    case 0x73:
+    case 0x74:
+    case 0x75:
+    case 0x76:
+    case 0x77:
+    case 0x78:
+      give_usage();
+                    /* WARNING: Subroutine does not return */
+      exit(1);
+    case 3:
+      nasty_supplant = 1;
+      break;
+    case 4:
+      nasty_time_warp = 1;
+      break;
+    case 5:
+    case 0x7a:
+      print_zero_totals = 1;
+      break;
+    case 6:
+      debugging_enabled = 1;
+    case 1:
+      print_file_problems = 1;
+      break;
+    case 7:
+      time_warp_leniency = strtol(optarg,(char **)0x0,10);
+      if (time_warp_leniency < 0) {
+        fatal("time warp leniency value has to be non-negative");
+      }
+      break;
+    case 8:
+    case 0x56:
+      __printf_chk(1,"%s: GNU Accounting Utilities (release %s)\n",program_name,"6.5.5");
+                    /* WARNING: Subroutine does not return */
+      exit(0);
+    case 10:
+    case 100:
+      print_midnight_totals = 1;
+      break;
+    case 0xb:
+    case 0x70:
+      print_individual_totals = 1;
+      break;
+    case 0xc:
+    case 0x66:
+      bVar1 = true;
+      add_utmp_file(optarg);
+      break;
+    case 0xd:
+      nasty_time_warp = 1;
+      nasty_supplant = 1;
+    case 2:
+      nasty_reboot = 1;
+      break;
+    case 0xe:
+    case 0x79:
+      print_year = 1;
+      break;
+    case 0xf:
+    case 0x61:
+      print_all_days = 1;
+      break;
+    case 0x10:
+      time_warp_suspicious = strtol(optarg,(char **)0x0,10);
+      if (time_warp_suspicious < 0) {
+        fatal("time warp suspicious value has to be non-negative");
+      }
+      if (time_warp_suspicious <= time_warp_leniency) {
+        fatal("time warp suspicious value has to greater than the time warp leniency value");
+      }
+      break;
+    default:
+      if (optind < argc) {
+        names = hashtab_init(0);
+        while (lVar4 = (long)optind, optind < argc) {
+          optind = optind + 1;
+          hashtab_create(names,argv[lVar4],0);
+        }
+        if (debugging_enabled != 0) {
+          hashtab_dump_keys(names,stdout);
+        }
+      }
+      if (!bVar1) {
+        add_utmp_file("/var/log/wtmp");
+      }
+      user_totals = hashtab_init(0);
+      login_table = hashtab_init(0);
+      parse_entries();
+      tVar3 = time((time_t *)0x0);
+      current_time = last_time;
+      if (last_time <= tVar3) {
+        current_time = tVar3;
+      }
+      do_totals(&next_midnight,current_time,1,1,"midnight logout");
+      log_everyone_out(current_time,1,0,"catch-up");
+      date_string = "";
+      if ((print_midnight_totals != 0) && (date_string = "Today", print_year != 0)) {
+        date_string = "Today\t";
+      }
+      do_statistics(date_string);
+                    /* WARNING: Subroutine does not return */
+      exit(0);
+    }
+  } while( true );
+}
+

@@ -1,0 +1,26 @@
+
+void read_and_plot_file(Reader *reader,Multigrapher *multigrapher)
+
+{
+  dataset_status_t dVar1;
+  bool bVar2;
+  Point point;
+  
+  do {
+    while( true ) {
+      while (dVar1 = read_point(reader,&point), dVar1 == IN_PROGRESS) {
+        plot_point(multigrapher,&point);
+      }
+      if (dVar1 != ENDED_BY_MODE_CHANGE) break;
+      bVar2 = reader->auto_bump;
+      reader->auto_bump = false;
+      reset_reader(reader);
+      reader->auto_bump = bVar2;
+      end_polyline_and_flush(multigrapher);
+    }
+    reset_reader(reader);
+    end_polyline_and_flush(multigrapher);
+  } while (dVar1 != ENDED_BY_EOF);
+  return;
+}
+

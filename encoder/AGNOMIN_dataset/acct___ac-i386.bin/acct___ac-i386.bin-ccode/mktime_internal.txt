@@ -1,0 +1,155 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+time_t mktime_internal(tm *tp,anon_subr_tm_ptr_time_t_ptr_tm_ptr *convert,time_t *offset)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int hour;
+  time_t tVar5;
+  tm *tp_00;
+  uint uVar6;
+  uint uVar7;
+  tm *ptVar8;
+  uint uVar9;
+  int iVar10;
+  uint uVar11;
+  int iVar12;
+  int iVar13;
+  int in_GS_OFFSET;
+  bool bVar14;
+  int local_cc;
+  uint local_a8;
+  int local_a4;
+  time_t t;
+  time_t t2;
+  time_t ot;
+  tm tm;
+  tm otm;
+  
+  iVar2 = *(int *)(in_GS_OFFSET + 0x14);
+  iVar3 = tp->tm_sec;
+  iVar4 = tp->tm_min;
+  hour = tp->tm_hour;
+  iVar13 = tp->tm_isdst;
+  uVar9 = (uint)(iVar13 != 0) | iVar13 >> 0x1f;
+  iVar10 = tp->tm_mon % 0xc;
+  iVar1 = iVar10 >> 0x1f;
+  tp_00 = (tm *)(tp->tm_mon / 0xc + iVar1 + tp->tm_year);
+  uVar6 = 0;
+  if (((uint)tp_00 & 3) == 0) {
+    uVar6 = 1;
+    if (tp_00 == (tm *)(((int)tp_00 / 100) * 100)) {
+      uVar6 = (uint)(((int)tp_00 / 100 & 3U) == 1);
+    }
+  }
+  local_cc = 0;
+  iVar1 = tp->tm_mday + -1 +
+          (uint)(*(ushort (*) [13])((int)__mon_yday + (uVar6 * 0xd + iVar10 + iVar1 * -0xc) * 2))[0]
+  ;
+  local_a4 = *offset;
+  if ((-1 < iVar3) && (local_cc = 0x3b, iVar3 < 0x3c)) {
+    local_cc = iVar3;
+  }
+  iVar10 = (((int)tp_00 >> 2) + 0x1db) - (uint)(((uint)tp_00 & 3) == 0);
+  iVar12 = iVar10 / 0x19 + (iVar10 % 0x19 >> 0x1f);
+  uVar6 = ((hour + (((int)&tp_00[-2].tm_mon + 2) * 0x16d + iVar1 +
+                   (iVar10 - iVar12) + -0x1dd + (iVar12 >> 2)) * 0x18) * 0x3c + iVar4) * 0x3c +
+          local_cc + local_a4;
+  iVar10 = (iVar4 >> 0x14) + (hour >> 0xe) + (tp->tm_year >> 1) + -0x23 + (tp->tm_mday >> 10);
+  uVar7 = ((int)uVar6 >> 0x1a) - iVar10;
+  uVar11 = (int)uVar7 >> 0x1f;
+  local_a8 = uVar6;
+  if ((int)((uVar7 ^ uVar11) - uVar11) < 0x16) {
+LAB_0804bf92:
+    bVar14 = false;
+    iVar10 = 6;
+    t2 = local_a8;
+    t = local_a8;
+    uVar6 = local_a8;
+    while( true ) {
+      ptVar8 = ranged_convert(convert,&t,&tm);
+      uVar7 = t;
+      uVar11 = guess_time_tm((long)tp_00,iVar1,hour,iVar4,local_cc,(tm *)t,(time_t *)ptVar8);
+      tVar5 = t2;
+      if (uVar7 == uVar11) break;
+      if ((uVar6 == uVar7) && (uVar6 != t2)) {
+        if (tm.tm_isdst < 0) goto offset_found;
+        if ((int)uVar9 < 0) {
+          if (bVar14 <= (tm.tm_isdst != 0)) goto offset_found;
+        }
+        else {
+          if ((uVar9 != 0) != (tm.tm_isdst != 0)) goto offset_found;
+        }
+      }
+      iVar10 = iVar10 + -1;
+      if (iVar10 == 0) goto LAB_0804c068;
+      t2 = uVar7;
+      bVar14 = tm.tm_isdst != 0;
+      uVar6 = tVar5;
+      t = uVar11;
+    }
+    uVar6 = uVar11;
+    if ((uVar9 != tm.tm_isdst & (byte)~(byte)(iVar13 >> 0x37) >> 7) != 0) {
+      iVar13 = 0x92c70;
+      if (-1 < tm.tm_isdst) {
+        do {
+          ot = uVar7 - iVar13;
+          if (((ot < (int)uVar7) &&
+              (ranged_convert(convert,&ot,&otm), uVar7 = t, otm.tm_isdst == uVar9)) ||
+             ((ot = iVar13 + uVar7, (int)uVar7 <= ot &&
+              (ranged_convert(convert,&ot,&otm), uVar7 = t, otm.tm_isdst == uVar9)))) {
+            t = guess_time_tm((long)tp_00,iVar1,hour,iVar4,local_cc,(tm *)ot,(time_t *)&otm);
+            ranged_convert(convert,&t,&tm);
+            uVar6 = t;
+            break;
+          }
+          iVar13 = iVar13 + 0x92c70;
+          uVar6 = uVar7;
+        } while (iVar13 != 0x100dc400);
+      }
+    }
+offset_found:
+    *offset = (local_a4 + uVar6) - local_a8;
+    if (iVar3 != tm.tm_sec) {
+      iVar4 = iVar3 + uVar6;
+      local_cc = (uint)(local_cc == 0 && tm.tm_sec == 0x3c) - local_cc;
+      t2 = iVar4 + local_cc;
+      bVar14 = t2 < iVar4;
+      ptVar8 = (*convert)(&t2,&tm);
+      if (((byte)(iVar4 < (int)uVar6 ^ (byte)((uint)iVar3 >> 0x1f) |
+                 (byte)((uint)local_cc >> 0x1f) ^ bVar14) != 0) || (uVar6 = t2, ptVar8 == (tm *)0x0)
+         ) goto LAB_0804c068;
+    }
+    tp->tm_sec = tm.tm_sec;
+    tp->tm_min = tm.tm_min;
+    tp->tm_hour = tm.tm_hour;
+    tp->tm_mday = tm.tm_mday;
+    tp->tm_mon = tm.tm_mon;
+    tp->tm_year = tm.tm_year;
+    tp->tm_wday = tm.tm_wday;
+    tp->tm_yday = tm.tm_yday;
+    tp->tm_isdst = tm.tm_isdst;
+    tp->tm_gmtoff = tm.tm_gmtoff;
+    tp->tm_zone = tm.tm_zone;
+  }
+  else {
+    local_a8 = ~uVar6;
+    uVar7 = ((int)local_a8 >> 0x1a) - iVar10;
+    uVar11 = (int)uVar7 >> 0x1f;
+    local_a4 = local_a4 + (local_a8 - uVar6);
+    if ((int)((uVar7 ^ uVar11) - uVar11) < 0x16) goto LAB_0804bf92;
+LAB_0804c068:
+    uVar6 = 0xffffffff;
+  }
+  if (iVar2 != *(int *)(in_GS_OFFSET + 0x14)) {
+    __stack_chk_fail_local();
+    uVar6 = mktime_internal(tp_00,localtime_r,&localtime_offset);
+    return uVar6;
+  }
+  return uVar6;
+}
+

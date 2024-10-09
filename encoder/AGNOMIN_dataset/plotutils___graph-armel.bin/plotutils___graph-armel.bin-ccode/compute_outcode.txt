@@ -1,0 +1,27 @@
+
+outcode compute_outcode(Multigrapher *multigrapher,double x,double y,bool tolerant)
+
+{
+  outcode oVar1;
+  bool in_NG;
+  
+  if (in_NG) {
+    oVar1 = 4;
+  }
+  else {
+    if (in_NG) {
+      oVar1 = 8;
+    }
+    else {
+      oVar1 = 0;
+    }
+  }
+  if (in_NG) {
+    return oVar1 | 1;
+  }
+  if (in_NG) {
+    oVar1 = oVar1 | 2;
+  }
+  return oVar1;
+}
+

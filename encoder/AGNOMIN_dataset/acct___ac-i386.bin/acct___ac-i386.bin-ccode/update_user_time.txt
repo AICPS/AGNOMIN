@@ -1,0 +1,41 @@
+
+void update_user_time(char *name,time_t the_time,char *debug_label)
+
+{
+  int iVar1;
+  hashtab_elem *phVar2;
+  int *piVar3;
+  int in_GS_OFFSET;
+  user_data u;
+  
+  iVar1 = *(int *)(in_GS_OFFSET + 0x14);
+  if (the_time < 0) {
+    utmp_print_file_and_line(stdout);
+    __fprintf_chk(stdout,1,": problem: update user %.*s (for %s) with %ld seconds?!\n",0x20,name,
+                  debug_label,the_time);
+    fatal("Possible overflow of time_t!  Can\'t continue.");
+  }
+  if (debugging_enabled != 0) {
+    if (names != (hashtab *)0x0) {
+      phVar2 = hashtab_find(names,name,0x20);
+      if (phVar2 == (hashtab_elem *)0x0) goto LAB_080491df;
+    }
+    __fprintf_chk(stdout,1,"\t\t\t\t\t%*.2f %-*.*s (%s)\n",0x20,(double)((float)the_time / 3600.0),
+                  0x20,0x20,name,debug_label);
+  }
+LAB_080491df:
+  phVar2 = hashtab_find(user_totals,name,0x20);
+  if (phVar2 == (hashtab_elem *)0x0) {
+    u = 0;
+    phVar2 = hashtab_create(user_totals,name,0x20);
+    hashtab_set_value(phVar2,&u,4);
+  }
+  piVar3 = (int *)hashtab_get_value(phVar2);
+  *piVar3 = *piVar3 + the_time;
+  if (iVar1 == *(int *)(in_GS_OFFSET + 0x14)) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+

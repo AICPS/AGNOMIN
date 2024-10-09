@@ -1,0 +1,205 @@
+
+void array_bounds(Point *p,int length,bool transpose_axes,int clip_mode,double *min_x,double *min_y,
+                 double *max_x,double *max_y,bool spec_min_x,bool spec_min_y,bool spec_max_x,
+                 bool spec_max_y)
+
+{
+  uint uVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  bool bVar9;
+  double x_min_clip;
+  uint uVar10;
+  int iVar11;
+  int local_b0;
+  double local_ac;
+  double local_a4;
+  double *local_9c;
+  double local_94;
+  double local_8c;
+  double local_84;
+  double local_7c;
+  double local_54;
+  double local_4c;
+  double local_44;
+  double local_3c;
+  double xxr [2];
+  double yyr [2];
+  
+  if (length == 0) {
+    if (spec_min_x == false) {
+      *min_x = 0.0;
+    }
+    if (spec_min_y == false) {
+      *min_y = 0.0;
+    }
+    if (spec_max_x == false) {
+      *max_x = *min_x;
+    }
+    if (spec_max_y == false) {
+      *max_y = *min_y;
+      return;
+    }
+    return;
+  }
+  if (spec_min_x == false) {
+    local_94 = 0.0;
+    dVar6 = 1.797693134862316e+308;
+    x_min_clip = local_94;
+  }
+  else {
+    dVar6 = 0.0;
+    x_min_clip = *min_x;
+  }
+  if (spec_max_x == false) {
+    local_84 = 0.0;
+    dVar8 = -1.797693134862316e+308;
+  }
+  else {
+    local_84 = *max_x;
+    local_94 = x_min_clip;
+    if ((spec_min_x != false) && (local_84 < x_min_clip)) {
+      local_94 = local_84;
+      local_84 = x_min_clip;
+    }
+    dVar8 = 0.0;
+    x_min_clip = local_94;
+  }
+  if (spec_min_y == false) {
+    local_8c = 0.0;
+    dVar7 = 1.797693134862316e+308;
+    dVar2 = local_8c;
+  }
+  else {
+    dVar2 = *min_y;
+    dVar7 = 0.0;
+  }
+  local_8c = dVar2;
+  if (spec_max_y == false) {
+    local_7c = 0.0;
+    dVar2 = -1.797693134862316e+308;
+  }
+  else {
+    local_7c = *max_y;
+    if ((spec_min_y != false) && (local_7c < dVar2)) {
+      local_8c = local_7c;
+      local_7c = dVar2;
+    }
+    dVar2 = 0.0;
+  }
+  if (length < 1) {
+LAB_0804c740:
+    dVar6 = 0.0;
+    dVar7 = dVar6;
+    dVar8 = dVar6;
+    dVar2 = dVar6;
+LAB_0804c74c:
+    if (spec_min_x == false) {
+      *min_x = dVar6;
+    }
+    if (spec_min_y == false) {
+      *min_y = dVar7;
+    }
+    if (spec_max_x == false) {
+      *max_x = dVar8;
+    }
+    if (spec_max_y == false) {
+      *max_y = dVar2;
+      return;
+    }
+    return;
+  }
+  local_b0 = 0;
+  bVar9 = false;
+  local_9c = &p->fill_fraction;
+  local_ac = 0.0;
+  local_a4 = 0.0;
+  if (transpose_axes == false) goto LAB_0804c520;
+LAB_0804c2d4:
+  dVar3 = local_9c[-10];
+  dVar4 = local_9c[-0xb];
+  do {
+    if ((local_b0 == 0) || (*(int *)(local_9c + -4) == 0)) {
+LAB_0804c5ba:
+      if (((((spec_min_x == false) || (x_min_clip <= dVar3)) &&
+           ((spec_max_x == false || (dVar3 <= local_84)))) &&
+          ((spec_min_y == false || (local_8c <= dVar4)))) &&
+         ((spec_max_y == false || (dVar4 <= local_7c)))) {
+        xxr[0] = dVar3;
+        uVar10 = 1;
+        yyr[0] = dVar4;
+LAB_0804c3f3:
+        iVar11 = 0;
+        do {
+          if ((spec_min_x == false) && (xxr[iVar11] <= dVar6)) {
+            dVar6 = xxr[iVar11];
+          }
+          if ((spec_min_y == false) && (yyr[iVar11] <= dVar7)) {
+            dVar7 = yyr[iVar11];
+          }
+          if ((spec_max_x == false) && (dVar8 <= xxr[iVar11])) {
+            dVar8 = xxr[iVar11];
+          }
+          if ((spec_max_y == false) && (dVar2 <= yyr[iVar11])) {
+            dVar2 = yyr[iVar11];
+          }
+          uVar1 = iVar11 + 1;
+          iVar11 = 1;
+        } while (uVar1 < uVar10);
+        bVar9 = true;
+      }
+    }
+    else {
+      if (*(int *)((int)local_9c + -0xc) < 1) {
+        dVar5 = *local_9c;
+        if (dVar5 < 0.0) goto LAB_0804c5ba;
+      }
+      else {
+        dVar5 = *local_9c;
+      }
+      local_44 = local_ac;
+      local_3c = local_a4;
+      local_54 = dVar3;
+      local_4c = dVar4;
+      if (dVar5 < 0.0) {
+        if (clip_mode == 0) goto LAB_0804c5ba;
+        if (clip_mode == 2) goto LAB_0804c338;
+        uVar10 = clip_line(&local_44,&local_3c,&local_54,&local_4c,x_min_clip,local_84,local_8c,
+                           local_7c,spec_min_x,spec_min_y,spec_max_x,spec_max_y);
+        if (((uVar10 & 1) != 0) && ((uVar10 & 6) != 6)) goto LAB_0804c3c2;
+      }
+      else {
+LAB_0804c338:
+        uVar10 = clip_line(&local_44,&local_3c,&local_54,&local_4c,x_min_clip,local_84,local_8c,
+                           local_7c,spec_min_x,spec_min_y,spec_max_x,spec_max_y);
+        if ((uVar10 & 1) != 0) {
+LAB_0804c3c2:
+          uVar10 = 2;
+          xxr[0] = local_44;
+          yyr[0] = local_3c;
+          xxr[1] = local_54;
+          yyr[1] = local_4c;
+          goto LAB_0804c3f3;
+        }
+      }
+    }
+    local_b0 = local_b0 + 1;
+    local_9c = (double *)((int)local_9c + 100);
+    if (local_b0 == length) {
+      if (bVar9) goto LAB_0804c74c;
+      goto LAB_0804c740;
+    }
+    local_ac = dVar3;
+    local_a4 = dVar4;
+    if (transpose_axes != false) goto LAB_0804c2d4;
+LAB_0804c520:
+    dVar3 = local_9c[-0xb];
+    dVar4 = local_9c[-10];
+  } while( true );
+}
+

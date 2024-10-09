@@ -1,0 +1,98 @@
+
+BOOL compile_pattern(patstr *p,int options,int popts,int fromfile,char *fromtext,int count)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  char *pcVar3;
+  patstr *ppVar4;
+  size_t sVar5;
+  char *__s;
+  char *pcVar6;
+  uint uVar7;
+  undefined2 *puVar8;
+  char *__s_00;
+  char *local_204c;
+  char *error;
+  int errptr;
+  char buffer [8202];
+  undefined2 *puVar9;
+  
+  iVar1 = __stack_chk_guard;
+  __s_00 = p->string;
+  local_204c = (char *)strlen(__s_00);
+  if (p->compiled == (pcre *)0x0) {
+    if (((popts & 4U) != 0) &&
+       (pcVar3 = end_of_line(__s_00,__s_00 + (int)local_204c,&errptr), errptr != 0)) {
+      ppVar4 = add_pattern(pcVar3,p);
+      if (ppVar4 == (patstr *)0x0) goto LAB_00011944;
+      local_204c = pcVar3 + (-errptr - (int)__s_00);
+    }
+    __s = prefix[popts];
+    pcVar6 = suffix[popts];
+    pcVar3 = local_204c;
+    __sprintf_chk(buffer,1,0x200a,"%s%.*s%s",__s,local_204c,__s_00,pcVar6);
+    ppVar4 = (patstr *)pcre_compile(buffer,options,&error,&errptr,pcretables);
+    p->compiled = (pcre *)ppVar4;
+    if (ppVar4 == (patstr *)0x0) {
+      sVar5 = strlen(__s);
+      uVar2 = stderr;
+      errptr = errptr - sVar5;
+      if ((int)local_204c < errptr) {
+        errptr = (int)local_204c;
+      }
+      if (fromfile == 0) {
+        if (count == 0) {
+          __fprintf_chk(stderr,1,"pcregrep: Error in %s regex at offset %d: %s\n",fromtext,errptr,
+                        error);
+          ppVar4 = (patstr *)count;
+        }
+        else {
+          __sprintf_chk(ordin::buffer,1,8,"%d",count,pcVar3,__s_00,pcVar6);
+          puVar8 = (undefined2 *)((int)&pcretables + 3);
+          do {
+            puVar9 = puVar8;
+            puVar8 = (undefined2 *)((int)puVar9 + 1);
+          } while (*(char *)puVar8 != '\0');
+          uVar7 = (uint)count % 10;
+          if (uVar7 == 2) {
+            *puVar8 = 0x646e;
+            *(undefined *)((int)puVar9 + 3) = 0;
+          }
+          else {
+            if (uVar7 == 3) {
+              *puVar8 = 0x6472;
+              *(undefined *)((int)puVar9 + 3) = 0;
+            }
+            else {
+              if (uVar7 == 1) {
+                *puVar8 = 0x7473;
+                *(undefined *)((int)puVar9 + 3) = 0;
+              }
+              else {
+                *puVar8 = 0x6874;
+                *(char *)((int)puVar9 + 3) = '\0';
+              }
+            }
+          }
+          __fprintf_chk(uVar2,1,"pcregrep: Error in %s %s regex at offset %d: %s\n",ordin::buffer,
+                        fromtext,errptr,error);
+          ppVar4 = (patstr *)0x0;
+        }
+      }
+      else {
+        __fprintf_chk(stderr,1,"pcregrep: Error in regex in line %d of %s at offset %d: %s\n",count,
+                      fromtext,errptr,error);
+      }
+      goto LAB_00011944;
+    }
+  }
+  ppVar4 = (patstr *)0x1;
+LAB_00011944:
+  if (iVar1 != __stack_chk_guard) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail();
+  }
+  return (BOOL)ppVar4;
+}
+

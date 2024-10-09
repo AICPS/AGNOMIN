@@ -1,0 +1,43 @@
+
+time_t guess_time_tm(long year,long yday,int hour,int min,int sec,tm *tp,time_t *t)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  
+  if (t != (time_t *)0x0) {
+    uVar1 = t[5];
+    iVar4 = ((int)uVar1 >> 2) + 0x1db;
+    iVar3 = (year >> 2) + 0x1db;
+    if ((uVar1 & 3) == 0) {
+      iVar4 = ((int)uVar1 >> 2) + 0x1da;
+    }
+    if ((year & 3U) == 0) {
+      iVar3 = (year >> 2) + 0x1da;
+    }
+    iVar5 = iVar4 / 0x19 + (iVar4 % 0x19 >> 0x1f);
+    iVar2 = iVar3 / 0x19 + (iVar3 % 0x19 >> 0x1f);
+    iVar4 = (((((((iVar3 - iVar4) + (iVar5 - iVar2) + ((iVar2 >> 2) - (iVar5 >> 2)) +
+                 (((year - uVar1) * 0x16d + yday) - t[7])) * 0x18 + hour) - t[2]) * 0x3c + min) -
+             t[1]) * 0x3c + sec) - *t;
+    iVar3 = (int)tp + iVar4;
+    if ((uint)((int)tp <= iVar3) != -(iVar4 >> 0x1f)) {
+      return iVar3;
+    }
+  }
+  if ((int)tp < 0) {
+    if (-0x7fffffff < (int)tp) {
+      return -0x80000000;
+    }
+    return (int)&tp->tm_sec + 1;
+  }
+  if (tp == (tm *)0x7ffffffd || (int)&tp[0x2e8ba2e].tm_year + 3 < 0 != SCARRY4((int)tp,-0x7ffffffd))
+  {
+    return 0x7fffffff;
+  }
+  return (int)&tp[-1].tm_zone + 3;
+}
+

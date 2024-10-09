@@ -1,0 +1,29 @@
+
+void hashtab_delete(hashtab_elem *he)
+
+{
+  ulong *puVar1;
+  hashtab *phVar2;
+  hashtab_elem *phVar3;
+  
+  phVar2 = he->ht;
+  phVar3 = he->prev;
+  puVar1 = &phVar2->items_hashed;
+  *puVar1 = *puVar1 - 1;
+  if (phVar3 == (hashtab_elem *)0x0) {
+    phVar2->table[he->hashval] = he->next;
+  }
+  else {
+    phVar3->next = he->next;
+  }
+  if (he->next != (hashtab_elem *)0x0) {
+    he->next->prev = he->prev;
+  }
+  if (he->data != (void *)0x0) {
+    free(he->data);
+  }
+  free(he->key);
+  free(he);
+  return;
+}
+

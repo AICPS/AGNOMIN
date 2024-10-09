@@ -1,0 +1,89 @@
+
+void plot_ordinate_log_subsubtick(Multigrapher *multigrapher,double yval)
+
+{
+  int *piVar1;
+  double dVar2;
+  grid_type gVar3;
+  undefined8 uVar4;
+  double extraout_XMM0_Qa;
+  double extraout_XMM0_Qa_00;
+  double dVar5;
+  double _b;
+  double _a;
+  char labelbuf [2048];
+  
+  dVar5 = (multigrapher->y_trans).input_max;
+  dVar2 = (multigrapher->y_trans).input_min;
+  pl_fontname_r(multigrapher->plotter);
+  pl_ffontsize_r();
+  dVar5 = (dVar5 - dVar2) * 1e-06;
+  if (yval < (multigrapher->y_trans).input_min - dVar5) {
+    return;
+  }
+  if (dVar5 + (multigrapher->y_trans).input_max < yval) {
+    return;
+  }
+  if ((multigrapher->y_axis).user_specified_subsubticks != false) {
+    pow(10.0,yval);
+    print_tick_label();
+    if ((multigrapher->x_axis).switch_axis_end == false) {
+      pl_fmove_r(multigrapher->plotter);
+      pl_flabelwidth_r(multigrapher->plotter,labelbuf);
+      uVar4 = 0x72;
+      _b = extraout_XMM0_Qa_00;
+    }
+    else {
+      pl_fmove_r(multigrapher->plotter);
+      pl_flabelwidth_r(multigrapher->plotter,labelbuf);
+      uVar4 = 0x6c;
+      _b = extraout_XMM0_Qa;
+    }
+    pl_alabel_r(multigrapher->plotter,uVar4,99);
+    dVar5 = (multigrapher->y_axis).max_label_width;
+    piVar1 = &(multigrapher->y_axis).labelled_ticks;
+    *piVar1 = *piVar1 + 1;
+    if (dVar5 <= _b) {
+      dVar5 = _b;
+    }
+    (multigrapher->y_axis).max_label_width = dVar5;
+  }
+  gVar3 = multigrapher->grid_spec;
+  if (gVar3 != AXES_AND_BOX) {
+    if (gVar3 < AXES_AND_BOX_AND_GRID) {
+      if (gVar3 != AXES) {
+        return;
+      }
+      goto LAB_004081ed;
+    }
+    if (gVar3 != AXES_AND_BOX_AND_GRID) {
+      if (gVar3 != AXES_AT_ORIGIN) {
+        return;
+      }
+      goto LAB_004081ed;
+    }
+    pl_linemod_r(multigrapher->plotter,"dotted");
+    pl_fmove_r(multigrapher->plotter);
+    pl_fcont_r(multigrapher->plotter);
+    pl_linemod_r(multigrapher->plotter);
+  }
+  if ((multigrapher->x_axis).switch_axis_end == false) {
+    pl_fmove_r(multigrapher->plotter);
+    pl_fcont_r();
+  }
+  else {
+    pl_fmove_r(multigrapher->plotter);
+    pl_fcont_r();
+  }
+LAB_004081ed:
+  if ((multigrapher->x_axis).switch_axis_end == false) {
+    pl_fmove_r(multigrapher->plotter);
+    pl_fcont_r(multigrapher->plotter);
+  }
+  else {
+    pl_fmove_r(multigrapher->plotter);
+    pl_fcont_r(multigrapher->plotter);
+  }
+  return;
+}
+

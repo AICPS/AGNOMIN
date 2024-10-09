@@ -1,0 +1,13 @@
+
+hashtab_elem * hashtab_first(hashtab *ht,hashtab_order *ho)
+
+{
+  hashtab_elem *phVar1;
+  
+  ho->which = 0;
+  ho->elem = (hashtab_elem *)0x0;
+  ho->ht = ht;
+  phVar1 = hashtab_next(ho);
+  return phVar1;
+}
+

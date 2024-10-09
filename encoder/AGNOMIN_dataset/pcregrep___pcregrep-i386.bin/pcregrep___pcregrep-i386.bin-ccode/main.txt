@@ -1,0 +1,845 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+/* WARNING: Type propagation algorithm not settling */
+
+int main(int argc,char **argv)
+
+{
+  char **ppcVar1;
+  omstr *poVar2;
+  int **ppiVar3;
+  option_item *poVar4;
+  ulong uVar5;
+  ulong uVar6;
+  char **ppcVar7;
+  char cVar8;
+  int iVar9;
+  char *pcVar10;
+  omstr *poVar11;
+  char *pcVar12;
+  patstr *ppVar13;
+  long lVar14;
+  undefined4 *puVar15;
+  pcre_extra *ppVar16;
+  uint uVar17;
+  BOOL BVar18;
+  char *pcVar19;
+  ushort **ppuVar20;
+  fnstr *pfVar21;
+  int *piVar22;
+  fnstr *pfVar23;
+  int iVar24;
+  byte bVar25;
+  pcre_extra *extraout_EDX;
+  pcre_extra *extraout_EDX_00;
+  pcre_extra *extraout_EDX_01;
+  pcre_extra *extraout_EDX_02;
+  pcre_extra *extraout_EDX_03;
+  pcre_extra *ppVar26;
+  uint uVar27;
+  patstr *ppVar28;
+  int iVar29;
+  char *pcVar30;
+  char *pcVar31;
+  byte *pbVar32;
+  byte *pbVar33;
+  int in_GS_OFFSET;
+  bool bVar34;
+  byte bVar35;
+  FILE *rc;
+  int *piVar36;
+  int *__s2;
+  pcre_extra *ppVar37;
+  int in_stack_ffffdf80;
+  byte *local_2060;
+  FILE *local_205c;
+  option_item *local_2058;
+  byte *local_2054;
+  int local_2050;
+  undefined local_204c [29];
+  char cStack8239;
+  int local_202e [2050];
+  int local_24;
+  undefined4 uStack28;
+  int *local_18;
+  
+  ppcVar7 = argv;
+  iVar24 = argc;
+  bVar35 = 0;
+  local_18 = &argc;
+  uStack28 = 0x11856;
+  local_24 = *(int *)(in_GS_OFFSET + 0x14);
+  pcVar30 = (char *)&local_2050;
+  pcre_config(1);
+  if (local_2050 == -1) {
+    newline = "any";
+  }
+  else {
+    if (local_2050 < 0) {
+      if (local_2050 == -2) {
+        newline = "anycrlf";
+      }
+      else {
+LAB_00011bfd:
+        newline = "lf";
+      }
+    }
+    else {
+      if (local_2050 == 0xd) {
+        newline = "cr";
+      }
+      else {
+        if (local_2050 != 0xd0a) goto LAB_00011bfd;
+        newline = "crlf";
+      }
+    }
+  }
+  local_2050 = 1;
+  if ((1 < iVar24) && (pcVar19 = ppcVar7[1], *pcVar19 == '-')) {
+    cVar8 = pcVar19[1];
+    if (cVar8 != '\0') {
+      piVar22 = (int *)pcVar30;
+LAB_0001191d:
+      iVar29 = local_2050;
+      if (cVar8 != '-') {
+        bVar25 = pcVar19[1];
+        local_2054 = (byte *)(pcVar19 + 1);
+        if (bVar25 == 0) {
+          do {
+            invalidInstructionException();
+          } while( true );
+        }
+        do {
+          iVar29 = (int)(char)bVar25;
+          if (optionlist[0].one_char == 0) {
+LAB_00011c10:
+            __fprintf_chk(stderr,1,"pcregrep: Unknown option letter \'%c\' in \"%s\"\n",iVar29,
+                          ppcVar7[local_2050]);
+            goto LAB_00011c3c;
+          }
+          iVar9 = optionlist[0].one_char;
+          local_2058 = optionlist;
+          while (iVar9 != iVar29) {
+            iVar9 = local_2058[1].one_char;
+            local_2058 = local_2058 + 1;
+            if (iVar9 == 0) goto LAB_00011c10;
+          }
+          local_2054 = local_2054 + 1;
+          iVar9 = local_2058->type;
+          bVar25 = *local_2054;
+          if (bVar25 == 0) {
+            bVar34 = false;
+            pcVar30 = (char *)0x0;
+            goto LAB_00011f46;
+          }
+          if (iVar9 - 5U < 2) {
+            ppuVar20 = __ctype_b_loc();
+            if ((*(byte *)((int)*ppuVar20 + (uint)bVar25 * 2 + 1) & 8) != 0) {
+              bVar34 = false;
+              pcVar30 = (char *)0x0;
+              goto LAB_00011c7f;
+            }
+          }
+          else {
+            if (iVar9 != 0) {
+              pcVar30 = (char *)0x0;
+              goto joined_r0x00011fb5;
+            }
+          }
+          pcre_options = handle_option(iVar29,pcre_options);
+          bVar25 = *local_2054;
+        } while (bVar25 != 0);
+        iVar9 = local_2058->type;
+        if (iVar9 != 0) {
+          bVar34 = false;
+          pcVar30 = (char *)0x0;
+          goto LAB_000119de;
+        }
+        goto LAB_00011f54;
+      }
+      pcVar10 = pcVar19 + 2;
+      pcVar30 = (char *)0x3d;
+      local_2054 = (byte *)strchr(pcVar10,0x3d);
+      if (pcVar19[2] != '\0') {
+        if (optionlist[0].one_char != 0) {
+          local_2058 = optionlist;
+          do {
+            piVar22 = (int *)local_2058->long_name;
+            pcVar30 = strchr((char *)piVar22,0x28);
+            pcVar19 = strchr((char *)piVar22,0x3d);
+            if (pcVar30 == (char *)0x0) {
+              if (pcVar19 == (char *)0x0) {
+                iVar29 = strcmp(pcVar10,(char *)piVar22);
+                if (iVar29 == 0) {
+                  bVar34 = false;
+                  local_2054 = (byte *)0x1623c;
+                  goto LAB_00011f28;
+                }
+              }
+              else {
+                pbVar32 = local_2054 + -(int)pcVar10;
+                if (local_2054 == (byte *)0x0) {
+                  pbVar32 = (byte *)strlen(pcVar10);
+                }
+                if ((pbVar32 == (byte *)(pcVar19 + -(int)piVar22)) &&
+                   (iVar29 = strncmp(pcVar10,(char *)piVar22,(size_t)pbVar32), iVar29 == 0)) {
+                  local_2054 = pbVar32 + (int)pcVar10;
+                  if (*local_2054 == 0x3d) {
+                    local_2054 = local_2054 + 1;
+                    bVar34 = true;
+                  }
+                  else {
+                    bVar34 = false;
+                  }
+                  goto LAB_00011f28;
+                }
+              }
+            }
+            else {
+              pcVar12 = strchr((char *)piVar22,0x29);
+              if ((pcVar19 == (char *)0x0) ||
+                 (local_2060 = local_2054 + -(int)pcVar10, local_2054 == (byte *)0x0)) {
+                local_2060 = (byte *)strlen(pcVar10);
+              }
+              piVar36 = (int *)(local_204c + 6);
+              __sprintf_chk(piVar36,1,0x18,&DAT_00016385,pcVar30 + -(int)piVar22,piVar22);
+              __s2 = (int *)(&cStack8239 + 1);
+              __sprintf_chk(__s2,1,0x18,&DAT_00016383,piVar36,
+                            pcVar12 + -(int)piVar22 + (-1 - (int)(pcVar30 + -(int)piVar22)),
+                            pcVar30 + 1);
+              iVar29 = strncmp(pcVar10,(char *)piVar36,(size_t)local_2060);
+              piVar22 = piVar36;
+              if ((iVar29 == 0) ||
+                 (iVar29 = strncmp(pcVar10,(char *)__s2,(size_t)local_2060), piVar22 = __s2,
+                 iVar29 == 0)) goto LAB_00011ef0;
+            }
+            poVar4 = local_2058 + 1;
+            local_2058 = local_2058 + 1;
+            if (poVar4->one_char == 0) break;
+          } while( true );
+        }
+        goto LAB_00012b34;
+      }
+      local_2050 = iVar29 + 1;
+      goto LAB_00011a9a;
+    }
+LAB_00011a8d:
+    if ((pattern_files == (fnstr *)0x0) && (patterns == (patstr *)0x0)) {
+LAB_00011c3c:
+      iVar24 = usage(in_stack_ffffdf80);
+                    /* WARNING: Subroutine does not return */
+      pcregrep_exit(iVar24);
+    }
+  }
+LAB_00011a9a:
+  if (0 < both_context) {
+    if (after_context == 0) {
+      after_context = both_context;
+    }
+    if (before_context == 0) {
+      before_context = both_context;
+    }
+  }
+  if (only_matching == (omstr *)0x0) {
+    if (file_offsets != 0) goto LAB_00011ae0;
+    if (line_offsets != 0) goto LAB_00011aee;
+  }
+  else {
+    if (file_offsets != 0) goto LAB_00012bd0;
+LAB_00011ae0:
+    if (line_offsets != 0) {
+LAB_00012bd0:
+      pcVar30 = "pcregrep: Cannot mix --only-matching, --file-offsets and/or --line-offsets\n";
+      fwrite("pcregrep: Cannot mix --only-matching, --file-offsets and/or --line-offsets\n",1,0x4b,
+             stderr);
+      iVar24 = usage((int)pcVar30);
+                    /* WARNING: Subroutine does not return */
+      pcregrep_exit(iVar24);
+    }
+LAB_00011aee:
+    show_only_matching = 1;
+  }
+  pcVar19 = "--locale";
+  if (locale == (char *)0x0) {
+    locale = getenv("LC_ALL");
+    if (locale != (char *)0x0) {
+      pcVar19 = "LCC_ALL";
+      goto LAB_00011b0c;
+    }
+    pcVar19 = "LC_CTYPE";
+    locale = getenv("LC_CTYPE");
+    if (locale != (char *)0x0) goto LAB_00011b0c;
+LAB_00011b2d:
+    pcVar19 = colour_option;
+    bVar34 = colour_option == (char *)0x0;
+    pcVar10 = colour_string;
+    if (!bVar34) {
+      iVar29 = 6;
+      pcVar12 = colour_option;
+      pcVar31 = "never";
+      do {
+        if (iVar29 == 0) break;
+        iVar29 = iVar29 + -1;
+        bVar34 = *pcVar12 == *pcVar31;
+        pcVar12 = pcVar12 + (uint)bVar35 * -2 + 1;
+        pcVar31 = pcVar31 + (uint)bVar35 * -2 + 1;
+      } while (bVar34);
+      if (bVar34) goto LAB_00011b98;
+      pcVar30 = "always";
+      iVar29 = strcmp(colour_option,"always");
+      if (iVar29 == 0) {
+        do_colour = 1;
+LAB_00011b78:
+        pcVar10 = getenv("PCREGREP_COLOUR");
+        if ((pcVar10 == (char *)0x0) && (pcVar10 = getenv("PCREGREP_COLOR"), pcVar10 == (char *)0x0)
+           ) {
+          pcVar10 = colour_string;
+        }
+        goto LAB_00011b98;
+      }
+      pcVar30 = &DAT_000163a7;
+      iVar29 = strcmp(pcVar19,"auto");
+      if (iVar29 == 0) {
+        iVar29 = fileno(stdout);
+        do_colour = isatty(iVar29);
+        pcVar10 = colour_string;
+        if (do_colour == 0) goto LAB_00011b98;
+        goto LAB_00011b78;
+      }
+      pcVar10 = "pcregrep: Unknown colour setting \"%s\"\n";
+LAB_00012321:
+      pcVar30 = (char *)0x1;
+      __fprintf_chk(stderr,1,pcVar10,pcVar19);
+      iVar29 = 2;
+      goto LAB_00012204;
+    }
+LAB_00011b98:
+    colour_string = pcVar10;
+    pcVar19 = newline;
+    cVar8 = *newline;
+    if (cVar8 == 'c') {
+      if (newline[1] != 'r') goto LAB_00011bb4;
+LAB_0001213a:
+      if (newline[2] != '\0') goto LAB_00011bb4;
+      pcre_options = pcre_options | 0x100000;
+      endlinetype = 1;
+    }
+    else {
+      if (cVar8 == 'C') {
+        if (newline[1] == 'R') goto LAB_0001213a;
+      }
+      else {
+        if (cVar8 == 'l') {
+          if (newline[1] == 'f') {
+LAB_0001240c:
+            if (newline[2] == '\0') {
+              pcre_options = pcre_options | 0x200000;
+              endlinetype = 0;
+              goto LAB_00012158;
+            }
+          }
+        }
+        else {
+          if ((cVar8 == 'L') && (newline[1] == 'F')) goto LAB_0001240c;
+        }
+      }
+LAB_00011bb4:
+      pcVar30 = &DAT_0001637e;
+      iVar29 = strcmp(newline,"crlf");
+      if (iVar29 != 0) {
+        pcVar30 = &DAT_000163e9;
+        iVar29 = strcmp(pcVar19,"CRLF");
+        if (iVar29 != 0) {
+          if (cVar8 == 'a') {
+            if ((pcVar19[1] == 'n') && (pcVar19[2] == 'y')) {
+LAB_000127e4:
+              if (pcVar19[3] == '\0') {
+                pcre_options = pcre_options | 0x400000;
+                endlinetype = 3;
+                goto LAB_00012158;
+              }
+            }
+          }
+          else {
+            if (((cVar8 == 'A') && (pcVar19[1] == 'N')) && (pcVar19[2] == 'Y')) goto LAB_000127e4;
+          }
+          pcVar30 = &DAT_0001637b;
+          iVar29 = strcmp(pcVar19,"anycrlf");
+          if (iVar29 != 0) {
+            pcVar30 = &DAT_000163e6;
+            iVar29 = strcmp(pcVar19,"ANYCRLF");
+            if (iVar29 != 0) {
+              pcVar10 = "pcregrep: Invalid newline specifier \"%s\"\n";
+              goto LAB_00012321;
+            }
+          }
+          pcre_options = pcre_options | 0x500000;
+          endlinetype = 4;
+          goto LAB_00012158;
+        }
+      }
+      pcre_options = pcre_options | 0x300000;
+      endlinetype = 2;
+    }
+LAB_00012158:
+    pcVar19 = dee_option;
+    bVar34 = dee_option == (char *)0x0;
+    if (!bVar34) {
+      iVar29 = 5;
+      pcVar10 = dee_option;
+      pcVar12 = "read";
+      do {
+        if (iVar29 == 0) break;
+        iVar29 = iVar29 + -1;
+        bVar34 = *pcVar10 == *pcVar12;
+        pcVar10 = pcVar10 + (uint)bVar35 * -2 + 1;
+        pcVar12 = pcVar12 + (uint)bVar35 * -2 + 1;
+      } while (bVar34);
+      if (bVar34) {
+        dee_action = 0;
+      }
+      else {
+        pcVar30 = "recurse";
+        iVar29 = strcmp(dee_option,"recurse");
+        if (iVar29 == 0) {
+          dee_action = 2;
+        }
+        else {
+          pcVar30 = &DAT_000163fb;
+          iVar29 = strcmp(pcVar19,"skip");
+          if (iVar29 != 0) {
+            pcVar10 = "pcregrep: Invalid value \"%s\" for -d\n";
+            goto LAB_00012321;
+          }
+          dee_action = 1;
+        }
+      }
+    }
+    pcVar19 = DEE_option;
+    bVar34 = DEE_option == (char *)0x0;
+    if (!bVar34) {
+      iVar29 = 5;
+      pcVar10 = DEE_option;
+      pcVar12 = "read";
+      do {
+        if (iVar29 == 0) break;
+        iVar29 = iVar29 + -1;
+        bVar34 = *pcVar10 == *pcVar12;
+        pcVar10 = pcVar10 + (uint)bVar35 * -2 + 1;
+        pcVar12 = pcVar12 + (uint)bVar35 * -2 + 1;
+      } while (bVar34);
+      if (bVar34) {
+        DEE_action = 0;
+      }
+      else {
+        pcVar30 = &DAT_000163fb;
+        iVar29 = strcmp(DEE_option,"skip");
+        if (iVar29 != 0) {
+          pcVar10 = "pcregrep: Invalid value \"%s\" for -D\n";
+          goto LAB_00012321;
+        }
+        DEE_action = 1;
+      }
+    }
+    bufsize = bufthird * 3;
+    ppVar16 = (pcre_extra *)malloc(bufsize);
+    main_buffer = (char *)ppVar16;
+    if (ppVar16 == (pcre_extra *)0x0) {
+LAB_000125aa:
+      fwrite("pcregrep: malloc failed\n",1,0x18,stderr);
+      local_2054 = (byte *)0x2;
+      goto EXIT;
+    }
+    if ((patterns == (patstr *)0x0) && (pattern_files == (fnstr *)0x0)) {
+      if (iVar24 <= local_2050) {
+        iVar29 = usage(in_stack_ffffdf80);
+        goto LAB_00012204;
+      }
+      goto LAB_0001247f;
+    }
+  }
+  else {
+LAB_00011b0c:
+    pcVar30 = locale;
+    pcVar10 = setlocale(0,locale);
+    if (pcVar10 != (char *)0x0) {
+      pcretables = (uchar *)pcre_maketables();
+      goto LAB_00011b2d;
+    }
+    __fprintf_chk(stderr,1,"pcregrep: Failed to set locale %s (obtained from %s)\n",locale,pcVar19);
+    iVar29 = 2;
+LAB_00012204:
+    if (local_24 == *(int *)(in_GS_OFFSET + 0x14)) {
+      return iVar29;
+    }
+    local_2050 = __stack_chk_fail_local();
+LAB_0001247f:
+    ppcVar1 = ppcVar7 + local_2050;
+    local_2050 = local_2050 + 1;
+    ppVar16 = (pcre_extra *)add_pattern(*ppcVar1,(patstr *)0x0);
+    patterns_last = (patstr *)ppVar16;
+    patterns = (patstr *)ppVar16;
+    if (ppVar16 == (pcre_extra *)0x0) {
+LAB_000126a8:
+      local_2054 = (byte *)0x2;
+      goto EXIT;
+    }
+  }
+  uVar27 = 1;
+  for (ppVar28 = patterns; pfVar23 = pattern_files, ppVar28 != (patstr *)0x0;
+      ppVar28 = ppVar28->next) {
+    uVar17 = uVar27;
+    if (uVar27 == 1) {
+      uVar17 = (uint)(patterns->next != (patstr *)0x0);
+    }
+    pcVar30 = (char *)0x0;
+    ppVar16 = (pcre_extra *)
+              compile_pattern(ppVar28,pcre_options,process_options,0,"command-line",uVar17);
+    if (ppVar16 == (pcre_extra *)0x0) goto LAB_000126a8;
+    uVar27 = uVar27 + 1;
+  }
+  for (; pfVar23 != (fnstr *)0x0; pfVar23 = pfVar23->next) {
+    pcVar30 = (char *)process_options;
+    ppVar16 = (pcre_extra *)
+              read_pattern_file(pfVar23->name,&patterns,&patterns_last,process_options);
+    if (ppVar16 == (pcre_extra *)0x0) goto LAB_000126a8;
+  }
+  if ((match_limit != 0) || (match_limit_recursion != 0)) {
+    study_options = study_options | 8;
+  }
+  ppVar26 = (pcre_extra *)local_204c;
+  iVar29 = 1;
+  for (ppVar28 = patterns; uVar6 = match_limit, uVar5 = match_limit_recursion, ppVar13 = patterns,
+      ppVar28 != (patstr *)0x0; ppVar28 = ppVar28->next) {
+    pcVar30 = (char *)study_options;
+    ppVar37 = ppVar26;
+    ppVar16 = (pcre_extra *)pcre_study(ppVar28->compiled,study_options,ppVar26,ppVar16);
+    ppVar28->hint = ppVar16;
+    if (local_204c._0_4_ != (char *)0x0) {
+      if (patterns->next == (patstr *)0x0) {
+        local_202e[0]._0_1_ = '\0';
+        ppVar26 = ppVar37;
+      }
+      else {
+        __sprintf_chk(&cStack8239 + 1,1,0x10," number %d",iVar29);
+        ppVar26 = ppVar37;
+      }
+      pcVar10 = &cStack8239 + 1;
+      pcVar19 = "pcregrep: Error while studying regex%s: %s\n";
+      goto LAB_00012695;
+    }
+    iVar29 = iVar29 + 1;
+  }
+  for (; ppVar13 != (patstr *)0x0; ppVar13 = ppVar13->next) {
+    if (uVar6 != 0) {
+      ppVar26 = ppVar13->hint;
+      ppVar26->flags = ppVar26->flags | 2;
+      ppVar26->match_limit = uVar6;
+    }
+    if (uVar5 != 0) {
+      ppVar26 = ppVar13->hint;
+      ppVar26->flags = ppVar26->flags | 0x10;
+      ppVar26->match_limit_recursion = uVar5;
+    }
+  }
+  iVar29 = 0;
+  do {
+    uVar27 = 1;
+    for (ppVar28 = (*(patstr **)((int)incexlist + iVar29))->next; ppVar28 != (patstr *)0x0;
+        ppVar28 = ppVar28->next) {
+      uVar17 = uVar27;
+      if (uVar27 == 1) {
+        uVar17 = (uint)(ppVar28->next != (patstr *)0x0);
+      }
+      pcVar30 = (char *)0x0;
+      BVar18 = compile_pattern(ppVar28,pcre_options,0,0,*(char **)((int)incexname + iVar29),uVar17);
+      if (BVar18 == 0) goto LAB_000126a8;
+      uVar27 = uVar27 + 1;
+      ppVar26 = extraout_EDX;
+    }
+    iVar29 = iVar29 + 4;
+    pfVar23 = include_from;
+  } while (iVar29 != 0x10);
+  for (; pfVar21 = exclude_from, pfVar23 != (fnstr *)0x0; pfVar23 = pfVar23->next) {
+    pcVar30 = (char *)0x0;
+    BVar18 = read_pattern_file(pfVar23->name,&include_patterns,&include_patterns_last,0);
+    if (BVar18 == 0) goto LAB_000126a8;
+    ppVar26 = extraout_EDX_00;
+  }
+  for (; pfVar21 != (fnstr *)0x0; pfVar21 = pfVar21->next) {
+    pcVar30 = (char *)0x0;
+    BVar18 = read_pattern_file(pfVar21->name,&exclude_patterns,&exclude_patterns_last,0);
+    if (BVar18 == 0) goto LAB_000126a8;
+    ppVar26 = extraout_EDX_01;
+  }
+  if ((file_lists == (fnstr *)0x0) && (iVar24 <= local_2050)) {
+    pcVar19 = stdin_name;
+    if (filenames < 2) {
+      pcVar19 = (char *)0x0;
+    }
+    local_2054 = (byte *)pcregrep(stdin,stdin_name,pcVar19,(int)pcVar30);
+  }
+  else {
+    local_2054 = (byte *)0x1;
+    for (pfVar23 = file_lists; pfVar23 != (fnstr *)0x0; pfVar23 = pfVar23->next) {
+      pcVar19 = pfVar23->name;
+      if ((*pcVar19 != '-') || (pcVar19[1] != '\0')) {
+        pcVar30 = &DAT_000162c0;
+        local_205c = fopen(pcVar19,"rb");
+        if (local_205c != (FILE *)0x0) goto LAB_00012871;
+        piVar22 = __errno_location();
+        local_204c._0_4_ = strerror(*piVar22);
+        pcVar19 = "pcregrep: Failed to open %s: %s\n";
+        pcVar10 = pfVar23->name;
+LAB_00012695:
+        __fprintf_chk(stderr,1,pcVar19,pcVar10,local_204c._0_4_,pcVar30,ppVar26);
+        goto LAB_000126a8;
+      }
+      local_205c = stdin;
+LAB_00012871:
+      pcVar30 = &cStack8239 + 1;
+      iVar29 = (int)local_2054;
+      while (local_2054 = (byte *)iVar29, pcVar19 = fgets(pcVar30,0x200a,local_205c),
+            pcVar19 != (char *)0x0) {
+        uVar27 = 0xffffffff;
+        pcVar19 = pcVar30;
+        do {
+          if (uVar27 == 0) break;
+          uVar27 = uVar27 - 1;
+          cVar8 = *pcVar19;
+          pcVar19 = pcVar19 + (uint)bVar35 * -2 + 1;
+        } while (cVar8 != '\0');
+        pcVar19 = &cStack8239 + ~uVar27;
+        while ((pcVar30 < pcVar19 &&
+               (ppuVar20 = __ctype_b_loc(),
+               (*(byte *)((int)*ppuVar20 + pcVar19[-1] * 2 + 1) & 0x20) != 0))) {
+          pcVar19 = pcVar19 + -1;
+        }
+        *pcVar19 = '\0';
+        iVar29 = (int)local_2054;
+        if ((((char)local_202e[0] != '\0') &&
+            (iVar29 = grep_or_recurse(pcVar30,(uint)(dee_action == 2),0), iVar29 < 2)) &&
+           ((iVar29 != 0 || (local_2054 != (byte *)0x1)))) {
+          iVar29 = (int)local_2054;
+        }
+      }
+      ppVar26 = extraout_EDX_02;
+      if (stdin != local_205c) {
+        fclose(local_205c);
+        ppVar26 = extraout_EDX_03;
+      }
+    }
+    if (iVar24 + -1 == local_2050) {
+      pfVar23 = (fnstr *)(uint)(file_lists == (fnstr *)0x0);
+    }
+    for (; local_2050 < iVar24; local_2050 = local_2050 + 1) {
+      iVar29 = grep_or_recurse(ppcVar7[local_2050],(uint)(dee_action == 2),(BOOL)pfVar23);
+      if ((iVar29 < 2) && ((iVar29 != 0 || (local_2054 != (byte *)0x1)))) {
+        iVar29 = (int)local_2054;
+      }
+      local_2054 = (byte *)iVar29;
+    }
+  }
+EXIT:
+  if (main_buffer != (char *)0x0) {
+    free(main_buffer);
+  }
+  free_pattern_chain(patterns);
+  free_pattern_chain(include_patterns);
+  free_pattern_chain(include_dir_patterns);
+  free_pattern_chain(exclude_patterns);
+  free_pattern_chain(exclude_dir_patterns);
+  pfVar23 = exclude_from;
+  while (pfVar21 = include_from, pfVar23 != (fnstr *)0x0) {
+    pfVar21 = pfVar23->next;
+    free(pfVar23);
+    pfVar23 = pfVar21;
+  }
+  while (pfVar23 = pattern_files, pfVar21 != (fnstr *)0x0) {
+    pfVar23 = pfVar21->next;
+    free(pfVar21);
+    pfVar21 = pfVar23;
+  }
+  while (pfVar21 = file_lists, pfVar23 != (fnstr *)0x0) {
+    pfVar21 = pfVar23->next;
+    free(pfVar23);
+    pfVar23 = pfVar21;
+  }
+  while (pfVar21 != (fnstr *)0x0) {
+    pfVar23 = pfVar21->next;
+    free(pfVar21);
+    pfVar21 = pfVar23;
+  }
+  while (poVar2 = only_matching, only_matching != (omstr *)0x0) {
+    only_matching = only_matching->next;
+    free(poVar2);
+  }
+                    /* WARNING: Subroutine does not return */
+  pcregrep_exit((int)local_2054);
+LAB_00011ef0:
+  bVar34 = false;
+  if ((pcVar19 == (char *)0x0) || (local_2054 == (byte *)0x0)) {
+    local_2054 = (byte *)0x1623c;
+  }
+  else {
+    if (*local_2054 == 0x3d) {
+      local_2054 = local_2054 + 1;
+      bVar34 = true;
+    }
+  }
+LAB_00011f28:
+  if (local_2058->one_char != 0) {
+    pcVar30 = (char *)0x1;
+    iVar9 = local_2058->type;
+LAB_00011f46:
+    if (iVar9 == 0) {
+LAB_00011f54:
+      pcVar30 = (char *)piVar22;
+      pcre_options = handle_option(local_2058->one_char,pcre_options);
+    }
+    else {
+LAB_00011c7f:
+      if (*local_2054 == 0) {
+LAB_000119de:
+        if ((iVar9 - 5U < 2) || (iVar9 == 2)) {
+          pcVar30 = (char *)piVar22;
+          if (local_2058->one_char == -1) {
+            colour_option = "auto";
+          }
+          else {
+            if ((local_2058->one_char == 0x6f) &&
+               (only_matching_last = add_number(0,only_matching_last), pcVar30 = (char *)piVar22,
+               only_matching == (omstr *)0x0)) {
+              only_matching = only_matching_last;
+            }
+          }
+          goto LAB_00011a5c;
+        }
+        if ((bVar34) || (iVar24 + -1 <= local_2050)) {
+          local_2054 = (byte *)ppcVar7[local_2050];
+          pcVar30 = "pcregrep: Data missing after %s\n";
+          goto LAB_000123df;
+        }
+        local_2050 = local_2050 + 1;
+        local_2054 = (byte *)ppcVar7[local_2050];
+      }
+      else {
+        if (iVar9 == 6) {
+          lVar14 = decode_number();
+          ppiVar3 = (int **)local_2058->dataptr;
+          poVar2 = (omstr *)ppiVar3[1];
+          poVar11 = add_number(lVar14,poVar2->next);
+          poVar2->next = poVar11;
+          if (**ppiVar3 == 0) {
+            **ppiVar3 = *ppiVar3[1];
+          }
+          goto LAB_00011a5c;
+        }
+      }
+joined_r0x00011fb5:
+      if (iVar9 == 7) {
+        ppiVar3 = (int **)local_2058->dataptr;
+        ppVar28 = (patstr *)ppiVar3[1];
+        ppVar13 = add_pattern((char *)local_2054,ppVar28->next);
+        ppVar28->next = ppVar13;
+        if (*ppiVar3[1] == 0) goto LAB_000126a8;
+        pcVar30 = (char *)piVar22;
+        if (**ppiVar3 == 0) {
+          **ppiVar3 = *ppiVar3[1];
+        }
+      }
+      else {
+        if (iVar9 == 8) {
+          ppiVar3 = (int **)local_2058->dataptr;
+          puVar15 = (undefined4 *)malloc(8);
+          if (puVar15 == (undefined4 *)0x0) goto LAB_000125aa;
+          piVar36 = *ppiVar3;
+          *puVar15 = 0;
+          puVar15[1] = local_2054;
+          pcVar30 = (char *)piVar22;
+          if (*piVar36 == 0) {
+            *piVar36 = (int)puVar15;
+            *ppiVar3[1] = (int)puVar15;
+          }
+          else {
+            piVar22 = ppiVar3[1];
+            *(undefined4 **)*piVar22 = puVar15;
+            *piVar22 = (int)puVar15;
+          }
+        }
+        else {
+          bVar34 = iVar9 == 9;
+          if (bVar34) {
+            iVar29 = 7;
+            pbVar32 = local_2054;
+            pbVar33 = (byte *)"binary";
+            do {
+              if (iVar29 == 0) break;
+              iVar29 = iVar29 + -1;
+              bVar34 = *pbVar32 == *pbVar33;
+              pbVar32 = pbVar32 + (uint)bVar35 * -2 + 1;
+              pbVar33 = pbVar33 + (uint)bVar35 * -2 + 1;
+            } while (bVar34);
+            if (bVar34) {
+              binary_files = 0;
+              pcVar30 = (char *)piVar22;
+            }
+            else {
+              iVar29 = 0xe;
+              pbVar32 = local_2054;
+              pbVar33 = (byte *)0x1665d;
+              do {
+                if (iVar29 == 0) break;
+                iVar29 = iVar29 + -1;
+                bVar34 = *pbVar32 == *pbVar33;
+                pbVar32 = pbVar32 + (uint)bVar35 * -2 + 1;
+                pbVar33 = pbVar33 + (uint)bVar35 * -2 + 1;
+              } while (bVar34);
+              if (bVar34) {
+                binary_files = 1;
+                pcVar30 = (char *)piVar22;
+              }
+              else {
+                pcVar30 = (char *)(int *)0x16493;
+                iVar29 = strcmp((char *)local_2054,"text");
+                if (iVar29 != 0) {
+                  pcVar30 = "pcregrep: unknown value \"%s\" for binary-files\n";
+                  goto LAB_000123df;
+                }
+                binary_files = 2;
+              }
+            }
+          }
+          else {
+            if (iVar9 - 3U < 3) {
+              lVar14 = decode_number();
+              *(long *)local_2058->dataptr = lVar14;
+            }
+            else {
+              *(byte **)local_2058->dataptr = local_2054;
+              pcVar30 = (char *)piVar22;
+            }
+          }
+        }
+      }
+    }
+LAB_00011a5c:
+    local_2050 = local_2050 + 1;
+    if ((iVar24 <= local_2050) || (pcVar19 = ppcVar7[local_2050], *pcVar19 != '-'))
+    goto LAB_00011a9a;
+    cVar8 = pcVar19[1];
+    piVar22 = (int *)pcVar30;
+    if (cVar8 == '\0') goto LAB_00011a8d;
+    goto LAB_0001191d;
+  }
+LAB_00012b34:
+  local_2054 = (byte *)ppcVar7[local_2050];
+  pcVar30 = "pcregrep: Unknown option %s\n";
+LAB_000123df:
+  rc = stderr;
+  __fprintf_chk(stderr,1,pcVar30,local_2054);
+  iVar24 = usage((int)rc);
+                    /* WARNING: Subroutine does not return */
+  pcregrep_exit(iVar24);
+}
+

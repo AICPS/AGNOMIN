@@ -1,0 +1,12 @@
+
+void __do_global_dtors_aux(void)
+
+{
+  if (completed_9027 != '\0') {
+    return;
+  }
+  deregister_tm_clones();
+  completed_9027 = 1;
+  return;
+}
+

@@ -1,0 +1,13 @@
+
+char * xstrdup(char *s)
+
+{
+  size_t sVar1;
+  char *__dest;
+  
+  sVar1 = strlen(s);
+  __dest = (char *)xmalloc(sVar1 + 1);
+  strcpy(__dest,s);
+  return __dest;
+}
+

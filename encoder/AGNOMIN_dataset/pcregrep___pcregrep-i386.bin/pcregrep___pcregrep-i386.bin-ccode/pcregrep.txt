@@ -1,0 +1,548 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+int __regparm2 pcregrep(void *handle,char *filename,char *printname,int frtype)
+
+{
+  byte bVar1;
+  bool bVar2;
+  byte bVar3;
+  int iVar4;
+  bool bVar5;
+  int iVar6;
+  void *pvVar7;
+  char *pcVar8;
+  BOOL BVar9;
+  byte *pbVar10;
+  size_t sVar11;
+  byte *pbVar12;
+  BOOL BVar13;
+  uint uVar14;
+  byte *pbVar15;
+  uint uVar16;
+  omstr *poVar17;
+  int iVar18;
+  int iVar19;
+  int in_GS_OFFSET;
+  bool bVar20;
+  byte *local_238;
+  uint local_220;
+  int local_21c;
+  byte *local_214;
+  BOOL local_208;
+  uint local_204;
+  byte *local_200;
+  byte *local_1fc;
+  int local_1f8;
+  int local_1f4;
+  int local_1f0;
+  byte *local_1e4;
+  byte *local_1e0;
+  byte *local_1d0;
+  int *local_1c8;
+  byte *local_1c4;
+  byte *local_1c0;
+  int local_1b8;
+  int local_1b4;
+  int local_1b0;
+  byte *local_1ac;
+  uint local_1a8 [98];
+  uint local_20;
+  undefined4 uStack20;
+  
+  pcVar8 = main_buffer;
+  BVar9 = line_buffered;
+  uStack20 = 0x135fb;
+  local_208 = line_buffered;
+  local_20 = *(uint *)(in_GS_OFFSET + 0x14);
+  local_1c4 = (byte *)main_buffer;
+  iVar6 = fileno((FILE *)handle);
+  iVar6 = isatty(iVar6);
+  if (iVar6 == 0) {
+    if (BVar9 != 0) goto LAB_00013acd;
+    local_204 = fread(pcVar8,1,bufsize,(FILE *)handle);
+  }
+  else {
+    local_208 = 1;
+LAB_00013acd:
+    local_204 = read_one_line(pcVar8,bufsize,(FILE *)handle);
+  }
+  uVar16 = binary_files;
+  local_1e0 = (byte *)(main_buffer + local_204);
+  if (binary_files == 2) {
+LAB_000136ce:
+    bVar2 = false;
+  }
+  else {
+    if (local_204 < 0x401) {
+      pvVar7 = memchr(main_buffer,0,local_204);
+    }
+    else {
+      pvVar7 = memchr(main_buffer,0,0x400);
+    }
+    if (pvVar7 == (void *)0x0) goto LAB_000136ce;
+    if (uVar16 == 1) goto LAB_00013b60;
+    bVar2 = true;
+  }
+  if (pcVar8 < local_1e0) {
+    local_220 = 0;
+    local_1e4 = (byte *)0x0;
+    local_1f4 = 0;
+    local_200 = (byte *)0x0;
+    local_21c = 0;
+    local_1f0 = 1;
+    local_1c0 = (byte *)0x1;
+LAB_0001373d:
+    local_1b4 = 0;
+    pcVar8 = end_of_line((char *)local_1c4,(char *)local_1e0,&local_1b8);
+    local_1fc = (byte *)(pcVar8 + (-local_1b8 - (int)local_1c4));
+    local_1d0 = local_1fc;
+    if (multiline != 0) {
+      local_1d0 = local_1e0 + -(int)local_1c4;
+    }
+    if ((local_1b8 == 0) && (pcVar8 == main_buffer + bufsize)) {
+      if (filename == (char *)0x0) {
+        filename = "";
+        pcVar8 = filename;
+      }
+      else {
+        pcVar8 = " of file ";
+      }
+      uVar16 = 2;
+      __fprintf_chk(stderr,1,
+                    "pcregrep: line %d%s%s is too long for the internal buffer\npcregrep: check the --buffer-size option\n"
+                    ,local_1f0,pcVar8,filename);
+      goto LAB_00013b60;
+    }
+    uVar14 = 0;
+    uVar16 = 0;
+    while (BVar9 = match_patterns((char *)local_1c4,(size_t)local_1d0,uVar14,uVar16,
+                                  (int *)&local_1ac,&local_1b4), uVar16 = count_only,
+          BVar9 != invert) {
+      if (filenames == 3) {
+        uVar16 = 1;
+        goto LAB_00013b60;
+      }
+      if (quiet != 0) goto LAB_00013f08;
+      if (count_only != 0) {
+        local_21c = local_21c + 1;
+        goto joined_r0x00013f24;
+      }
+      if (bVar2) {
+        pcVar8 = "Binary file %s matches\n";
+LAB_00013f79:
+        __fprintf_chk(stdout,1,pcVar8,filename);
+        goto LAB_00013b60;
+      }
+      if (filenames == 2) {
+        pcVar8 = "%s\n";
+        filename = printname;
+        goto LAB_00013f79;
+      }
+      local_238 = (byte *)show_only_matching;
+      if (show_only_matching == 0) {
+        if ((after_context < 1) || (local_1f4 == 0)) {
+          local_214 = local_1e4;
+          goto LAB_00014162;
+        }
+        if (local_1e4 < local_1c4) {
+          iVar6 = 0;
+          pbVar15 = local_1e4;
+          goto LAB_00014008;
+        }
+        local_214 = local_1e4;
+        goto LAB_00014503;
+      }
+      if (invert != 0) goto joined_r0x00013f24;
+      if (printname != (char *)0x0) {
+        __fprintf_chk(stdout,1,&DAT_0001629f,printname);
+      }
+      if (number != 0) {
+        __fprintf_chk(stdout,1,&DAT_000162a3,local_1f0);
+      }
+      pbVar15 = local_1ac;
+      if (line_offsets == 0) {
+        if (file_offsets != 0) {
+          pbVar15 = local_200 + (int)local_1ac;
+          goto LAB_00013a43;
+        }
+        if (only_matching == (omstr *)0x0) {
+          bVar20 = false;
+        }
+        else {
+          poVar17 = only_matching;
+          bVar5 = false;
+          do {
+            while ((bVar20 = bVar5, iVar6 = poVar17->groupnum, local_1b4 <= iVar6 ||
+                   (uVar16 = local_1a8[iVar6 * 2], pbVar15 = (&local_1ac)[iVar6 * 2],
+                   (int)(uVar16 - (int)pbVar15) < 1))) {
+LAB_0001390d:
+              poVar17 = poVar17->next;
+              bVar5 = bVar20;
+              if (poVar17 == (omstr *)0x0) goto LAB_000139e0;
+            }
+            if (bVar20) {
+              fputs(om_separator,stdout);
+            }
+            if (do_colour != 0) {
+              __fprintf_chk(stdout,1,"%c[%sm",0x1b,colour_string);
+            }
+            fwrite(local_1c4 + (int)(&local_1ac)[iVar6 * 2],1,uVar16 - (int)pbVar15,stdout);
+            bVar20 = true;
+            if (do_colour == 0) goto LAB_0001390d;
+            __fprintf_chk(stdout,1,"%c[00m",0x1b);
+            poVar17 = poVar17->next;
+            bVar20 = true;
+            bVar5 = true;
+          } while (poVar17 != (omstr *)0x0);
+        }
+LAB_000139e0:
+        if (((printname != (char *)0x0) || (bVar20)) || (number != 0)) {
+          fputc(10,stdout);
+        }
+      }
+      else {
+LAB_00013a43:
+        __fprintf_chk(stdout,1,&DAT_000162a7,pbVar15,local_1a8[0] - (int)local_1ac);
+      }
+      if (line_buffered != 0) {
+        fflush(stdout);
+      }
+      local_1c0 = (byte *)0x0;
+      uVar14 = 0x400;
+      uVar16 = local_1a8[0];
+    }
+    local_1f0 = local_1f0 + 1;
+    goto LAB_00013b98;
+  }
+  local_220 = 0;
+  local_1e4 = (byte *)0x0;
+  local_1f4 = 0;
+  local_21c = 0;
+  uVar16 = 1;
+LAB_00013db5:
+  if (show_only_matching == 0) {
+    if (count_only != 0) {
+      if (filenames == 3) goto LAB_00013ee9;
+      goto LAB_00013e23;
+    }
+    if ((local_1f4 != 0) && (0 < after_context)) {
+      do_after_lines(local_1f4,(char *)local_1e4,(char *)local_1e0,printname);
+    }
+    hyphenpending = hyphenpending | local_220;
+  }
+  if (filenames == 3) {
+LAB_00013ee9:
+    __fprintf_chk(stdout,1,"%s\n",printname);
+LAB_00013f08:
+    uVar16 = 0;
+    goto LAB_00013b60;
+  }
+  if (count_only == 0) goto LAB_00013b60;
+LAB_00013e23:
+  if (quiet != 0) goto LAB_00013b60;
+  if ((local_21c == 0) && (omit_zero_count != 0)) goto LAB_00013b60;
+  if ((filenames != 0) && (printname != (char *)0x0)) goto LAB_00014a34;
+  while( true ) {
+    __fprintf_chk(stdout,1,&DAT_000162aa,local_21c);
+LAB_00013b60:
+    uVar14 = local_20 ^ *(uint *)(in_GS_OFFSET + 0x14);
+    if (uVar14 == 0) break;
+    __stack_chk_fail_local();
+    uVar16 = uVar14;
+LAB_00014a34:
+    __fprintf_chk(stdout,1,&DAT_0001629f,printname);
+  }
+  return uVar16;
+  while (iVar6 < after_context) {
+LAB_00014008:
+    iVar6 = iVar6 + 1;
+    pbVar15 = (byte *)end_of_line((char *)pbVar15,(char *)local_1c4,&local_1b0);
+    if (local_1c4 <= pbVar15) break;
+  }
+  if (local_1e4 < pbVar15) {
+    do {
+      if (printname != (char *)0x0) {
+        __fprintf_chk(stdout,1,&DAT_00016253,printname);
+      }
+      if (number != 0) {
+        __fprintf_chk(stdout,1,&DAT_00016257,local_1f4);
+        local_1f4 = local_1f4 + 1;
+      }
+      local_214 = (byte *)end_of_line((char *)local_1e4,(char *)local_1e0,&local_1b0);
+      fwrite(local_1e4,1,(size_t)(local_214 + -(int)local_1e4),stdout);
+      local_1e4 = local_214;
+    } while (local_214 < pbVar15);
+LAB_00014503:
+    if (local_1c4 != local_214) goto LAB_00014515;
+    local_214 = local_1c4;
+LAB_00014162:
+    bVar3 = 0;
+    if (hyphenpending != 0) goto LAB_0001451f;
+  }
+  else {
+    local_214 = local_1e4;
+LAB_00014515:
+    hyphenpending = 1;
+LAB_0001451f:
+    fwrite(&DAT_000162bc,1,3,stdout);
+    hyphenpending = 0;
+    bVar3 = 1;
+  }
+  iVar6 = after_context;
+  if (0 < before_context) {
+    local_1f8 = 0;
+    local_1c0 = local_1c4;
+    pbVar15 = local_1c0;
+LAB_000141d0:
+    do {
+      local_1c0 = pbVar15;
+      if (((local_1c0 <= main_buffer) || (local_1f4 != 0 && local_1c0 <= local_214)) ||
+         (before_context <= local_1f8)) goto LAB_000146ac;
+      local_1f8 = local_1f8 + 1;
+      if (endlinetype == 2) {
+        do {
+          pbVar15 = local_1c0 + -2;
+          if (main_buffer < pbVar15) {
+            bVar1 = local_1c0[-3];
+            pbVar10 = pbVar15;
+            while ((pbVar15 = pbVar10, bVar1 != 10 &&
+                   (pbVar15 = (byte *)main_buffer, pbVar10 + -1 != (byte *)main_buffer))) {
+              bVar1 = pbVar10[-2];
+              pbVar10 = pbVar10 + -1;
+            }
+          }
+        } while ((main_buffer + 1 < pbVar15) && (local_1c0 = pbVar15, pbVar15[-2] != 0xd));
+      }
+      else {
+        if (endlinetype < 3) {
+          if (endlinetype != 1) goto LAB_0001443a;
+          pbVar15 = local_1c0 + -1;
+          if (main_buffer < pbVar15) {
+            bVar1 = local_1c0[-2];
+            pbVar10 = pbVar15;
+            while ((pbVar15 = pbVar10, bVar1 != 10 &&
+                   (pbVar15 = (byte *)main_buffer, pbVar10 + -1 != (byte *)main_buffer))) {
+              bVar1 = pbVar10[-2];
+              pbVar10 = pbVar10 + -1;
+            }
+          }
+        }
+        else {
+          if (endlinetype < 5) {
+            pbVar10 = local_1c0 + -1;
+            if (((local_1c0[-1] == 10) && (main_buffer < pbVar10)) && (local_1c0[-2] == 0xd)) {
+              pbVar10 = local_1c0 + -2;
+            }
+            if (utf8 != 0) {
+              bVar1 = *pbVar10;
+              while (((int)(char)bVar1 & 0xc0U) == 0x80) {
+                pbVar10 = pbVar10 + -1;
+                bVar1 = *pbVar10;
+              }
+            }
+joined_r0x00014305:
+            do {
+              while( true ) {
+                pbVar15 = (byte *)main_buffer;
+                if (pbVar10 <= main_buffer) goto LAB_000141d0;
+                pbVar12 = pbVar10 + -1;
+                pbVar15 = pbVar10;
+                if (utf8 == 0) break;
+                bVar1 = pbVar10[-1];
+                while (uVar16 = (uint)bVar1, (uVar16 & 0xc0) == 0x80) {
+                  pbVar12 = pbVar12 + -1;
+                  bVar1 = *pbVar12;
+                }
+                if (0xbf < bVar1) {
+                  iVar18 = (int)utf8_table4[uVar16 & 0x3f];
+                  iVar6 = iVar18 * 6;
+                  uVar16 = (uVar16 & utf8_table3[iVar18]) << ((byte)iVar6 & 0x1f);
+                  if (0 < iVar18) {
+                    iVar19 = 0;
+                    do {
+                      iVar4 = iVar19 + 1;
+                      iVar6 = iVar6 + -6;
+                      iVar19 = iVar19 + 1;
+                      uVar16 = uVar16 | (pbVar12[iVar4] & 0x3f) << ((byte)iVar6 & 0x1f);
+                    } while (iVar19 != iVar18);
+                  }
+                }
+                if (endlinetype != 4) goto LAB_000143bb;
+LAB_000143ed:
+                if ((uVar16 == 10) || (pbVar10 = pbVar12, uVar16 == 0xd)) goto LAB_000141d0;
+              }
+              uVar16 = (uint)pbVar10[-1];
+              if (endlinetype == 4) goto LAB_000143ed;
+LAB_000143bb:
+              if (uVar16 == 0x85) goto LAB_000141d0;
+              pbVar10 = pbVar12;
+              if (0x85 < uVar16) {
+                if (uVar16 - 0x2028 < 2) goto LAB_000141d0;
+                goto joined_r0x00014305;
+              }
+              if (uVar16 - 10 < 4) goto LAB_000141d0;
+            } while( true );
+          }
+LAB_0001443a:
+          pbVar15 = local_1c0 + -1;
+          if (main_buffer < pbVar15) {
+            bVar1 = local_1c0[-2];
+            pbVar10 = pbVar15;
+            while ((pbVar15 = pbVar10, bVar1 != 10 &&
+                   (pbVar15 = (byte *)main_buffer, pbVar10 + -1 != (byte *)main_buffer))) {
+              bVar1 = pbVar10[-2];
+              pbVar10 = pbVar10 + -1;
+            }
+          }
+        }
+      }
+    } while( true );
+  }
+joined_r0x000147bb:
+  if (0 < iVar6) goto LAB_0001456a;
+LAB_00014574:
+  if (printname != (char *)0x0) {
+    __fprintf_chk(stdout,1,&DAT_0001629f,printname);
+  }
+  if (number != 0) {
+    __fprintf_chk(stdout,1,&DAT_000162a3,local_1f0);
+  }
+  bVar20 = invert == 0;
+  if ((multiline & (uint)bVar20) != 0) {
+    pbVar10 = local_1c4 + local_1a8[0];
+    pbVar15 = local_1c4;
+    if (!CARRY4((uint)local_1c4,local_1a8[0])) {
+      while (pbVar15 = (byte *)end_of_line((char *)pbVar15,(char *)local_1e0,&local_1b8),
+            pbVar15 < pbVar10) {
+        local_1f0 = local_1f0 + 1;
+      }
+      local_238 = pbVar15 + -(int)local_1c4;
+    }
+    local_1fc = local_238 + -local_1b8;
+  }
+  if ((do_colour == 0) || (!bVar20)) {
+    fwrite(local_1c4,1,(size_t)(local_1fc + local_1b8),stdout);
+  }
+  else {
+    fwrite(local_1c4,1,(size_t)local_1ac,stdout);
+    __fprintf_chk(stdout,1,"%c[%sm",0x1b,colour_string);
+    fwrite(local_1c4 + (int)local_1ac,1,local_1a8[0] - (int)local_1ac,stdout);
+    __fprintf_chk(stdout,1,"%c[00m",0x1b);
+    pbVar15 = local_1fc + local_1b8;
+    uVar16 = local_1a8[0];
+    if ((int)local_1a8[0] < (int)pbVar15) {
+      do {
+        uVar16 = local_1a8[0];
+        BVar13 = match_patterns((char *)local_1c4,(size_t)local_1d0,0x400,local_1a8[0],
+                                (int *)&local_1ac,&local_1b4);
+        if (BVar13 == 0) {
+          pbVar15 = local_1fc + local_1b8;
+          break;
+        }
+        fwrite(local_1c4 + uVar16,1,(size_t)(local_1ac + -uVar16),stdout);
+        __fprintf_chk(stdout,1,"%c[%sm",0x1b,colour_string);
+        fwrite(local_1c4 + (int)local_1ac,1,local_1a8[0] - (int)local_1ac,stdout);
+        __fprintf_chk(stdout,1,"%c[00m",0x1b);
+        pbVar15 = local_1fc + local_1b8;
+        uVar16 = local_1a8[0];
+      } while ((int)local_1a8[0] < (int)pbVar15);
+    }
+    if (0 < (int)(pbVar15 + -uVar16)) {
+      fwrite(local_1c4 + uVar16,1,(size_t)(pbVar15 + -uVar16),stdout);
+    }
+  }
+joined_r0x00013f24:
+  if (line_buffered != 0) {
+    fflush(stdout);
+  }
+  local_1e4 = local_1c4 + (int)(local_1fc + local_1b8);
+  local_1c0 = (byte *)0x0;
+  local_1f0 = local_1f0 + 1;
+  local_1f4 = local_1f0;
+LAB_00013b98:
+  if (((multiline != 0) && (BVar9 != 0)) && (invert != 0)) {
+    pbVar15 = local_1c4 + local_1a8[0];
+    if (local_1c4 < pbVar15) {
+      pbVar10 = local_1c4;
+      while (pbVar10 = (byte *)end_of_line((char *)pbVar10,(char *)local_1e0,&local_1b0),
+            pbVar10 <= pbVar15) {
+        if (pbVar15 <= pbVar10) {
+          local_1f0 = local_1f0 + 1;
+          break;
+        }
+        local_1f0 = local_1f0 + 1;
+      }
+    }
+    local_1c8 = &local_1b0;
+    pcVar8 = end_of_line((char *)pbVar15,(char *)local_1e0,local_1c8);
+    local_1fc = (byte *)(pcVar8 + (-local_1b0 - (int)local_1c4));
+  }
+  local_1c4 = local_1c4 + (int)(local_1fc + local_1b8);
+  local_200 = local_1fc + local_1b8 + (int)local_200;
+  uVar16 = (uint)local_1c0;
+  if (local_208 != 0) {
+    if ((uint)bufsize <= local_204) goto LAB_00013cb8;
+    uVar14 = read_one_line((char *)local_1c4,(int)(main_buffer + (bufsize - (int)local_1c4)),
+                           (FILE *)handle);
+    local_204 = local_204 + uVar14;
+    local_1e0 = local_1e0 + uVar14;
+  }
+  if (local_204 < (uint)bufsize) {
+    if (local_1e0 <= local_1c4) goto LAB_00013db5;
+    goto LAB_0001373d;
+  }
+LAB_00013cb8:
+  sVar11 = bufthird * 2;
+  if (main_buffer + sVar11 < local_1c4) {
+    pbVar15 = (byte *)(main_buffer + bufthird);
+    if (((0 < after_context) && (local_1f4 != 0)) && (local_1e4 < pbVar15)) {
+      do_after_lines(local_1f4,(char *)local_1e4,(char *)local_1e0,printname);
+      local_1f4 = 0;
+      sVar11 = bufthird * 2;
+      pbVar15 = (byte *)(main_buffer + bufthird);
+    }
+    pcVar8 = main_buffer;
+    memmove(main_buffer,pbVar15,sVar11);
+    local_1c4 = local_1c4 + -bufthird;
+    iVar6 = bufthird * 2;
+    if (local_208 == 0) {
+      sVar11 = fread(pcVar8 + iVar6,1,bufthird,(FILE *)handle);
+    }
+    else {
+      sVar11 = read_one_line(pcVar8 + iVar6,bufthird,(FILE *)handle);
+    }
+    local_204 = sVar11 + iVar6;
+    local_1e0 = (byte *)(main_buffer + local_204);
+    if (local_1f4 != 0) {
+      local_1e4 = local_1e4 + -bufthird;
+    }
+  }
+  if (local_1e0 <= local_1c4) goto LAB_00013db5;
+  goto LAB_0001373d;
+LAB_000146ac:
+  if (((bool)(0 < local_1f4 & (bVar3 ^ 1))) && (local_214 < local_1c0)) {
+    fwrite(&DAT_000162bc,1,3,stdout);
+  }
+  iVar6 = local_1f8;
+  while (local_1c0 < local_1c4) {
+    if (printname != (char *)0x0) {
+      __fprintf_chk(stdout,1,&DAT_00016253,printname);
+    }
+    local_1f8 = iVar6;
+    if (number != 0) {
+      local_1f8 = iVar6 + -1;
+      __fprintf_chk(stdout,1,&DAT_00016257,local_1f0 - iVar6);
+    }
+    pbVar15 = (byte *)end_of_line((char *)local_1c0,(char *)local_1e0,&local_1b0);
+    fwrite(local_1c0,1,(size_t)(pbVar15 + -(int)local_1c0),stdout);
+    iVar6 = local_1f8;
+    local_1c0 = pbVar15;
+  }
+  iVar6 = before_context;
+  if (after_context < 1) goto joined_r0x000147bb;
+LAB_0001456a:
+  local_220 = 1;
+  goto LAB_00014574;
+}
+

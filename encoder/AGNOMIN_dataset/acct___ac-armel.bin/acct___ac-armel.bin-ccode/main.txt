@@ -1,0 +1,132 @@
+
+/* WARNING: Restarted to delay deadcode elimination for space: ram */
+
+int main(int argc,char **argv)
+
+{
+  char **ppcVar1;
+  bool bVar2;
+  int iVar3;
+  time_t current_time;
+  char *date_string;
+  int option_index;
+  undefined4 local_2c;
+  
+  program_name = *argv;
+  local_2c = __stack_chk_guard;
+  bVar2 = false;
+  utmp_init(0);
+  while( true ) {
+    option_index = 0;
+    iVar3 = rpl_getopt_long(argc,argv,"adf:hpVyz",main::lexical_block_0::long_options,&option_index)
+    ;
+    if (iVar3 == -1) break;
+    switch(iVar3) {
+    case 1:
+      print_file_problems = 1;
+      break;
+    case 2:
+      nasty_reboot = 1;
+      break;
+    case 3:
+      nasty_supplant = 1;
+      break;
+    case 4:
+      nasty_time_warp = 1;
+      break;
+    case 5:
+    case 0x7a:
+      print_zero_totals = 1;
+      break;
+    case 6:
+      debugging_enabled = 1;
+      print_file_problems = 1;
+      break;
+    case 7:
+      time_warp_leniency = strtol(rpl_optarg,(char **)0x0,10);
+      if (time_warp_leniency < 0) {
+        fatal("time warp leniency value has to be non-negative");
+      }
+      break;
+    case 8:
+    case 0x56:
+      __printf_chk(1,"%s: GNU Accounting Utilities (release %s)\n",program_name,"6.5.5");
+                    /* WARNING: Subroutine does not return */
+      exit(0);
+    default:
+      give_usage();
+                    /* WARNING: Subroutine does not return */
+      exit(1);
+    case 10:
+    case 100:
+      print_midnight_totals = 1;
+      break;
+    case 0xb:
+    case 0x70:
+      print_individual_totals = 1;
+      break;
+    case 0xc:
+    case 0x66:
+      bVar2 = true;
+      add_utmp_file(rpl_optarg);
+      break;
+    case 0xd:
+      nasty_time_warp = 1;
+      nasty_supplant = 1;
+      nasty_reboot = 1;
+      break;
+    case 0xe:
+    case 0x79:
+      print_year = 1;
+      break;
+    case 0xf:
+    case 0x61:
+      print_all_days = 1;
+      break;
+    case 0x10:
+      time_warp_suspicious = strtol(rpl_optarg,(char **)0x0,10);
+      if (time_warp_suspicious < 0) {
+        fatal("time warp suspicious value has to be non-negative");
+      }
+      if (time_warp_suspicious <= time_warp_leniency) {
+        fatal("time warp suspicious value has to greater than the time warp leniency value");
+      }
+    }
+  }
+  if (rpl_optind < argc) {
+    names = hashtab_init(0);
+    while (rpl_optind < argc) {
+      ppcVar1 = argv + rpl_optind;
+      rpl_optind = rpl_optind + 1;
+      hashtab_create(names,*ppcVar1,0);
+    }
+    if (debugging_enabled != 0) {
+      hashtab_dump_keys(names,stdout);
+    }
+  }
+  if (!bVar2) {
+    add_utmp_file("/var/log/wtmp");
+  }
+  user_totals = hashtab_init(0);
+  login_table = hashtab_init(0);
+  parse_entries();
+  current_time = time((time_t *)0x0);
+  if (current_time < last_time) {
+    current_time = last_time;
+  }
+  do_totals(&next_midnight,current_time,1,1,"midnight logout");
+  log_everyone_out(current_time,1,0,"catch-up");
+  if (print_midnight_totals == 0) {
+    date_string = "";
+  }
+  else {
+    date_string = "Today\t";
+    if (print_year == 0) {
+      date_string = "Today";
+    }
+  }
+  do_statistics(date_string);
+                    /* WARNING: Subroutine does not return */
+  exit(0);
+}
+

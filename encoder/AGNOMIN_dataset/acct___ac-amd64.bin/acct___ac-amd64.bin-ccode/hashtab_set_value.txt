@@ -1,0 +1,12 @@
+
+void hashtab_set_value(hashtab_elem *he,void *v,uint len)
+
+{
+  void *__dest;
+  
+  __dest = xmalloc((ulong)len);
+  he->data = __dest;
+  memcpy(__dest,v,(ulong)len);
+  return;
+}
+

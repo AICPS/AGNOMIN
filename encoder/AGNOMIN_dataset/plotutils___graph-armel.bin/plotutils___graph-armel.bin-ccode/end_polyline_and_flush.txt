@@ -1,0 +1,10 @@
+
+void end_polyline_and_flush(Multigrapher *multigrapher)
+
+{
+  pl_endpath_r(multigrapher->plotter);
+  pl_flushpl_r(multigrapher->plotter);
+  multigrapher->first_point_of_polyline = true;
+  return;
+}
+

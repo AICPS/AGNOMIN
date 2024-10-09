@@ -1,0 +1,40 @@
+
+void alter_reader_parameters
+               (Reader *reader,FILE *input,data_type format_type,bool auto_abscissa,double delta_x,
+               double abscissa,int symbol,double symbol_size,char *symbol_font_name,int linemode,
+               double line_width,double fill_fraction,bool use_color,bool new_symbol,
+               bool new_symbol_size,bool new_symbol_font_name,bool new_linemode,bool new_line_width,
+               bool new_fill_fraction,bool new_use_color)
+
+{
+  reader->need_break = true;
+  reader->input = input;
+  reader->format_type = format_type;
+  reader->auto_abscissa = auto_abscissa;
+  reader->delta_x = delta_x;
+  reader->initial_abscissa = abscissa;
+  reader->abscissa = abscissa;
+  if (new_symbol != false) {
+    reader->symbol = symbol;
+  }
+  if (new_symbol_size != false) {
+    reader->symbol_size = symbol_size;
+  }
+  if (new_symbol_font_name != false) {
+    reader->symbol_font_name = symbol_font_name;
+  }
+  if (new_linemode != false) {
+    reader->linemode = linemode;
+  }
+  if (new_line_width != false) {
+    reader->line_width = line_width;
+  }
+  if (new_fill_fraction != false) {
+    reader->fill_fraction = fill_fraction;
+  }
+  if (new_use_color != false) {
+    reader->use_color = use_color;
+  }
+  return;
+}
+

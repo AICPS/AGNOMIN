@@ -1,0 +1,26 @@
+
+void * x2realloc(void *p,size_t *pn)
+
+{
+  void *pvVar1;
+  size_t sVar2;
+  
+  sVar2 = *pn;
+  if (p == (void *)0x0) {
+    if (sVar2 == 0) {
+      sVar2 = 0x40;
+    }
+    *pn = sVar2;
+    pvVar1 = xrealloc((void *)0x0,sVar2);
+    return pvVar1;
+  }
+  if (0xaaaaaaa9 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    xalloc_die();
+  }
+  sVar2 = sVar2 + (sVar2 + 1 >> 1);
+  *pn = sVar2;
+  pvVar1 = xrealloc(p,sVar2);
+  return pvVar1;
+}
+

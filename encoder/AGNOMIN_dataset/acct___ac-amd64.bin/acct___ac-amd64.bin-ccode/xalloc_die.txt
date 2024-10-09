@@ -1,0 +1,9 @@
+
+void xalloc_die(void)
+
+{
+  error(exit_failure,0,"%s","memory exhausted");
+                    /* WARNING: Subroutine does not return */
+  abort();
+}
+

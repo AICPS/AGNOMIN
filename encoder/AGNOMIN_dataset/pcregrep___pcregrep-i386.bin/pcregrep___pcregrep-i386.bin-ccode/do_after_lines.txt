@@ -1,0 +1,61 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+void __regparm2
+do_after_lines(int lastmatchnumber,char *lastmatchrestart,char *endptr,char *printname)
+
+{
+  undefined4 uVar1;
+  bool bVar2;
+  char *pcVar3;
+  undefined4 *puVar4;
+  undefined4 *puVar5;
+  int iVar6;
+  int in_GS_OFFSET;
+  undefined8 uVar7;
+  int local_30;
+  int ellength;
+  int local_20;
+  undefined4 uStack20;
+  
+  uStack20 = 0x133ab;
+  local_20 = *(int *)(in_GS_OFFSET + 0x14);
+  if ((lastmatchrestart < endptr) && (0 < after_context)) {
+    iVar6 = 1;
+    local_30 = lastmatchnumber;
+    do {
+      if (printname != (char *)0x0) {
+        __fprintf_chk(stdout,1,&DAT_00016253,printname);
+      }
+      if (number != 0) {
+        __fprintf_chk(stdout,1,&DAT_00016257,local_30);
+        local_30 = local_30 + 1;
+      }
+      pcVar3 = end_of_line(lastmatchrestart,endptr,&ellength);
+      fwrite(lastmatchrestart,1,(size_t)(pcVar3 + -(int)lastmatchrestart),stdout);
+    } while ((pcVar3 < endptr) &&
+            (bVar2 = iVar6 < after_context, lastmatchrestart = pcVar3, iVar6 = iVar6 + 1, bVar2));
+  }
+  hyphenpending = 1;
+  if (local_20 != *(int *)(in_GS_OFFSET + 0x14)) {
+    uVar7 = __stack_chk_fail_local();
+    puVar5 = (undefined4 *)((ulonglong)uVar7 >> 0x20);
+    puVar4 = (undefined4 *)malloc(8);
+    if (puVar4 == (undefined4 *)0x0) {
+      fwrite("pcregrep: malloc failed\n",1,0x18,stderr);
+                    /* WARNING: Subroutine does not return */
+      pcregrep_exit(2);
+    }
+    *puVar4 = 0;
+    puVar4[1] = (int)uVar7;
+    if (puVar5 != (undefined4 *)0x0) {
+      uVar1 = *puVar5;
+      *puVar5 = puVar4;
+      *puVar4 = uVar1;
+    }
+    return;
+  }
+  hyphenpending = 1;
+  return;
+}
+

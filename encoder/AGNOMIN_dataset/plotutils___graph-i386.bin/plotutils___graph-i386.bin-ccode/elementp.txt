@@ -1,0 +1,16 @@
+
+bool elementp(int item,int *list)
+
+{
+  int iVar1;
+  
+  do {
+    iVar1 = *list;
+    if (iVar1 == 0) {
+      return false;
+    }
+    list = list + 1;
+  } while (item != iVar1);
+  return true;
+}
+

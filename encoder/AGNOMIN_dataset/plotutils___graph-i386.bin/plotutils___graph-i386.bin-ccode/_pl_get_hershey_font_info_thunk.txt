@@ -1,0 +1,10 @@
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _pl_get_hershey_font_info(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+

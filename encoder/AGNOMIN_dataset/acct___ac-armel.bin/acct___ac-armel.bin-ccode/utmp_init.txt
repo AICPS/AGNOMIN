@@ -1,0 +1,8 @@
+
+void utmp_init(int backwards)
+
+{
+  utmp_info = file_reader_init(0x180,0x100,backwards);
+  return;
+}
+

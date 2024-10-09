@@ -1,0 +1,42 @@
+
+tm * __regparm2 ranged_convert(anon_subr_tm_ptr_time_t_ptr_tm_ptr *convert,time_t *t,tm *tp)
+
+{
+  tm *ptVar1;
+  int iVar2;
+  int iVar3;
+  time_t tVar4;
+  time_t tVar5;
+  
+  ptVar1 = (*convert)(t,tp);
+  if ((ptVar1 == (tm *)0x0) && (iVar3 = *t, iVar3 != 0)) {
+    ptVar1 = (tm *)0x0;
+    tVar5 = 0;
+    if (iVar3 < 0) goto LAB_0804bbf4;
+    while (tVar5 + 1 != iVar3) {
+      tVar4 = (iVar3 - tVar5 >> 1) + tVar5;
+      iVar2 = iVar3;
+      while( true ) {
+        *t = tVar4;
+        ptVar1 = (*convert)(t,tp);
+        iVar3 = tVar4;
+        if (ptVar1 != (tm *)0x0) {
+          iVar3 = iVar2;
+          tVar5 = tVar4;
+        }
+        if (-1 < iVar3) break;
+LAB_0804bbf4:
+        if (tVar5 + -1 == iVar3) goto LAB_0804bc10;
+        tVar4 = (tVar5 - iVar3 >> 1) + iVar3;
+        iVar2 = iVar3;
+      }
+    }
+LAB_0804bc10:
+    if ((tVar5 != 0) && (ptVar1 == (tm *)0x0)) {
+      *t = tVar5;
+      ptVar1 = (*convert)(t,tp);
+    }
+  }
+  return ptVar1;
+}
+

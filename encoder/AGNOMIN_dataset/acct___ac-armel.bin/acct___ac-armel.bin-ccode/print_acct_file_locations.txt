@@ -1,0 +1,13 @@
+
+void print_acct_file_locations(void)
+
+{
+  undefined4 in_r3;
+  
+  puts("The system\'s default process accounting files are:\n");
+  __printf_chk(1,"  raw process accounting data: %s\n","/var/log/account/pacct");
+  __printf_chk(1,"      summary by command name: %s\n","/var/log/account/savacct");
+  __printf_chk(1,"          summary by username: %s\n\n","/var/log/account/usracct",in_r3);
+  return;
+}
+

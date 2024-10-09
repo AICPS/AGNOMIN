@@ -1,0 +1,157 @@
+
+int handle_option(int letter,int options)
+
+{
+  long lVar1;
+  option_item *poVar2;
+  int iVar3;
+  undefined8 uVar4;
+  char *pcVar5;
+  char *__s;
+  long in_FS_OFFSET;
+  char s [4];
+  
+  lVar1 = *(long *)(in_FS_OFFSET + 0x28);
+  switch(letter) {
+  case 0x46:
+    process_options = process_options | 4;
+    break;
+  case 0x48:
+    filenames = 4;
+    break;
+  case 0x49:
+    binary_files = 1;
+    break;
+  case 0x4c:
+    filenames = 3;
+    break;
+  case 0x4d:
+    multiline = 1;
+    options = options | 0x40002;
+    break;
+  case 0x56:
+    uVar4 = pcre_version();
+    __fprintf_chk(stdout,1,"pcregrep version %s\n",uVar4);
+                    /* WARNING: Subroutine does not return */
+    pcregrep_exit(0);
+  case 0x61:
+    binary_files = 2;
+    break;
+  case 99:
+    count_only = 1;
+    break;
+  case 0x68:
+    filenames = 0;
+    break;
+  case 0x69:
+    options = options | 1;
+    break;
+  case 0x6c:
+    omit_zero_count = 1;
+    filenames = 2;
+    break;
+  case 0x6e:
+    number = 1;
+    break;
+  case 0x6f:
+    only_matching_last = add_number(0,only_matching_last);
+    if (only_matching == (omstr *)0x0) {
+      only_matching = only_matching_last;
+    }
+    break;
+  case 0x71:
+    quiet = 1;
+    break;
+  case 0x72:
+    dee_action = 2;
+    break;
+  case 0x73:
+    silent = 1;
+    break;
+  case 0x75:
+    options = options | 0x800;
+    utf8 = 1;
+    break;
+  case 0x76:
+    invert = 1;
+    break;
+  case 0x77:
+    process_options = process_options | 1;
+    break;
+  case 0x78:
+    process_options = process_options | 2;
+    break;
+  case -0x10:
+    study_options = study_options & 0xfffffffe;
+    break;
+  default:
+    uVar4 = stderr;
+    __fprintf_chk(stderr,1,"pcregrep: Unknown option -%c\n",letter);
+    iVar3 = usage((int)uVar4);
+                    /* WARNING: Subroutine does not return */
+    pcregrep_exit(iVar3);
+  case -0xc:
+    line_buffered = 1;
+    break;
+  case -0xb:
+    file_offsets = 1;
+    break;
+  case -10:
+    number = 1;
+    line_offsets = 1;
+    break;
+  case -4:
+    puts("Usage: pcregrep [OPTION]... [PATTERN] [FILE1 FILE2 ...]");
+    puts("Search for PATTERN in each FILE or standard input.");
+    puts("PATTERN must be present if neither -e nor -f is used.");
+    puts("\"-\" can be used as a file name to mean STDIN.");
+    puts("All files are read as plain files, without any interpretation.\n");
+    puts("Example: pcregrep -i \'hello.*world\' menu.h main.c\n");
+    puts("Options:");
+    poVar2 = optionlist;
+    iVar3 = optionlist[0].one_char;
+    do {
+      if (iVar3 == 0) {
+        puts("\nNumbers may be followed by K or M, e.g. --buffer-size=100K.");
+        __printf_chk(1,"The default value for --buffer-size is %d.\n",0x5000);
+        puts("When reading patterns or file names from a file, trailing white");
+        puts("space is removed and blank lines are ignored.");
+        __printf_chk(1,"The maximum size of any pattern is %d bytes.\n",0x2000);
+        puts("\nWith no FILEs, read standard input. If fewer than two FILEs given, assume -h.");
+        puts("Exit status is 0 if any matches, 1 if no matches, and 2 if trouble.");
+                    /* WARNING: Subroutine does not return */
+        pcregrep_exit(0);
+      }
+      __s = poVar2->long_name;
+      pcVar5 = strchr(__s,0x5f);
+      if (pcVar5 == (char *)0x0) {
+        if (iVar3 < 1) {
+          s = 0x202020;
+LAB_001060cd:
+          iVar3 = __printf_chk(1,"  %s --%s",s,__s);
+        }
+        else {
+          if (*__s != '\0') {
+            __sprintf_chk(s,1,4,&DAT_00107138,iVar3);
+            __s = poVar2->long_name;
+            goto LAB_001060cd;
+          }
+          iVar3 = __printf_chk(1,"  -%c",iVar3);
+        }
+        iVar3 = 0x1f - iVar3;
+        if (iVar3 < 1) {
+          iVar3 = 1;
+        }
+        __printf_chk(1,"%.*s%s\n",iVar3,"                           ");
+      }
+      iVar3 = poVar2[1].one_char;
+      poVar2 = poVar2 + 1;
+    } while( true );
+  }
+  if (lVar1 == *(long *)(in_FS_OFFSET + 0x28)) {
+    return options;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+

@@ -1,0 +1,76 @@
+
+int list_fonts(char *output_format,char *progname)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int *piVar4;
+  int iVar5;
+  char **ppcVar6;
+  
+  ppcVar6 = _known_devices;
+  do {
+    if (*ppcVar6 == (char *)0x0) {
+      fprintf(stderr,"%s: no font information on display device \"%s\" is available\n",progname,
+              output_format);
+      return 0;
+    }
+    iVar1 = strcmp(output_format,*ppcVar6);
+    ppcVar6 = ppcVar6 + 1;
+  } while (iVar1 != 0);
+  uVar2 = pl_newplparams();
+  iVar1 = pl_newpl_r(output_format,0,stdout,stderr,uVar2);
+  if (iVar1 == 0) {
+    fprintf(stderr,"%s: no font information on display device \"%s\" is available\n",progname,
+            output_format);
+    return 0;
+  }
+  iVar3 = pl_havecap_r(iVar1,"HERSHEY_FONTS");
+  if (iVar3 != 0) {
+    piVar4 = (int *)_pl_get_hershey_font_info(iVar1);
+    iVar3 = *piVar4;
+    while (iVar3 != 0) {
+      if (piVar4[0x87] != 0) {
+        fprintf(stdout,"%s\n");
+      }
+      piVar4 = piVar4 + 0x88;
+      iVar3 = *piVar4;
+    }
+  }
+  iVar3 = pl_havecap_r(iVar1,"STICK_FONTS");
+  if (iVar3 != 0) {
+    piVar4 = (int *)_pl_get_stick_font_info(iVar1);
+    iVar3 = pl_havecap_r(iVar1,"EXTRA_STICK_FONTS");
+    iVar5 = *piVar4;
+    while (iVar5 != 0) {
+      if ((iVar3 != 0) || (piVar4[1] != 0)) {
+        fprintf(stdout,"%s\n");
+      }
+      piVar4 = piVar4 + 0x56;
+      iVar5 = *piVar4;
+    }
+  }
+  iVar3 = pl_havecap_r(iVar1,"PCL_FONTS");
+  if (iVar3 != 0) {
+    piVar4 = (int *)_pl_get_pcl_font_info(iVar1);
+    iVar3 = *piVar4;
+    while (iVar3 != 0) {
+      fprintf(stdout,"%s\n");
+      piVar4 = piVar4 + 0x116;
+      iVar3 = *piVar4;
+    }
+  }
+  iVar3 = pl_havecap_r(iVar1,"PS_FONTS");
+  if (iVar3 != 0) {
+    piVar4 = (int *)_pl_get_ps_font_info(iVar1);
+    iVar1 = *piVar4;
+    while (iVar1 != 0) {
+      fprintf(stdout,"%s\n");
+      piVar4 = piVar4 + 0x11a;
+      iVar1 = *piVar4;
+    }
+  }
+  return 1;
+}
+

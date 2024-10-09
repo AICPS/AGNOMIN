@@ -1,0 +1,8 @@
+
+void utmp_print_file_and_line(FILE *out)
+
+{
+  file_reader_print_file_and_line(out,utmp_info);
+  return;
+}
+

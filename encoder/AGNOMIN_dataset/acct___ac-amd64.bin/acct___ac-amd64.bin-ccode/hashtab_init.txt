@@ -1,0 +1,16 @@
+
+hashtab * hashtab_init(int numeric)
+
+{
+  hashtab *phVar1;
+  
+  phVar1 = (hashtab *)xmalloc(0x28);
+  *(undefined8 *)&phVar1->numeric = 0;
+  phVar1->table_size = 0;
+  phVar1->items_hashed = 0;
+  phVar1->resize_size = 0;
+  phVar1->table = (hashtab_elem **)0x0;
+  phVar1->numeric = numeric;
+  return phVar1;
+}
+

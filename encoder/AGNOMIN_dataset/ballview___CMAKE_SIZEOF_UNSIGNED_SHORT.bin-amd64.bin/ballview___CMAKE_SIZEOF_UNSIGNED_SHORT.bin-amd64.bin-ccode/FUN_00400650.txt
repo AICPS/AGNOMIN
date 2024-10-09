@@ -1,0 +1,9 @@
+
+void FUN_00400650(void)
+
+{
+                    /* WARNING: Treating indirect jump as call */
+  (*(code *)(undefined *)0x0)();
+  return;
+}
+

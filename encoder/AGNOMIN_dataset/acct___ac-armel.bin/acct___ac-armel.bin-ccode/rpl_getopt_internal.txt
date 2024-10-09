@@ -1,0 +1,17 @@
+
+int rpl_getopt_internal(int argc,char **argv,char *optstring,rpl_option *longopts,int *longind,
+                       int long_only,int posixly_correct)
+
+{
+  int iVar1;
+  
+  getopt_data.rpl_optind = rpl_optind;
+  getopt_data.rpl_opterr = rpl_opterr;
+  iVar1 = _getopt_internal_r(argc,argv,optstring,longopts,longind,long_only,&getopt_data,
+                             posixly_correct);
+  rpl_optopt = getopt_data.rpl_optopt;
+  rpl_optind = getopt_data.rpl_optind;
+  rpl_optarg = getopt_data.rpl_optarg;
+  return iVar1;
+}
+

@@ -1,0 +1,14 @@
+
+void * xrealloc(void *p,size_t n)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = realloc(p,n);
+  if ((pvVar1 == (void *)0x0) && (n != 0)) {
+                    /* WARNING: Subroutine does not return */
+    xalloc_die();
+  }
+  return pvVar1;
+}
+

@@ -1,0 +1,122 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+BOOL __regparm2
+compile_pattern(patstr *p,int options,int popts,int fromfile,char *fromtext,int count)
+
+{
+  int iVar1;
+  char cVar2;
+  patstr *ppVar3;
+  char *pcVar4;
+  char *pcVar5;
+  uint uVar6;
+  char *pcVar7;
+  char *pcVar8;
+  int iVar9;
+  int in_GS_OFFSET;
+  byte bVar10;
+  undefined8 uVar11;
+  char *pcVar12;
+  char *pcVar13;
+  char *local_2040;
+  char *error;
+  int errptr;
+  char buffer [8202];
+  
+  bVar10 = 0;
+  uVar6 = 0xffffffff;
+  pcVar8 = p->string;
+  iVar1 = *(int *)(in_GS_OFFSET + 0x14);
+  pcVar4 = pcVar8;
+  do {
+    if (uVar6 == 0) break;
+    uVar6 = uVar6 - 1;
+    cVar2 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar2 != '\0');
+  local_2040 = (char *)(~uVar6 - 1);
+  if (p->compiled == (pcre *)0x0) {
+    if ((popts & 4U) != 0) {
+      pcVar4 = end_of_line(pcVar8,pcVar8 + (int)local_2040,&errptr);
+      if (errptr != 0) {
+        ppVar3 = add_pattern(pcVar4,p);
+        if (ppVar3 == (patstr *)0x0) goto LAB_00011644;
+        local_2040 = pcVar4 + (-errptr - (int)pcVar8);
+      }
+    }
+    pcVar4 = prefix[popts];
+    pcVar13 = suffix[popts];
+    pcVar12 = local_2040;
+    __sprintf_chk(buffer,1,0x200a,"%s%.*s%s",pcVar4,local_2040,pcVar8,pcVar13);
+    uVar11 = pcre_compile(buffer,options,&error,&errptr,pcretables);
+    pcVar5 = (char *)((ulonglong)uVar11 >> 0x20);
+    p->compiled = (pcre *)uVar11;
+    if ((pcre *)uVar11 == (pcre *)0x0) {
+      pcVar7 = (char *)0xffffffff;
+      do {
+        if (pcVar7 == (char *)0x0) break;
+        pcVar7 = pcVar7 + -1;
+        cVar2 = *pcVar4;
+        pcVar4 = pcVar4 + (uint)bVar10 * -2 + 1;
+      } while (cVar2 != '\0');
+      pcVar4 = pcVar7 + errptr + 2;
+      if ((int)local_2040 < (int)(pcVar7 + errptr + 2)) {
+        pcVar4 = local_2040;
+      }
+      errptr = (int)pcVar4;
+      if (fromfile == 0) {
+        if (count == 0) {
+          pcVar8 = "pcregrep: Error in %s regex at offset %d: %s\n";
+          count = (int)fromtext;
+          fromtext = pcVar4;
+          pcVar4 = error;
+          error = pcVar5;
+        }
+        else {
+          __sprintf_chk(ordin::buffer,1,8,"%d",count,pcVar12,pcVar8,pcVar13);
+          for (pcVar8 = ordin::buffer; *pcVar8 != '\0'; pcVar8 = (char *)((int)pcVar8 + 1)) {
+          }
+          pcVar5 = (char *)(count / 10);
+          iVar9 = count % 10;
+          if (iVar9 == 2) {
+            *(undefined2 *)pcVar8 = 0x646e;
+            *(undefined *)((int)pcVar8 + 2) = 0;
+          }
+          else {
+            if (iVar9 == 3) {
+              *(undefined2 *)pcVar8 = 0x6472;
+              *(undefined *)((int)pcVar8 + 2) = 0;
+            }
+            else {
+              if (iVar9 == 1) {
+                *(undefined2 *)pcVar8 = 0x7473;
+                *(undefined *)((int)pcVar8 + 2) = 0;
+              }
+              else {
+                *(undefined2 *)pcVar8 = 0x6874;
+                *(undefined *)((int)pcVar8 + 2) = 0;
+              }
+            }
+          }
+          pcVar8 = "pcregrep: Error in %s %s regex at offset %d: %s\n";
+          count = (int)ordin::buffer;
+        }
+      }
+      else {
+        pcVar8 = "pcregrep: Error in regex in line %d of %s at offset %d: %s\n";
+        pcVar5 = pcVar7;
+      }
+      __fprintf_chk(stderr,1,pcVar8,count,fromtext,pcVar4,error,pcVar5);
+      ppVar3 = (patstr *)0x0;
+      goto LAB_00011644;
+    }
+  }
+  ppVar3 = (patstr *)0x1;
+LAB_00011644:
+  if (iVar1 != *(int *)(in_GS_OFFSET + 0x14)) {
+    ppVar3 = (patstr *)__stack_chk_fail_local();
+  }
+  return (BOOL)ppVar3;
+}
+

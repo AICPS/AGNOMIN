@@ -1,0 +1,31 @@
+
+void log_out(utmp *entry)
+
+{
+  hashtab_elem *he;
+  char *name;
+  
+  if (entry->ut_line[0] == '\0') {
+    if (print_file_problems != 0) {
+      utmp_print_file_and_line(stdout);
+      fwrite(": problem: trying to hash rec with ut_line == NULL\n",1,0x33,(FILE *)stdout);
+      return;
+    }
+  }
+  else {
+    he = hashtab_find(login_table,entry->ut_line,0x20);
+    if (he != (hashtab_elem *)0x0) {
+      name = (char *)hashtab_get_value(he);
+      update_user_time(name,(long)(entry->ut_tv).tv_sec - *(long *)(name + 0x20),"logout");
+      hashtab_delete(he);
+      return;
+    }
+    if (print_file_problems != 0) {
+      utmp_print_file_and_line(stdout);
+      __fprintf_chk(stdout,1,": problem: missing login record for `%.*s\'\n",0x20,entry->ut_line);
+      return;
+    }
+  }
+  return;
+}
+

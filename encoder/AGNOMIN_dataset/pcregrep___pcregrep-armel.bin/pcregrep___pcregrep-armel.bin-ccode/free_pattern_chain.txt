@@ -1,0 +1,20 @@
+
+void free_pattern_chain(patstr *pc)
+
+{
+  patstr *ppVar1;
+  
+  while (pc != (patstr *)0x0) {
+    ppVar1 = pc->next;
+    if (pc->hint != (pcre_extra *)0x0) {
+      pcre_free_study();
+    }
+    if (pc->compiled != (pcre *)0x0) {
+      (*pcre_free)();
+    }
+    free(pc);
+    pc = ppVar1;
+  }
+  return;
+}
+

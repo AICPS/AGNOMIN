@@ -1,0 +1,34 @@
+
+patstr * add_pattern(char *s,patstr *after)
+
+{
+  patstr *ppVar1;
+  patstr *ppVar2;
+  size_t sVar3;
+  
+  ppVar2 = (patstr *)malloc(0x20);
+  if (ppVar2 == (patstr *)0x0) {
+    fwrite("pcregrep: malloc failed\n",1,0x18,stderr);
+                    /* WARNING: Subroutine does not return */
+    pcregrep_exit(2);
+  }
+  sVar3 = strlen(s);
+  if (sVar3 < 0x2001) {
+    ppVar2->next = (patstr *)0x0;
+    ppVar2->string = s;
+    ppVar2->compiled = (pcre *)0x0;
+    ppVar2->hint = (pcre_extra *)0x0;
+    if (after == (patstr *)0x0) {
+      return ppVar2;
+    }
+    ppVar1 = after->next;
+    after->next = ppVar2;
+    ppVar2->next = ppVar1;
+  }
+  else {
+    __fprintf_chk(stderr,1,"pcregrep: pattern is too long (limit is %d bytes)\n",0x2000);
+    ppVar2 = (patstr *)0x0;
+  }
+  return ppVar2;
+}
+

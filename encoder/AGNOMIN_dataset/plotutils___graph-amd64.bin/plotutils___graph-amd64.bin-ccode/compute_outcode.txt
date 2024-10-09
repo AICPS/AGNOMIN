@@ -1,0 +1,23 @@
+
+outcode compute_outcode(Multigrapher *multigrapher,double x,double y,bool tolerant)
+
+{
+  uint uVar1;
+  double dVar2;
+  double dVar3;
+  
+  uVar1 = 4;
+  dVar3 = (multigrapher->x_trans).input_range * 1e-06;
+  dVar2 = (multigrapher->y_trans).input_range * 1e-06;
+  if (x <= (multigrapher->x_trans).input_max + dVar3) {
+    uVar1 = (uint)(x < (multigrapher->x_trans).input_min - dVar3) << 3;
+  }
+  if (y <= (multigrapher->y_trans).input_max + dVar2) {
+    if (y < (multigrapher->y_trans).input_min - dVar2) {
+      uVar1 = uVar1 | 2;
+    }
+    return (outcode)uVar1;
+  }
+  return (outcode)(uVar1 | 1);
+}
+

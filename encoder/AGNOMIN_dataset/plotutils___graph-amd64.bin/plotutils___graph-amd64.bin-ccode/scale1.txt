@@ -1,0 +1,58 @@
+
+void scale1(double min,double max,double *tick_spacing,int *tick_spacing_type)
+
+{
+  int iVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double local_38;
+  
+  dVar4 = (double)(~-(ulong)(min < max) | -(ulong)(min < max) & 0x3ff0000000000000) *
+          ((max - min) / 5.0);
+  if (dVar4 <= 0.0) {
+    fprintf(stderr,"%s: error: the trial inter-tick spacing \'%g\' is bad\n",progname);
+                    /* WARNING: Subroutine does not return */
+    exit(1);
+  }
+  dVar2 = log10(dVar4);
+  dVar2 = floor(dVar2);
+  dVar3 = pow(10.0,(double)((ulong)dVar2 ^ 0x8000000000000000));
+  dVar4 = dVar4 * dVar3;
+  if (dVar4 < 1.414213562373095) {
+    iVar1 = 0;
+  }
+  else {
+    if (dVar4 < 3.16228) {
+      iVar1 = 1;
+    }
+    else {
+      if (7.07107 <= dVar4) {
+        if (min < max) {
+          dVar4 = pow(10.0,dVar2);
+          iVar1 = 0;
+          *tick_spacing = dVar4 * 10.0;
+        }
+        else {
+          dVar4 = pow(10.0,dVar2);
+          iVar1 = 0;
+          *tick_spacing = dVar4 * -10.0;
+        }
+        goto LAB_00405e3f;
+      }
+      iVar1 = 2;
+    }
+  }
+  if (max <= min) {
+    local_38 = (double)((ulong)scale1::vint[iVar1] ^ 0x8000000000000000);
+  }
+  else {
+    local_38 = scale1::vint[iVar1];
+  }
+  dVar4 = pow(10.0,dVar2);
+  *tick_spacing = dVar4 * local_38;
+LAB_00405e3f:
+  *tick_spacing_type = iVar1;
+  return;
+}
+

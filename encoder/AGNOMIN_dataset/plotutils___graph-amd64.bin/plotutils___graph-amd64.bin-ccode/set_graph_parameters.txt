@@ -1,0 +1,218 @@
+
+void set_graph_parameters
+               (Multigrapher *multigrapher,double frame_line_width,char *frame_color,char *title,
+               char *title_font_name,double title_font_size,double tick_size,grid_type grid_spec,
+               double x_min,double x_max,double x_spacing,double y_min,double y_max,double y_spacing
+               ,bool spec_x_spacing,bool spec_y_spacing,double width,double height,double up,
+               double right,char *x_font_name,double x_font_size,char *x_label,char *y_font_name,
+               double y_font_size,char *y_label,bool no_rotate_y_label,int log_axis,
+               int round_to_next_tick,int switch_axis_end,int omit_ticks,int clip_mode,
+               double blankout_fraction,bool transpose_axes)
+
+{
+  double dVar1;
+  grid_type gVar2;
+  int iVar3;
+  char *pcVar4;
+  bool log_axis_00;
+  uint uVar5;
+  uint uVar6;
+  bool log_axis_01;
+  bool bVar7;
+  uint uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double min;
+  double dVar13;
+  double dVar14;
+  undefined4 in_stack_0000000c;
+  double local_b0;
+  double local_a0;
+  
+  iVar3 = SUB84(y_spacing,0);
+  log_axis_01 = log_axis & 1;
+  if ((log_axis_01 == false) || (iVar3 == 0)) {
+    uVar6 = 0;
+    local_a0 = 0.0;
+  }
+  else {
+    uVar6 = 1;
+    iVar3 = 0;
+    local_a0 = x_spacing;
+  }
+  log_axis_00 = log_axis & 2;
+  local_b0 = 0.0;
+  if ((log_axis_00 != false) && (spec_y_spacing != false)) {
+    local_b0 = _spec_x_spacing;
+    uVar6 = uVar6 | 2;
+    spec_y_spacing = false;
+  }
+  dVar11 = x_max;
+  dVar9 = x_min;
+  if (x_max < x_min) {
+    dVar11 = x_min;
+    dVar9 = x_max;
+  }
+  uVar5 = (uint)(x_max < x_min);
+  if (dVar11 == dVar9) {
+    fprintf(stderr,"%s: identical upper and lower x limits are separated\n",progname);
+    dVar11 = dVar11 + 1.0;
+    dVar9 = dVar9 - 1.0;
+  }
+  dVar13 = y_min;
+  if (y_max < y_min) {
+    uVar5 = uVar5 | 2;
+    dVar13 = y_max;
+    y_max = y_min;
+  }
+  if (y_max == dVar13) {
+    fprintf(stderr,"%s: identical upper and lower y limits are separated\n",progname);
+    y_max = y_max + 1.0;
+    dVar13 = dVar13 - 1.0;
+  }
+  dVar14 = 0.0;
+  if (iVar3 != 0) {
+    if (x_spacing == 0.0) goto LAB_00409701;
+    x_spacing = (double)((ulong)x_spacing & 0x7fffffffffffffff);
+  }
+  if (spec_y_spacing != false) {
+    if (_spec_x_spacing == 0.0) {
+LAB_00409701:
+      fprintf(stderr,"%s: error: the spacing between ticks on an axis is zero\n",progname);
+                    /* WARNING: Subroutine does not return */
+      exit(1);
+    }
+    _spec_x_spacing = (double)((ulong)_spec_x_spacing & 0x7fffffffffffffff);
+  }
+  dVar10 = dVar11;
+  dVar12 = x_spacing;
+  min = dVar13;
+  if (transpose_axes != false) {
+    bVar7 = log_axis_01;
+    if (log_axis_01 != false) {
+      bVar7 = 2;
+    }
+    pcVar4 = y_label;
+    dVar1 = local_a0;
+    local_a0 = local_b0;
+    uVar8 = round_to_next_tick & 1;
+    if (uVar8 != 0) {
+      uVar8 = 2;
+    }
+    round_to_next_tick = uVar8 | (uint)round_to_next_tick >> 1 & 1;
+    uVar8 = switch_axis_end & 1;
+    if (uVar8 != 0) {
+      uVar8 = 2;
+    }
+    switch_axis_end = uVar8 | (uint)switch_axis_end >> 1 & 1;
+    uVar8 = omit_ticks & 1;
+    if (uVar8 != 0) {
+      uVar8 = 2;
+    }
+    omit_ticks = uVar8 | (uint)omit_ticks >> 1 & 1;
+    uVar8 = uVar5 & 1;
+    if (uVar8 != 0) {
+      uVar8 = 2;
+    }
+    uVar5 = uVar8 | uVar5 >> 1;
+    uVar8 = uVar6 & 1;
+    if (uVar8 != 0) {
+      uVar8 = 2;
+    }
+    log_axis_01 = (uint)(log_axis_00 != false) | bVar7 & 1;
+    uVar6 = uVar8 | uVar6 >> 1;
+    y_label = x_label;
+    log_axis_00 = bVar7 & 2;
+    dVar10 = y_max;
+    dVar12 = _spec_x_spacing;
+    min = dVar9;
+    y_max = dVar11;
+    dVar9 = dVar13;
+    _spec_x_spacing = x_spacing;
+    x_label = pcVar4;
+    local_b0 = dVar1;
+  }
+  multigrapher->frame_line_width = frame_line_width;
+  multigrapher->frame_color = frame_color;
+  multigrapher->no_rotate_y_label = no_rotate_y_label;
+  multigrapher->blankout_fraction = blankout_fraction;
+  if (title == (char *)0x0) {
+    multigrapher->title = (char *)0x0;
+  }
+  else {
+    pcVar4 = xstrdup(title);
+    multigrapher->title = pcVar4;
+  }
+  if (title_font_name == (char *)0x0) {
+    multigrapher->title_font_name = (char *)0x0;
+  }
+  else {
+    pcVar4 = xstrdup(title_font_name);
+    multigrapher->title_font_name = pcVar4;
+  }
+  multigrapher->clip_mode = clip_mode;
+  multigrapher->title_font_size = title_font_size;
+  multigrapher->tick_size = tick_size;
+  multigrapher->grid_spec = grid_spec;
+  multigrapher->subtick_size = tick_size * 0.4;
+  prepare_axis(&multigrapher->x_axis,&multigrapher->x_trans,dVar9,dVar10,dVar12,x_font_name,
+               x_font_size,x_label,local_a0,uVar6 & 1,round_to_next_tick & 1,log_axis_01,uVar5 & 1,
+               switch_axis_end & 1,omit_ticks & 1);
+  prepare_axis(&multigrapher->y_axis,&multigrapher->y_trans,min,y_max,_spec_x_spacing,y_font_name,
+               y_font_size,y_label,local_b0,uVar6 & 2,round_to_next_tick & 2,log_axis_00,uVar5 & 2,
+               switch_axis_end & 2,omit_ticks & 2);
+  (multigrapher->x_trans).output_min = 0.0;
+  (multigrapher->y_trans).output_min = 0.0;
+  (multigrapher->x_trans).squeezed_min = right;
+  (multigrapher->x_trans).squeezed_max = width + right;
+  gVar2 = multigrapher->grid_spec;
+  (multigrapher->x_trans).squeezed_range = width;
+  (multigrapher->y_trans).squeezed_min = up;
+  (multigrapher->y_trans).squeezed_range = height;
+  (multigrapher->x_trans).output_max = 4096.0;
+  (multigrapher->x_trans).output_range = 4096.0;
+  (multigrapher->y_trans).squeezed_max = height + up;
+  (multigrapher->y_trans).output_max = 4096.0;
+  (multigrapher->y_trans).output_range = 4096.0;
+  if (gVar2 == AXES_AT_ORIGIN) {
+    dVar11 = (multigrapher->x_trans).input_min;
+    dVar9 = (multigrapher->x_trans).input_max;
+    dVar13 = dVar14;
+    if (0.0 < dVar11 * dVar9) {
+      dVar13 = (double)(~-(ulong)(0.0 < dVar11) & (ulong)dVar9 |
+                       (ulong)dVar11 & -(ulong)(0.0 < dVar11));
+    }
+    dVar10 = (multigrapher->y_trans).input_min;
+    dVar12 = (multigrapher->y_trans).input_max;
+    (multigrapher->x_axis).other_axis_loc = dVar13;
+    if (0.0 < dVar10 * dVar12) {
+      dVar14 = (double)(~-(ulong)(0.0 < dVar10) & (ulong)dVar12 |
+                       (ulong)dVar10 & -(ulong)(0.0 < dVar10));
+    }
+    (multigrapher->x_axis).alt_other_axis_loc = dVar13;
+    (multigrapher->y_axis).other_axis_loc = dVar14;
+    (multigrapher->y_axis).alt_other_axis_loc = dVar14;
+    (multigrapher->x_axis).switch_axis_end = (uint)(dVar9 - dVar13 < dVar13 - dVar11);
+    (multigrapher->y_axis).switch_axis_end = (uint)(dVar12 - dVar14 < dVar14 - dVar10);
+  }
+  else {
+    (multigrapher->x_axis).other_axis_loc = (multigrapher->x_trans).input_min;
+    (multigrapher->y_axis).other_axis_loc = (multigrapher->y_trans).input_min;
+    (multigrapher->x_axis).alt_other_axis_loc = (multigrapher->x_trans).input_max;
+    (multigrapher->y_axis).alt_other_axis_loc = (multigrapher->y_trans).input_max;
+  }
+  if ((frame_line_width < 0.0) ||
+     (iVar3 = pl_havecap_r(multigrapher->plotter,"WIDE_LINES"), iVar3 == 0)) {
+    multigrapher->half_line_width = 0.0;
+  }
+  else {
+    multigrapher->half_line_width = frame_line_width * 0.5 * (multigrapher->x_trans).output_range;
+  }
+  multigrapher->first_point_of_polyline = true;
+  multigrapher->oldpoint_x = 0.0;
+  multigrapher->oldpoint_y = 0.0;
+  return;
+}
+

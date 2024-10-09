@@ -1,0 +1,125 @@
+
+/* WARNING: Unknown calling convention yet parameter storage is locked */
+
+void print_tick_label(void)
+
+{
+  char *pcVar1;
+  char *pcVar2;
+  double *in_RDX;
+  ulong uVar3;
+  char *pcVar4;
+  long in_RSI;
+  char *in_RDI;
+  double in_XMM0_Qa;
+  double dVar5;
+  double dVar6;
+  char *in_XMM1_Qa;
+  double local_f8;
+  uint local_e4;
+  char *local_e0;
+  char local_d8 [64];
+  char local_98 [64];
+  char local_58 [64];
+  
+  if ((*(int *)(in_RSI + 0x18) == 1) &&
+     (in_XMM0_Qa = pow(10.0,in_XMM0_Qa), *(int *)(in_RSI + 0x18) == 1)) {
+    dVar6 = pow(10.0,*in_RDX);
+  }
+  else {
+    dVar6 = *in_RDX;
+  }
+  if (((in_XMM0_Qa != 0.0) &&
+      (dVar5 = log10((double)((ulong)in_XMM0_Qa & 0x7fffffffffffffff)),
+      4.0 <= (double)((ulong)dVar5 & 0x7fffffffffffffff))) ||
+     ((dVar6 != 0.0 && (dVar6 = log10(dVar6), 4.0 <= (double)((ulong)dVar6 & 0x7fffffffffffffff)))))
+  {
+    pcVar1 = local_d8;
+    sprintf(in_XMM1_Qa,pcVar1,&DAT_004115c4);
+    pcVar2 = strchr(pcVar1,0x65);
+    if (pcVar2 == (char *)0x0) {
+      return;
+    }
+    if ((*(int *)(in_RSI + 0x18) == 1) && (*(int *)(in_RSI + 0x4c) == 0)) {
+      __isoc99_sscanf(pcVar2 + 1,"%d",&local_e4);
+      sprintf(in_RDI,"10\\sp%d\\ep",(ulong)local_e4);
+      return;
+    }
+    if ((double)in_XMM1_Qa != 0.0) {
+      pcVar4 = local_58;
+      if (pcVar1 < pcVar2) {
+        pcVar4 = (char *)0x0;
+        do {
+          local_58[(long)pcVar4] = pcVar1[(long)pcVar4];
+          pcVar4 = pcVar4 + 1;
+        } while (pcVar4 != pcVar2 + -(long)pcVar1);
+        pcVar4 = local_58 + (long)(pcVar2 + -(long)pcVar1);
+        pcVar1 = pcVar1 + (long)(pcVar2 + -(long)pcVar1);
+      }
+      *pcVar4 = '\0';
+      __isoc99_sscanf(local_58,"%lf",&local_e0);
+      __isoc99_sscanf(pcVar1 + 1,"%d",&local_e4);
+      if (*(int *)(in_RSI + 0x18) == 0) {
+        local_f8 = *(double *)(in_RSI + 0x20);
+      }
+      else {
+        local_f8 = *(double *)(in_RSI + 0x50);
+      }
+      dVar6 = pow(10.0,(double)local_e4);
+      sprintf((char *)(local_f8 / dVar6),local_98,&DAT_0041159d);
+      pcVar1 = strchr(local_98,0x2e);
+      if (pcVar1 == (char *)0x0) {
+        uVar3 = 0;
+      }
+      else {
+        uVar3 = 0;
+        pcVar2 = pcVar1;
+        while( true ) {
+          pcVar2 = pcVar2 + 1;
+          if (*pcVar2 == '\0') break;
+          if (*pcVar2 != '0') {
+            uVar3 = (ulong)(uint)((int)pcVar2 - (int)pcVar1);
+          }
+        }
+      }
+      sprintf(local_e0,in_RDI,&DAT_004115a0,uVar3,(ulong)local_e4);
+      return;
+    }
+    *in_RDI = '0';
+    in_RDI[1] = '\0';
+    return;
+  }
+  if (*(int *)(in_RSI + 0x18) == 1) {
+    if (*(int *)(in_RSI + 0x4c) == 0) {
+      sprintf(in_XMM1_Qa,in_RDI,&DAT_004115b5);
+      return;
+    }
+  }
+  else {
+    if (*(int *)(in_RSI + 0x18) == 0) {
+      pcVar1 = *(char **)(in_RSI + 0x20);
+      goto LAB_004071ea;
+    }
+  }
+  pcVar1 = *(char **)(in_RSI + 0x50);
+LAB_004071ea:
+  sprintf(pcVar1,local_98,&DAT_004115ba);
+  pcVar1 = strchr(local_98,0x2e);
+  if (pcVar1 == (char *)0x0) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = 0;
+    pcVar2 = pcVar1;
+    while( true ) {
+      pcVar2 = pcVar2 + 1;
+      if (*pcVar2 == '\0') break;
+      if (*pcVar2 != '0') {
+        uVar3 = (ulong)(uint)((int)pcVar2 - (int)pcVar1);
+      }
+    }
+  }
+  sprintf(in_XMM1_Qa,in_RDI,&DAT_004115bf,uVar3);
+  return;
+}
+

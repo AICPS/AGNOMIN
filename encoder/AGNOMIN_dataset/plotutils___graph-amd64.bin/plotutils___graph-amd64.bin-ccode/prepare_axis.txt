@@ -1,0 +1,217 @@
+
+void prepare_axis(Axis *axisp,Transform *trans,double min,double max,double spacing,char *font_name,
+                 double font_size,char *label,double subsubtick_spacing,
+                 bool user_specified_subsubticks,bool round_to_next_tick,bool log_axis,
+                 bool reverse_axis,bool switch_axis_end,bool omit_ticks)
+
+{
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  bool bVar5;
+  int iVar6;
+  int iVar7;
+  bool bVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double local_b0;
+  double local_a8;
+  double local_98;
+  int tick_spacing_type;
+  double tick_spacing;
+  
+  tick_spacing_type = 0;
+  if (max < min) {
+    fprintf(stderr,"%s: error: min > max for an axis, which is not allowed\n",progname);
+                    /* WARNING: Subroutine does not return */
+    exit(1);
+  }
+  if (min == max) {
+    local_b0 = floor(max + 1.0);
+    min = ceil(min - 1.0);
+    if (log_axis != false) goto LAB_004062ed;
+LAB_00405f74:
+    local_a8 = 1.0;
+    if (spacing == 0.0) {
+      scale1(min,local_b0,&tick_spacing,&tick_spacing_type);
+    }
+    else {
+      tick_spacing = spacing;
+      dVar14 = log10(spacing);
+      dVar14 = floor(dVar14);
+      iVar2 = (int)dVar14;
+      if (iVar2 < 0) {
+        iVar2 = -iVar2;
+        bVar8 = true;
+LAB_00406423:
+        iVar6 = 0;
+        do {
+          iVar6 = iVar6 + 1;
+          local_a8 = local_a8 * 10.0;
+        } while (iVar6 < iVar2);
+        if (bVar8) {
+          local_a8 = 1.0 / local_a8;
+        }
+        dVar14 = (double)((ulong)local_a8 & 0x7fffffffffffffff) * 1e-06;
+      }
+      else {
+        bVar8 = false;
+        if (iVar2 != 0) goto LAB_00406423;
+        dVar14 = 1e-06;
+      }
+      tick_spacing_type = 0;
+      if (((dVar14 <= (double)((ulong)(spacing - local_a8) & 0x7fffffffffffffff)) &&
+          (tick_spacing_type = 1,
+          dVar14 <= (double)((ulong)(spacing - (local_a8 + local_a8)) & 0x7fffffffffffffff))) &&
+         (tick_spacing_type = 3,
+         dVar14 <= (double)((ulong)(spacing - local_a8 * 2.5) & 0x7fffffffffffffff))) {
+        tick_spacing_type =
+             (uint)((double)((ulong)(spacing - local_a8 * 5.0) & 0x7fffffffffffffff) < dVar14) * 4 +
+             -2;
+      }
+    }
+    dVar14 = local_b0 - min;
+    if (round_to_next_tick != false) goto LAB_00405fc7;
+LAB_0040633e:
+    dVar12 = tick_spacing;
+    dVar9 = min - dVar14 * 1e-06;
+    dVar10 = ceil(dVar9 / tick_spacing);
+    iVar2 = (int)dVar10;
+    local_98 = dVar14 * 1e-06 + local_b0;
+    dVar10 = floor(local_98 / dVar12);
+    iVar6 = (int)dVar10;
+    iVar3 = tick_spacing_type + -1;
+    bVar8 = iVar3 == 0;
+    iVar7 = tick_spacing_type;
+    if (bVar8) goto LAB_004063cc;
+LAB_00406083:
+    iVar7 = tick_spacing_type;
+    local_a8 = 1.0;
+    dVar10 = dVar12;
+    if (bVar8 || SBORROW4(tick_spacing_type,1) != iVar3 < 0) {
+      if (tick_spacing_type != 0) goto LAB_004064f2;
+      dVar13 = dVar12 / 10.0;
+      dVar10 = ceil(dVar9 / dVar13);
+      dVar11 = floor(local_98 / dVar13);
+      if (0x1d < (int)dVar11 - (int)dVar10) {
+        dVar13 = dVar12 / 5.0;
+        dVar10 = ceil(dVar9 / dVar13);
+        dVar11 = floor(local_98 / dVar13);
+        if (0x1d < (int)dVar11 - (int)dVar10) goto LAB_004063cc;
+      }
+      goto LAB_0040611b;
+    }
+    if (tick_spacing_type < 4) {
+      dVar10 = dVar12 / 5.0;
+    }
+LAB_004064f2:
+    bVar8 = log_axis != false;
+    dVar13 = dVar10;
+    if (dVar10 <= 1.0 && bVar8) {
+      dVar13 = local_a8;
+      bVar8 = dVar10 <= 1.0 && bVar8;
+    }
+LAB_0040613c:
+    dVar9 = ceil(dVar9 / dVar13);
+    iVar4 = (int)dVar9;
+    dVar9 = floor(local_98 / dVar13);
+    bVar5 = false;
+    iVar3 = (int)dVar9;
+    local_a8 = dVar13;
+    bVar1 = bVar8;
+    if (iVar7 == -2) goto LAB_004061be;
+  }
+  else {
+    local_b0 = max;
+    if (log_axis == false) goto LAB_00405f74;
+LAB_004062ed:
+    scale1(min,local_b0,&tick_spacing,&tick_spacing_type);
+    if (tick_spacing <= 1.0) {
+      tick_spacing_type = 0;
+      tick_spacing = 1.0;
+    }
+    dVar14 = local_b0 - min;
+    if (round_to_next_tick == false) goto LAB_0040633e;
+LAB_00405fc7:
+    dVar12 = tick_spacing;
+    if (user_specified_subsubticks == false) {
+      dVar9 = floor((min + dVar14 * 1e-06) / tick_spacing);
+      iVar2 = (int)dVar9;
+      dVar14 = ceil((local_b0 - dVar14 * 1e-06) / dVar12);
+      iVar6 = (int)dVar14;
+      min = (double)iVar2 * dVar12;
+      local_b0 = (double)iVar6 * dVar12;
+      dVar14 = local_b0 - min;
+      dVar9 = min - dVar14 * 1e-06;
+      local_98 = dVar14 * 1e-06 + local_b0;
+    }
+    else {
+      dVar14 = pow(10.0,min);
+      dVar12 = pow(10.0,local_b0);
+      dVar9 = (dVar12 - dVar14) * 1e-06;
+      dVar14 = floor((dVar14 + dVar9) / subsubtick_spacing);
+      dVar12 = ceil((dVar12 - dVar9) / subsubtick_spacing);
+      if (0 < (int)dVar14) {
+        min = log10((double)(int)dVar14 * subsubtick_spacing);
+      }
+      iVar6 = 0;
+      iVar2 = 0;
+      local_b0 = log10((double)(int)dVar12 * subsubtick_spacing);
+      dVar14 = local_b0 - min;
+      dVar9 = min - dVar14 * 1e-06;
+      local_98 = dVar14 * 1e-06 + local_b0;
+      dVar12 = tick_spacing;
+    }
+    iVar3 = tick_spacing_type + -1;
+    bVar8 = tick_spacing_type == 1;
+    iVar7 = tick_spacing_type;
+    if (!bVar8) goto LAB_00406083;
+LAB_004063cc:
+    dVar13 = dVar12 * 0.5;
+LAB_0040611b:
+    local_a8 = 1.0;
+    bVar8 = log_axis != false;
+    bVar1 = dVar13 <= 1.0 && bVar8;
+    if (dVar13 > 1.0 || !bVar8) goto LAB_0040613c;
+    dVar9 = ceil(dVar9);
+    iVar4 = (int)dVar9;
+    dVar9 = floor(local_98);
+    iVar3 = (int)dVar9;
+  }
+  bVar5 = (bool)(iVar3 - iVar4 < 0x1e);
+LAB_004061be:
+  trans->input_min = min;
+  trans->input_max = local_b0;
+  trans->reverse = reverse_axis;
+  trans->input_range = dVar14;
+  axisp->tick_spacing = dVar12;
+  axisp->label = label;
+  axisp->lin_subtick_spacing = local_a8;
+  axisp->switch_axis_end = switch_axis_end;
+  axisp->font_name = font_name;
+  axisp->font_size = font_size;
+  axisp->max_label_width = 0.0;
+  axisp->min_tick_count = iVar2;
+  axisp->omit_ticks = omit_ticks;
+  axisp->max_tick_count = iVar6;
+  axisp->type = (uint)bVar1;
+  axisp->subsubtick_spacing = subsubtick_spacing;
+  axisp->have_lin_subticks = bVar5;
+  axisp->min_lin_subtick_count = iVar4;
+  axisp->max_lin_subtick_count = iVar3;
+  axisp->user_specified_subsubticks = user_specified_subsubticks;
+  axisp->labelled_ticks = 0;
+  if ((bVar1 == false) || (5.000001 < dVar14)) {
+    axisp->have_normal_subsubticks = false;
+  }
+  else {
+    axisp->have_normal_subsubticks = true;
+  }
+  return;
+}
+

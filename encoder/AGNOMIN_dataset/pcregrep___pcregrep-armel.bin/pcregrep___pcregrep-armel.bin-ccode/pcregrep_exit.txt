@@ -1,0 +1,14 @@
+
+void pcregrep_exit(int rc)
+
+{
+  if (resource_error != 0) {
+    __fprintf_chk(stderr,1,
+                  "pcregrep: Error %d, %d or %d means that a resource limit was exceeded.\n",
+                  0xfffffff8,0xffffffeb,0xffffffe5);
+    fwrite("pcregrep: Check your regex for nested unlimited loops.\n",1,0x37,stderr);
+  }
+                    /* WARNING: Subroutine does not return */
+  exit(rc);
+}
+

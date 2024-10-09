@@ -1,0 +1,268 @@
+
+int display_fonts(char *output_format,char *progname)
+
+{
+  int iVar1;
+  FILE *pFVar2;
+  undefined4 uVar3;
+  size_t sVar4;
+  int *piVar5;
+  void *__ptr;
+  int *piVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  uint uVar11;
+  int iVar12;
+  int *piVar13;
+  int iVar14;
+  int iVar15;
+  char **ppcVar16;
+  char **ppcVar17;
+  char **ppcVar18;
+  char *pcVar19;
+  size_t length;
+  char *pcVar20;
+  bool bVar21;
+  byte bVar22;
+  int local_34;
+  
+  bVar22 = 0;
+  ppcVar18 = _known_devices;
+  do {
+    pcVar19 = *ppcVar18;
+    if (pcVar19 == (char *)0x0) goto LAB_08054c72;
+    ppcVar18 = ppcVar18 + 1;
+    iVar14 = strcmp(output_format,pcVar19);
+    bVar21 = iVar14 == 0;
+  } while (!bVar21);
+  iVar7 = 5;
+  pcVar19 = output_format;
+  pcVar20 = "meta";
+  do {
+    if (iVar7 == 0) break;
+    iVar7 = iVar7 + -1;
+    bVar21 = *pcVar19 == *pcVar20;
+    pcVar19 = pcVar19 + (uint)bVar22 * -2 + 1;
+    pcVar20 = pcVar20 + (uint)bVar22 * -2 + 1;
+  } while (bVar21);
+  if (bVar21) {
+LAB_08054c72:
+    iVar14 = 0;
+    fprintf(stderr,
+            "To list available fonts, type `%s -T \"format\" --help-fonts\',\nwhere \"format\" is the output format, and is one of:\nX, png, pnm, gif (bitmap formats), or\nsvg, ps, ai, cgm, fig, pcl, hpgl, regis, tek (vector formats).\n"
+            ,progname);
+  }
+  else {
+    uVar3 = pl_newplparams();
+    iVar7 = pl_newpl_r(output_format,0,stdout,stderr,uVar3);
+    if (iVar7 == 0) {
+      fprintf(stderr,"%s: no font information on display device \"%s\" is available\n",progname,
+              output_format);
+    }
+    else {
+      iVar14 = pl_havecap_r(iVar7,"HERSHEY_FONTS");
+      if (iVar14 != 0) {
+        piVar5 = (int *)_pl_get_hershey_font_info(iVar7);
+        if (*piVar5 == 0) {
+          fwrite("Names of supported Hershey vector fonts (case-insensitive):\n",1,0x3c,stdout);
+        }
+        else {
+          uVar11 = 0;
+          piVar6 = piVar5 + 0x88;
+          do {
+            uVar11 = (uVar11 + 1) - (uint)(piVar6[-1] == 0);
+            iVar14 = *piVar6;
+            piVar6 = piVar6 + 0x88;
+          } while (iVar14 != 0);
+          iVar8 = (int)uVar11 >> 1;
+          iVar10 = 0;
+          iVar12 = 0;
+          iVar9 = -1;
+          piVar6 = piVar5 + 0x88;
+          iVar14 = 0;
+          do {
+            iVar15 = iVar14;
+            if (((piVar6[-1] != 0) && (iVar9 = iVar9 + 1, iVar15 = iVar12, iVar9 != 0)) &&
+               (iVar15 = iVar14, iVar8 + (uVar11 & 1) == iVar9)) {
+              iVar10 = iVar12;
+            }
+            iVar12 = iVar12 + 1;
+            iVar1 = *piVar6;
+            piVar6 = piVar6 + 0x88;
+            iVar14 = iVar15;
+          } while (iVar1 != 0);
+          fwrite("Names of supported Hershey vector fonts (case-insensitive):\n",1,0x3c,stdout);
+          if (0 < iVar8) {
+            iVar14 = 0;
+            do {
+              pcVar19 = (char *)piVar5[iVar15 * 0x88];
+              sVar4 = strlen(pcVar19);
+              fprintf(stdout,"\t%s",pcVar19);
+              pFVar2 = stdout;
+              spaces[-sVar4 + 0x24] = '\0';
+              fputs(spaces,pFVar2);
+              spaces[-sVar4 + 0x24] = ' ';
+              fprintf(stdout,"%s\n",piVar5[iVar10 * 0x88]);
+              piVar6 = piVar5 + iVar15 * 0x88 + 0x10f;
+              do {
+                iVar9 = *piVar6;
+                iVar15 = iVar15 + 1;
+                piVar6 = piVar6 + 0x88;
+              } while (iVar9 == 0);
+              if (iVar14 < iVar8 + -1) {
+                piVar6 = piVar5 + iVar10 * 0x88 + 0x10f;
+                do {
+                  iVar9 = *piVar6;
+                  iVar10 = iVar10 + 1;
+                  piVar6 = piVar6 + 0x88;
+                } while (iVar9 == 0);
+              }
+              iVar14 = iVar14 + 1;
+            } while (iVar14 != iVar8);
+          }
+          if ((uVar11 & 1) != 0) {
+            fprintf(stdout,"\t%s\n",piVar5[iVar15 * 0x88]);
+          }
+        }
+      }
+      iVar14 = pl_havecap_r(iVar7,"STICK_FONTS");
+      if (iVar14 != 0) {
+        piVar5 = (int *)_pl_get_stick_font_info(iVar7);
+        if (*piVar5 == 0) {
+          length = 0;
+        }
+        else {
+          iVar14 = 0;
+          piVar6 = piVar5;
+          do {
+            piVar6 = piVar6 + 0x56;
+            iVar14 = iVar14 + 1;
+          } while (*piVar6 != 0);
+          length = iVar14 * 4;
+        }
+        iVar14 = pl_havecap_r(iVar7,"EXTRA_STICK_FONTS");
+        __ptr = xmalloc(length);
+        if (*piVar5 == 0) {
+          fwrite("Names of supported HP vector fonts (case-insensitive):\n",1,0x37,stdout);
+        }
+        else {
+          uVar11 = 0;
+          iVar10 = 0;
+          piVar6 = piVar5;
+          do {
+            piVar13 = piVar6 + 0x56;
+            if ((iVar14 != 0) || (piVar6[1] != 0)) {
+              *(int *)((int)__ptr + uVar11 * 4) = iVar10;
+              uVar11 = uVar11 + 1;
+            }
+            iVar10 = iVar10 + 1;
+            piVar6 = piVar13;
+          } while (*piVar13 != 0);
+          local_34 = (int)uVar11 >> 1;
+          fwrite("Names of supported HP vector fonts (case-insensitive):\n",1,0x37,stdout);
+          if (local_34 < 1) {
+            local_34 = 0;
+          }
+          else {
+            iVar14 = 0;
+            do {
+              pcVar19 = (char *)piVar5[*(int *)((int)__ptr + iVar14 * 4) * 0x56];
+              sVar4 = strlen(pcVar19);
+              fprintf(stdout,"\t%s",pcVar19);
+              spaces[-sVar4 + 0x24] = '\0';
+              fputs(spaces,stdout);
+              spaces[-sVar4 + 0x24] = ' ';
+              iVar10 = iVar14 * 4;
+              iVar14 = iVar14 + 1;
+              fprintf(stdout,"%s\n",
+                      piVar5[*(int *)((int)__ptr + iVar10 + ((uVar11 & 1) + local_34) * 4) * 0x56]);
+            } while (iVar14 != local_34);
+          }
+          if ((uVar11 & 1) != 0) {
+            fprintf(stdout,"\t%s\n",piVar5[*(int *)((int)__ptr + local_34 * 4) * 0x56]);
+          }
+        }
+        free(__ptr);
+      }
+      iVar14 = pl_havecap_r(iVar7,"PCL_FONTS");
+      if (iVar14 != 0) {
+        ppcVar18 = (char **)_pl_get_pcl_font_info(iVar7);
+        if (*ppcVar18 == (char *)0x0) {
+          fwrite("Names of supported PCL fonts (case-insensitive):\n",1,0x31,stdout);
+        }
+        else {
+          uVar11 = 0;
+          ppcVar16 = ppcVar18;
+          do {
+            ppcVar16 = ppcVar16 + 0x116;
+            uVar11 = uVar11 + 1;
+          } while (*ppcVar16 != (char *)0x0);
+          iVar14 = (int)uVar11 >> 1;
+          fwrite("Names of supported PCL fonts (case-insensitive):\n",1,0x31,stdout);
+          if (iVar14 != 0) {
+            ppcVar16 = ppcVar18;
+            do {
+              pcVar19 = *ppcVar16;
+              ppcVar17 = ppcVar16 + 0x116;
+              sVar4 = strlen(pcVar19);
+              fprintf(stdout,"\t%s",pcVar19);
+              spaces[-sVar4 + 0x24] = '\0';
+              fputs(spaces,stdout);
+              spaces[-sVar4 + 0x24] = ' ';
+              fprintf(stdout,"%s\n",ppcVar16[((uVar11 & 1) + iVar14) * 0x116]);
+              ppcVar16 = ppcVar17;
+            } while (ppcVar17 != ppcVar18 + iVar14 * 0x116);
+          }
+          if ((uVar11 & 1) != 0) {
+            fprintf(stdout,"\t%s\n",ppcVar18[iVar14 * 0x116]);
+          }
+        }
+      }
+      iVar14 = pl_havecap_r(iVar7,"PS_FONTS");
+      if (iVar14 != 0) {
+        ppcVar18 = (char **)_pl_get_ps_font_info(iVar7);
+        if (*ppcVar18 == (char *)0x0) {
+          fwrite("Names of supported Postscript fonts (case-insensitive):\n",1,0x38,stdout);
+        }
+        else {
+          uVar11 = 0;
+          ppcVar16 = ppcVar18;
+          do {
+            ppcVar16 = ppcVar16 + 0x11a;
+            uVar11 = uVar11 + 1;
+          } while (*ppcVar16 != (char *)0x0);
+          iVar14 = (int)uVar11 >> 1;
+          fwrite("Names of supported Postscript fonts (case-insensitive):\n",1,0x38,stdout);
+          if (iVar14 != 0) {
+            ppcVar16 = ppcVar18;
+            do {
+              pcVar19 = *ppcVar16;
+              ppcVar17 = ppcVar16 + 0x11a;
+              sVar4 = strlen(pcVar19);
+              fprintf(stdout,"\t%s",pcVar19);
+              pFVar2 = stdout;
+              spaces[-sVar4 + 0x24] = '\0';
+              fputs(spaces,pFVar2);
+              spaces[-sVar4 + 0x24] = ' ';
+              fprintf(stdout,"%s\n",ppcVar16[((uVar11 & 1) + iVar14) * 0x11a]);
+              ppcVar16 = ppcVar17;
+            } while (ppcVar17 != ppcVar18 + iVar14 * 0x11a);
+          }
+          if ((uVar11 & 1) != 0) {
+            fprintf(stdout,"\t%s\n",ppcVar18[iVar14 * 0x11a]);
+          }
+        }
+      }
+      iVar14 = 1;
+      if ((*output_format == 'X') && (output_format[1] == '\0')) {
+        fwrite("Most core X Window System fonts, such as charter-medium-r-normal,\n",1,0x42,stdout);
+        fwrite("can also be used.\n",1,0x12,stdout);
+        return 1;
+      }
+    }
+  }
+  return iVar14;
+}
+

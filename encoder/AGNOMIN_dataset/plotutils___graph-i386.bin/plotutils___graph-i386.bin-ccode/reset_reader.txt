@@ -1,0 +1,14 @@
+
+void __regparm3 reset_reader(Reader *reader)
+
+{
+  reader->need_break = true;
+  if (reader->auto_bump != false) {
+    reader->linemode = (uint)(0 < reader->linemode) * 2 + -1 + reader->linemode;
+  }
+  if (reader->auto_abscissa != false) {
+    reader->abscissa = reader->initial_abscissa;
+  }
+  return;
+}
+

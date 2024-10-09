@@ -1,0 +1,78 @@
+
+int list_fonts(char *output_format,char *progname)
+
+{
+  char *__s2;
+  long lVar1;
+  int iVar2;
+  undefined8 uVar3;
+  long lVar4;
+  long *plVar5;
+  char **ppcVar6;
+  
+  ppcVar6 = _known_devices;
+  do {
+    __s2 = *ppcVar6;
+    if (__s2 == (char *)0x0) {
+      fprintf(stderr,"%s: no font information on display device \"%s\" is available\n",progname,
+              output_format);
+      return 0;
+    }
+    ppcVar6 = ppcVar6 + 1;
+    iVar2 = strcmp(output_format,__s2);
+  } while (iVar2 != 0);
+  uVar3 = pl_newplparams();
+  lVar4 = pl_newpl_r(output_format,0,stdout,stderr,uVar3);
+  if (lVar4 == 0) {
+    fprintf(stderr,"%s: no font information on display device \"%s\" is available\n",progname,
+            output_format);
+    return 0;
+  }
+  iVar2 = pl_havecap_r(lVar4,"HERSHEY_FONTS");
+  if (iVar2 != 0) {
+    plVar5 = (long *)_pl_get_hershey_font_info(lVar4);
+    lVar1 = *plVar5;
+    while (lVar1 != 0) {
+      if (*(int *)(plVar5 + 0x45) != 0) {
+        fprintf(stdout,"%s\n");
+      }
+      lVar1 = plVar5[0x46];
+      plVar5 = plVar5 + 0x46;
+    }
+  }
+  iVar2 = pl_havecap_r(lVar4,"STICK_FONTS");
+  if (iVar2 != 0) {
+    plVar5 = (long *)_pl_get_stick_font_info(lVar4);
+    iVar2 = pl_havecap_r(lVar4,"EXTRA_STICK_FONTS");
+    lVar1 = *plVar5;
+    while (lVar1 != 0) {
+      if ((iVar2 != 0) || (*(int *)(plVar5 + 1) != 0)) {
+        fprintf(stdout,"%s\n");
+      }
+      lVar1 = plVar5[0x2c];
+      plVar5 = plVar5 + 0x2c;
+    }
+  }
+  iVar2 = pl_havecap_r(lVar4,"PCL_FONTS");
+  if (iVar2 != 0) {
+    plVar5 = (long *)_pl_get_pcl_font_info(lVar4);
+    lVar1 = *plVar5;
+    while (lVar1 != 0) {
+      plVar5 = plVar5 + 0x90;
+      fprintf(stdout,"%s\n");
+      lVar1 = *plVar5;
+    }
+  }
+  iVar2 = pl_havecap_r(lVar4,"PS_FONTS");
+  if (iVar2 != 0) {
+    plVar5 = (long *)_pl_get_ps_font_info(lVar4);
+    lVar4 = *plVar5;
+    while (lVar4 != 0) {
+      plVar5 = plVar5 + 0x94;
+      fprintf(stdout,"%s\n");
+      lVar4 = *plVar5;
+    }
+  }
+  return 1;
+}
+

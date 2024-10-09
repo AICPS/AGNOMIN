@@ -1,0 +1,53 @@
+
+tm * ranged_convert(anon_subr_tm_ptr_time_t_ptr_tm_ptr *convert,time_t *t,tm *tp)
+
+{
+  tm *ptVar1;
+  tm *ptVar2;
+  tm *ptVar3;
+  tm *ptVar4;
+  tm *ptVar5;
+  
+  ptVar1 = (*convert)(t,tp);
+  if (ptVar1 != (tm *)0x0) {
+    return ptVar1;
+  }
+  ptVar2 = ptVar1;
+  ptVar5 = (tm *)*t;
+  if ((tm *)*t == (tm *)0x0) {
+    return (tm *)0x0;
+  }
+  while( true ) {
+    ptVar4 = ptVar2;
+    ptVar2 = (tm *)((int)&ptVar4->tm_sec + 1);
+    ptVar3 = (tm *)((int)&ptVar4->tm_sec + ((int)((int)ptVar5 - (int)ptVar4) >> 1));
+    if ((int)ptVar5 < 0) {
+      ptVar2 = (tm *)((int)&ptVar4[-1].tm_zone + 3);
+      ptVar3 = (tm *)((int)&ptVar5->tm_sec + ((int)((int)ptVar4 - (int)ptVar5) >> 1));
+    }
+    if (ptVar2 == ptVar5) break;
+    *t = (time_t)ptVar3;
+    ptVar1 = (*convert)(t,tp);
+    ptVar2 = ptVar3;
+    if (ptVar1 == (tm *)0x0) {
+      ptVar2 = ptVar4;
+      ptVar5 = ptVar3;
+    }
+  }
+  ptVar2 = ptVar4;
+  if (ptVar4 != (tm *)0x0) {
+    ptVar2 = (tm *)0x1;
+  }
+  if (ptVar1 != (tm *)0x0) {
+    ptVar2 = (tm *)0x0;
+  }
+  if (ptVar2 != (tm *)0x0) {
+    *t = (time_t)ptVar4;
+                    /* WARNING: Could not recover jumptable at 0x0001400c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    ptVar1 = (*convert)(t,tp);
+    return ptVar1;
+  }
+  return ptVar1;
+}
+

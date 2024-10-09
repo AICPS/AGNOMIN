@@ -1,0 +1,11 @@
+
+void give_usage(void)
+
+{
+  __printf_chk(1,
+               "                Usage: %s [-dhpVy] [-f <file>] [people] ...\n                [--daily-totals] [--individual-totals] [--file <file>]\n                [--complain] [--reboots] [--supplants] [--timewarps] [--print-year]\n                [--compatibility] [--print-zeros] [--debug] [--tw-leniency <value>]\n                [--tw-suspicious <value>] [--version] [--help]\n"
+               ,program_name);
+  print_wtmp_file_location();
+  return;
+}
+

@@ -1,0 +1,21 @@
+
+hashtab_elem * hashtab_next(hashtab_order *ho)
+
+{
+  hashtab_elem *phVar1;
+  hashtab_elem *phVar2;
+  
+  phVar2 = ho->elem;
+  if (phVar2 == (hashtab_elem *)0x0) {
+    phVar2 = hashtab_next(ho);
+    return phVar2;
+  }
+  phVar1 = phVar2->next;
+  ho->elem = phVar1;
+  if (phVar1 != (hashtab_elem *)0x0) {
+    return phVar2;
+  }
+  ho->which = ho->which + 1;
+  return phVar2;
+}
+

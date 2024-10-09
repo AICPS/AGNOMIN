@@ -1,0 +1,10 @@
+
+void begin_graph(Multigrapher *multigrapher,double scale,double trans_x,double trans_y)
+
+{
+  pl_savestate_r();
+  pl_fconcat_r(multigrapher->plotter,scale,0,0,scale,(double)((float)trans_x * 4096.0),
+               (double)((float)trans_y * 4096.0));
+  return;
+}
+

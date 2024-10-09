@@ -1,0 +1,12 @@
+
+hashtab * hashtab_init(int numeric)
+
+{
+  hashtab *__s;
+  
+  __s = (hashtab *)xmalloc(0x14);
+  memset(__s,0,0x14);
+  __s->numeric = numeric;
+  return __s;
+}
+

@@ -1,0 +1,11 @@
+
+/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */
+
+void xalloc_die(void)
+
+{
+  error(exit_failure,0,"%s","memory exhausted");
+                    /* WARNING: Subroutine does not return */
+  abort();
+}
+

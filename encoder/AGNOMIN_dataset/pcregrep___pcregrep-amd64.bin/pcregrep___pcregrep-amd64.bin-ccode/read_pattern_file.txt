@@ -1,0 +1,85 @@
+
+BOOL read_pattern_file(char *name,patstr **patptr,patstr **patlastptr,int popts)
+
+{
+  char cVar1;
+  long lVar2;
+  BOOL BVar3;
+  int *piVar4;
+  ushort **ppuVar5;
+  char *pcVar6;
+  patstr *ppVar7;
+  long lVar8;
+  int count;
+  long in_FS_OFFSET;
+  byte bVar9;
+  FILE *local_2068;
+  char buffer [8202];
+  
+  bVar9 = 0;
+  lVar2 = *(long *)(in_FS_OFFSET + 0x28);
+  if ((*name == '-') && (name[1] == '\0')) {
+    local_2068 = stdin;
+    name = stdin_name;
+  }
+  else {
+    local_2068 = fopen(name,"r");
+    if (local_2068 == (FILE *)0x0) {
+      piVar4 = __errno_location();
+      pcVar6 = strerror(*piVar4);
+      __fprintf_chk(stderr,1,"pcregrep: Failed to open %s: %s\n",name,pcVar6);
+      BVar3 = 0;
+      goto LAB_00102a8d;
+    }
+  }
+  count = 0;
+  while( true ) {
+    pcVar6 = fgets(buffer,0x200a,local_2068);
+    if (pcVar6 == (char *)0x0) break;
+    lVar8 = -1;
+    pcVar6 = buffer;
+    do {
+      if (lVar8 == 0) break;
+      lVar8 = lVar8 + -1;
+      cVar1 = *pcVar6;
+      pcVar6 = pcVar6 + (ulong)bVar9 * -2 + 1;
+    } while (cVar1 != '\0');
+    for (pcVar6 = buffer + (int)(~(uint)lVar8 - 1); buffer < pcVar6; pcVar6 = pcVar6 + -1) {
+      ppuVar5 = __ctype_b_loc();
+      if ((*(byte *)((long)*ppuVar5 + (ulong)(byte)pcVar6[-1] * 2 + 1) & 0x20) == 0) break;
+    }
+    *pcVar6 = '\0';
+    count = count + 1;
+    if (buffer[0] != '\0') {
+      ppVar7 = add_pattern(buffer,*patlastptr);
+      *patlastptr = ppVar7;
+      if (ppVar7 == (patstr *)0x0) {
+LAB_00102a19:
+        BVar3 = 0;
+        goto LAB_00102a8d;
+      }
+      if (*patptr == (patstr *)0x0) {
+        *patptr = ppVar7;
+      }
+      while( true ) {
+        BVar3 = compile_pattern(*patlastptr,pcre_options,popts,1,name,count);
+        if (BVar3 == 0) goto LAB_00102a19;
+        (*patlastptr)->string = (char *)0x0;
+        if ((*patlastptr)->next == (patstr *)0x0) break;
+        *patlastptr = (*patlastptr)->next;
+      }
+    }
+  }
+  BVar3 = 1;
+  if (local_2068 != stdin) {
+    fclose(local_2068);
+    BVar3 = 1;
+  }
+LAB_00102a8d:
+  if (lVar2 != *(long *)(in_FS_OFFSET + 0x28)) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail();
+  }
+  return BVar3;
+}
+

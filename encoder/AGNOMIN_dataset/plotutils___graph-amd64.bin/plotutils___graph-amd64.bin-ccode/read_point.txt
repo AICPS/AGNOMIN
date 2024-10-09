@@ -1,0 +1,362 @@
+
+/* WARNING: Removing unreachable block (ram,0x0040571c) */
+/* WARNING: Could not reconcile some variable overlaps */
+
+dataset_status_t read_point(Reader *reader,Point *point)
+
+{
+  data_type dVar1;
+  char *pcVar2;
+  FILE *pFVar3;
+  bool bVar4;
+  dataset_status_t dVar5;
+  uint uVar6;
+  bool bVar7;
+  int iVar8;
+  size_t sVar9;
+  ushort **ppuVar10;
+  double dVar11;
+  char directive;
+  char c;
+  double x;
+  float fx;
+  undefined4 uStack44;
+  
+  dVar1 = reader->format_type;
+  dVar11 = reader->symbol_size;
+  point->symbol = reader->symbol;
+  pcVar2 = reader->symbol_font_name;
+  point->symbol_size = dVar11;
+  dVar11 = reader->line_width;
+  point->symbol_font_name = pcVar2;
+  iVar8 = reader->linemode;
+  point->line_width = dVar11;
+  dVar11 = reader->fill_fraction;
+  point->linemode = iVar8;
+  bVar7 = reader->use_color;
+  point->fill_fraction = dVar11;
+  point->have_x_errorbar = false;
+  point->use_color = bVar7;
+  point->have_y_errorbar = (uint)(dVar1 == T_ASCII_ERRORBAR);
+  do {
+    if (dVar1 == T_GNUPLOT) {
+      pFVar3 = reader->input;
+      while( true ) {
+        bVar7 = skip_some_whitespace(pFVar3);
+        if (bVar7 != false) goto LAB_0040525e;
+        iVar8 = _IO_getc((_IO_FILE *)pFVar3);
+        ungetc(iVar8,(FILE *)pFVar3);
+        if (iVar8 == 0x69) break;
+        if (0x69 < iVar8) {
+          if (iVar8 != 0x6f) {
+            if (iVar8 != 0x75) goto LAB_0040534c;
+            do {
+              sVar9 = fread(&c,1,1,(FILE *)pFVar3);
+              if ((int)sVar9 < 1) goto LAB_00405226;
+            } while (c != '\n');
+            goto LAB_00405397;
+          }
+          break;
+        }
+        if ((iVar8 == 0x23) || (iVar8 == 0x43)) {
+          do {
+            sVar9 = fread(&c,1,1,(FILE *)pFVar3);
+            if ((int)sVar9 < 1) goto LAB_004050d0;
+          } while (c != '\n');
+          ungetc(10,(FILE *)pFVar3);
+        }
+        else {
+LAB_0040534c:
+          iVar8 = __isoc99_fscanf(pFVar3,"%lf %lf %c",&x);
+          if (iVar8 != 3) goto LAB_00405226;
+          if (directive == 'o' || directive == 'i') {
+            if (directive != 'u') goto LAB_00405467;
+          }
+          else {
+            if (directive != 'u') goto LAB_00405226;
+          }
+LAB_00405397:
+          reader->need_break = true;
+        }
+      }
+      iVar8 = __isoc99_fscanf(pFVar3,"%c x=%lf y=%lf",&directive);
+      if (iVar8 != 3) {
+LAB_00405226:
+        fprintf(stderr,"%s: an input file in gnuplot format could not be parsed\n",progname);
+        goto LAB_004050d0;
+      }
+LAB_00405467:
+      point->x = (double)CONCAT44(x._4_4_,x._0_4_);
+      point->y = (double)CONCAT44(uStack44,fx);
+    }
+    else {
+      if (dVar1 < T_ASCII_ERRORBAR) {
+        if (dVar1 == T_ASCII) {
+LAB_00405290:
+          pFVar3 = reader->input;
+          while( true ) {
+            bVar7 = skip_some_whitespace(pFVar3);
+            if (bVar7 != false) {
+              return ENDED_BY_DATASET_TERMINATOR;
+            }
+            iVar8 = feof((FILE *)pFVar3);
+            if (iVar8 != 0) goto LAB_004050d0;
+            iVar8 = _IO_getc((_IO_FILE *)pFVar3);
+            ungetc(iVar8,(FILE *)pFVar3);
+            if (iVar8 != 0x23) break;
+            iVar8 = __isoc99_fscanf(pFVar3,"# m = %d, S = %d",&fx,&x);
+            if (iVar8 == 2) {
+LAB_004057f3:
+              reader->linemode = (int)fx;
+              reader->symbol = x._0_4_;
+              return ENDED_BY_MODE_CHANGE;
+            }
+            do {
+              sVar9 = fread(&c,1,1,(FILE *)pFVar3);
+              if ((int)sVar9 < 1) goto LAB_004050d0;
+            } while (c != '\n');
+            ungetc(10,(FILE *)pFVar3);
+          }
+          if (reader->auto_abscissa == false) {
+            iVar8 = __isoc99_fscanf(pFVar3,"%lf",point);
+            if (iVar8 != 1) goto LAB_004050d0;
+          }
+          else {
+            dVar11 = reader->abscissa;
+            point->x = dVar11;
+            reader->abscissa = dVar11 + reader->delta_x;
+          }
+          iVar8 = __isoc99_fscanf(pFVar3,"%lf",&point->y);
+          if (iVar8 != 1) {
+            if (reader->auto_abscissa == false) {
+              fprintf(stderr,"%s: an input file terminated prematurely\n",progname);
+              return ENDED_BY_EOF;
+            }
+            goto LAB_004050d0;
+          }
+        }
+        else {
+          pFVar3 = reader->input;
+          if (reader->auto_abscissa == false) {
+            if (dVar1 == T_SINGLE) {
+              sVar9 = fread(&fx,4,1,(FILE *)pFVar3);
+              dVar11 = (double)fx;
+              point->x = dVar11;
+              if ((int)sVar9 < 1) goto LAB_004050d0;
+LAB_004056c4:
+              if (dVar11 == 3.402823466385289e+38) {
+                return ENDED_BY_DATASET_TERMINATOR;
+              }
+              sVar9 = fread(&fx,4,1,(FILE *)pFVar3);
+              iVar8 = (int)sVar9;
+              point->y = (double)fx;
+            }
+            else {
+              if (dVar1 != T_INTEGER) {
+                sVar9 = fread(point,8,1,(FILE *)pFVar3);
+                if (0 < (int)sVar9) goto joined_r0x00405412;
+                goto LAB_004050d0;
+              }
+              sVar9 = fread(&fx,4,1,(FILE *)pFVar3);
+              dVar11 = (double)(int)fx;
+              point->x = dVar11;
+              if ((int)sVar9 < 1) goto LAB_004050d0;
+LAB_00405744:
+              if (dVar11 == 2147483647.0) {
+                return ENDED_BY_DATASET_TERMINATOR;
+              }
+              sVar9 = fread(&fx,4,1,(FILE *)pFVar3);
+              iVar8 = (int)sVar9;
+              point->y = (double)(int)fx;
+            }
+          }
+          else {
+            dVar11 = reader->abscissa;
+            point->x = dVar11;
+            reader->abscissa = dVar11 + reader->delta_x;
+joined_r0x00405412:
+            if (dVar1 == T_DOUBLE) {
+              if (point->x == 1.797693134862316e+308) {
+                return ENDED_BY_DATASET_TERMINATOR;
+              }
+            }
+            else {
+              if (dVar1 == T_SINGLE) {
+                dVar11 = point->x;
+                goto LAB_004056c4;
+              }
+              if (dVar1 == T_INTEGER) {
+                dVar11 = point->x;
+                goto LAB_00405744;
+              }
+            }
+            sVar9 = fread(&point->y,8,1,(FILE *)pFVar3);
+            iVar8 = (int)sVar9;
+          }
+          if (iVar8 != 1) {
+            if (reader->auto_abscissa == false) {
+              fprintf(stderr,"%s: an input file (in binary format) terminated prematurely\n",
+                      progname);
+              return ENDED_BY_EOF;
+            }
+            goto LAB_004050d0;
+          }
+        }
+      }
+      else {
+        if (dVar1 != T_ASCII_ERRORBAR) goto LAB_00405290;
+        pFVar3 = reader->input;
+        bVar7 = skip_some_whitespace(pFVar3);
+        while( true ) {
+          if (bVar7 != false) {
+            return ENDED_BY_DATASET_TERMINATOR;
+          }
+          iVar8 = feof((FILE *)pFVar3);
+          if (iVar8 != 0) goto LAB_004050d0;
+          iVar8 = _IO_getc((_IO_FILE *)pFVar3);
+          ungetc(iVar8,(FILE *)pFVar3);
+          if (iVar8 != 0x23) break;
+          iVar8 = __isoc99_fscanf(pFVar3,"# m = %d, S = %d",&fx,&x);
+          if (iVar8 == 2) goto LAB_004057f3;
+          do {
+            sVar9 = fread(&c,1,1,(FILE *)pFVar3);
+            if ((int)sVar9 < 1) goto LAB_004050d0;
+          } while (c != '\n');
+          ungetc(10,(FILE *)pFVar3);
+          bVar7 = skip_some_whitespace(pFVar3);
+        }
+        if (reader->auto_abscissa == false) {
+          iVar8 = __isoc99_fscanf(pFVar3,"%lf",point);
+          if (iVar8 != 1) goto LAB_004050d0;
+        }
+        else {
+          dVar11 = reader->abscissa;
+          point->x = dVar11;
+          reader->abscissa = dVar11 + reader->delta_x;
+        }
+        iVar8 = __isoc99_fscanf(pFVar3,"%lf",&point->y);
+        if (iVar8 != 1) {
+          if (reader->auto_abscissa == false) {
+LAB_004058d3:
+            fprintf(stderr,"%s: an input file (in errorbar format) terminated prematurely\n",
+                    progname);
+            return ENDED_BY_EOF;
+          }
+          goto LAB_004050d0;
+        }
+        iVar8 = __isoc99_fscanf(pFVar3,"%lf",&fx);
+        if (iVar8 != 1) goto LAB_004058d3;
+        point->xmin = 0.0;
+        point->xmax = 0.0;
+        point->ymin = point->y - (double)CONCAT44(uStack44,fx);
+        point->ymax = (double)CONCAT44(uStack44,fx) + point->y;
+      }
+    }
+    uVar6 = reader->log_axis;
+    if ((uVar6 & 1) == 0) {
+LAB_00405502:
+      if ((uVar6 & 2) == 0) goto LAB_004055f8;
+      if (point->y <= 0.0) {
+        if (point->have_y_errorbar == false) goto LAB_0040558b;
+        dVar11 = point->ymin;
+        bVar4 = true;
+      }
+      else {
+        dVar11 = log10(point->y);
+        point->y = dVar11;
+        if (point->have_y_errorbar == false) {
+LAB_004055f8:
+          if (reader->transpose_axes != false) {
+            dVar11 = point->y;
+            bVar7 = point->have_y_errorbar;
+            point->y = point->x;
+            point->x = dVar11;
+            point->have_y_errorbar = point->have_x_errorbar;
+            dVar11 = point->ymin;
+            point->ymin = point->xmin;
+            point->have_x_errorbar = bVar7;
+            point->xmin = dVar11;
+            dVar11 = point->ymax;
+            point->ymax = point->xmax;
+            point->xmax = dVar11;
+          }
+          point->pendown = (uint)(reader->need_break == false);
+          reader->need_break = false;
+          return IN_PROGRESS;
+        }
+        dVar11 = point->ymin;
+        bVar4 = false;
+      }
+      if (dVar11 <= 0.0) {
+        if (0.0 < point->ymax) {
+          dVar11 = log10(point->ymax);
+          point->ymax = dVar11;
+        }
+      }
+      else {
+        dVar11 = log10(dVar11);
+        point->ymin = dVar11;
+        if (0.0 < point->ymax) {
+          dVar11 = log10(point->ymax);
+          point->ymax = dVar11;
+          if (!bVar4) goto LAB_004055f8;
+        }
+      }
+    }
+    else {
+      if (point->x <= 0.0) {
+        if (point->have_x_errorbar != false) {
+          dVar11 = point->xmin;
+          bVar4 = true;
+          if (dVar11 <= 0.0) goto LAB_0040568b;
+LAB_004054c6:
+          dVar11 = log10(dVar11);
+          point->xmin = dVar11;
+          if (0.0 < point->xmax) {
+            dVar11 = log10(point->xmax);
+            point->xmax = dVar11;
+            if (!bVar4) goto LAB_004054fd;
+          }
+        }
+      }
+      else {
+        dVar11 = log10(point->x);
+        point->x = dVar11;
+        if (point->have_x_errorbar == false) {
+LAB_004054fd:
+          uVar6 = reader->log_axis;
+          goto LAB_00405502;
+        }
+        dVar11 = point->xmin;
+        bVar4 = false;
+        if (0.0 < dVar11) goto LAB_004054c6;
+LAB_0040568b:
+        if (0.0 < point->xmax) {
+          dVar11 = log10(point->xmax);
+          point->xmax = dVar11;
+        }
+      }
+    }
+LAB_0040558b:
+    fprintf(stderr,"%s: the inappropriate point (%g,%g) is dropped, as this is a log plot\n",
+            progname);
+    reader->need_break = true;
+    dVar1 = reader->format_type;
+  } while( true );
+  while (ppuVar10 = __ctype_b_loc(),
+        (*(byte *)((long)*ppuVar10 + ((ulong)uVar6 & 0xff) * 2 + 1) & 0x20) != 0) {
+LAB_0040525e:
+    uVar6 = _IO_getc((_IO_FILE *)pFVar3);
+    if (uVar6 == 0xffffffff) goto LAB_0040526d;
+  }
+  ungetc(uVar6,(FILE *)pFVar3);
+LAB_0040526d:
+  iVar8 = feof((FILE *)pFVar3);
+  dVar5 = ENDED_BY_DATASET_TERMINATOR;
+  if (iVar8 != 0) {
+LAB_004050d0:
+    dVar5 = ENDED_BY_EOF;
+  }
+  return dVar5;
+}
+

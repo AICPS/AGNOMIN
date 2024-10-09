@@ -1,0 +1,13 @@
+
+void __do_global_dtors_aux(void)
+
+{
+  if (completed_9027 == '\0') {
+    __cxa_finalize(__dso_handle);
+    deregister_tm_clones();
+    completed_9027 = 1;
+    return;
+  }
+  return;
+}
+

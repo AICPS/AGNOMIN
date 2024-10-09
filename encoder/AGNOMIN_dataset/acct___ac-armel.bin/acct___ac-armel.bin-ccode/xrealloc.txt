@@ -1,0 +1,20 @@
+
+void * xrealloc(void *p,size_t n)
+
+{
+  void *pvVar1;
+  uint uVar2;
+  
+  pvVar1 = realloc(p,n);
+  uVar2 = count_leading_zeroes(pvVar1);
+  uVar2 = uVar2 >> 5;
+  if (n == 0) {
+    uVar2 = 0;
+  }
+  if (uVar2 == 0) {
+    return pvVar1;
+  }
+                    /* WARNING: Subroutine does not return */
+  xalloc_die();
+}
+

@@ -1,0 +1,2 @@
+#!/bin/bash
+python main.py --infer --epochs 400 --num_layers 5 --embedder bert --batch-size 64 --fp32encoder --lr1 0.001 --lr2 5e-5 --warmup 1000 --data-dir Datasets/bb_func_128_AGNOMIN_dataset_4096 --maxlen 236 --tf sentence-transformers/bert-base-nli-mean-tokens --dropout 0.1 --wd1 0.001 --wd2 0.001 --seed 9113 --compile

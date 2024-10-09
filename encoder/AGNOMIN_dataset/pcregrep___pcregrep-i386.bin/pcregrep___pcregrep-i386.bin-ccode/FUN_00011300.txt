@@ -1,0 +1,12 @@
+
+void FUN_00011300(void)
+
+{
+  int unaff_EBX;
+  
+                    /* WARNING: Could not recover jumptable at 0x00011300. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(unaff_EBX + 0x8c))();
+  return;
+}
+

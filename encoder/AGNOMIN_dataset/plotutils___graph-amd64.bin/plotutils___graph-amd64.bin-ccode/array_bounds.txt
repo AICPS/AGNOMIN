@@ -1,0 +1,226 @@
+
+/* WARNING: Type propagation algorithm not settling */
+
+void array_bounds(Point *p,int length,bool transpose_axes,int clip_mode,double *min_x,double *min_y,
+                 double *max_x,double *max_y,bool spec_min_x,bool spec_min_y,bool spec_max_x,
+                 bool spec_max_y)
+
+{
+  bool bVar1;
+  uint uVar2;
+  long lVar3;
+  int iVar4;
+  double *pdVar5;
+  int iVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  undefined auVar10 [16];
+  undefined auVar11 [16];
+  double dVar12;
+  undefined auVar13 [16];
+  undefined auVar14 [16];
+  double dVar15;
+  undefined auVar16 [16];
+  undefined auVar17 [16];
+  double dVar18;
+  double local_e0;
+  double local_d8;
+  double local_d0;
+  double local_c8;
+  double local_78;
+  double local_70;
+  double local_68;
+  double local_60;
+  double xxr [2];
+  double yyr [2];
+  
+  if (length == 0) {
+    if (spec_min_x == false) {
+      *min_x = 0.0;
+    }
+    if (spec_min_y == false) {
+      *min_y = 0.0;
+    }
+    if (spec_max_x == false) {
+      *max_x = *min_x;
+    }
+    if (spec_max_y == false) {
+      *max_y = *min_y;
+      return;
+    }
+    return;
+  }
+  if (spec_min_x == false) {
+    dVar18 = 1.797693134862316e+308;
+    local_e0 = 0.0;
+    dVar7 = local_e0;
+  }
+  else {
+    dVar18 = 0.0;
+    dVar7 = *min_x;
+  }
+  local_e0 = dVar7;
+  if (spec_max_x == false) {
+    local_d0 = 0.0;
+    auVar13 = ZEXT816(0xffefffffffffffff);
+  }
+  else {
+    local_d0 = *max_x;
+    if ((spec_min_x != false) && (local_d0 < dVar7)) {
+      local_e0 = local_d0;
+      local_d0 = dVar7;
+    }
+    auVar13 = (undefined  [16])0x0;
+  }
+  if (spec_min_y == false) {
+    auVar16 = ZEXT816(0x7fefffffffffffff);
+    local_d8 = 0.0;
+    dVar7 = local_d8;
+  }
+  else {
+    dVar7 = *min_y;
+    auVar16 = (undefined  [16])0x0;
+  }
+  local_d8 = dVar7;
+  if (spec_max_y == false) {
+    local_c8 = 0.0;
+    auVar10 = ZEXT816(0xffefffffffffffff);
+  }
+  else {
+    local_c8 = *max_y;
+    if ((spec_min_y != false) && (local_c8 < dVar7)) {
+      local_d8 = local_c8;
+      local_c8 = dVar7;
+    }
+    auVar10 = (undefined  [16])0x0;
+  }
+  if (length < 1) {
+LAB_00404f0c:
+    dVar9 = 0.0;
+    dVar12 = 0.0;
+    dVar15 = 0.0;
+    dVar18 = 0.0;
+LAB_00404f1c:
+    if (spec_min_x == false) {
+      *min_x = dVar18;
+    }
+    if (spec_min_y == false) {
+      *min_y = dVar15;
+    }
+    if (spec_max_x == false) {
+      *max_x = dVar12;
+    }
+    if (spec_max_y == false) {
+      *max_y = dVar9;
+    }
+    return;
+  }
+  dVar7 = 0.0;
+  iVar6 = 0;
+  pdVar5 = &p->fill_fraction;
+  bVar1 = false;
+  local_60 = dVar7;
+  dVar8 = dVar7;
+  if (transpose_axes == false) goto LAB_00404d01;
+LAB_00404b38:
+  local_68 = dVar7;
+  dVar7 = pdVar5[-0xb];
+  dVar8 = pdVar5[-0xc];
+  do {
+    if (((iVar6 == 0) || (*(int *)(pdVar5 + -5) == 0)) ||
+       ((*(int *)(pdVar5 + -2) < 1 && (*pdVar5 < 0.0)))) {
+LAB_00404dc6:
+      auVar11 = auVar10;
+      auVar14 = auVar13;
+      auVar17 = auVar16;
+      if ((((spec_min_x == false) || (local_e0 <= dVar7)) &&
+          (((spec_max_x == false || (dVar7 <= local_d0)) &&
+           ((spec_min_y == false || (local_d8 <= dVar8)))))) &&
+         ((spec_max_y == false || (dVar8 <= local_c8)))) {
+        xxr[0] = dVar7;
+        iVar4 = 1;
+        yyr[0] = dVar8;
+LAB_00404c87:
+        lVar3 = 0;
+        do {
+          if ((spec_min_x == false) && (xxr[lVar3] <= dVar18)) {
+            dVar18 = xxr[lVar3];
+          }
+          if ((spec_min_y == false) && (yyr[lVar3] <= SUB168(auVar16,0))) {
+            auVar16 = CONCAT88(SUB168(auVar16 >> 0x40,0),yyr[lVar3]);
+          }
+          if ((spec_max_x == false) && (SUB168(auVar13,0) <= xxr[lVar3])) {
+            auVar13 = CONCAT88(SUB168(auVar13 >> 0x40,0),xxr[lVar3]);
+          }
+          if ((spec_max_y == false) && (SUB168(auVar10,0) <= yyr[lVar3])) {
+            auVar10 = CONCAT88(SUB168(auVar10 >> 0x40,0),yyr[lVar3]);
+          }
+          lVar3 = lVar3 + 1;
+        } while ((int)lVar3 < iVar4);
+        bVar1 = true;
+        auVar11 = auVar10;
+        auVar14 = auVar13;
+        auVar17 = auVar16;
+      }
+LAB_00404cd6:
+      dVar12 = SUB168(auVar14,0);
+      dVar15 = SUB168(auVar17,0);
+      dVar9 = SUB168(auVar11,0);
+    }
+    else {
+      dVar15 = SUB168(auVar16,0);
+      dVar9 = SUB168(auVar10,0);
+      dVar12 = SUB168(auVar13,0);
+      local_78 = dVar7;
+      local_70 = dVar8;
+      if (0.0 <= *pdVar5) {
+LAB_00404b9e:
+        uVar2 = clip_line(&local_68,&local_60,&local_78,&local_70,local_e0,local_d0,local_d8,
+                          local_c8,spec_min_x,spec_min_y,spec_max_x,spec_max_y);
+        auVar11 = auVar10 & (undefined  [16])0xffffffffffffffff;
+        auVar14 = auVar13 & (undefined  [16])0xffffffffffffffff;
+        auVar17 = auVar16 & (undefined  [16])0xffffffffffffffff;
+        if ((uVar2 & 1) != 0) {
+LAB_00404c3a:
+          auVar16 = auVar16 & (undefined  [16])0xffffffffffffffff;
+          auVar13 = auVar13 & (undefined  [16])0xffffffffffffffff;
+          auVar10 = auVar10 & (undefined  [16])0xffffffffffffffff;
+          iVar4 = 2;
+          xxr[0] = local_68;
+          yyr[0] = local_60;
+          xxr[1] = local_78;
+          yyr[1] = local_70;
+          goto LAB_00404c87;
+        }
+        goto LAB_00404cd6;
+      }
+      if (clip_mode == 0) goto LAB_00404dc6;
+      if (clip_mode == 2) goto LAB_00404b9e;
+      uVar2 = clip_line(&local_68,&local_60,&local_78,&local_70,local_e0,local_d0,local_d8,local_c8,
+                        spec_min_x,spec_min_y,spec_max_x,spec_max_y);
+      auVar11 = auVar10 & (undefined  [16])0xffffffffffffffff;
+      auVar14 = auVar13 & (undefined  [16])0xffffffffffffffff;
+      auVar17 = auVar16 & (undefined  [16])0xffffffffffffffff;
+      if ((uVar2 & 1) == 0) goto LAB_00404cd6;
+      if ((uVar2 & 6) != 6) goto LAB_00404c3a;
+    }
+    auVar16 = auVar17;
+    auVar13 = auVar14;
+    auVar10 = auVar11;
+    if (iVar6 + 1 == length) {
+      if (!bVar1) goto LAB_00404f0c;
+      goto LAB_00404f1c;
+    }
+    iVar6 = iVar6 + 1;
+    pdVar5 = pdVar5 + 0xe;
+    local_60 = dVar8;
+    if (transpose_axes != false) goto LAB_00404b38;
+LAB_00404d01:
+    local_68 = dVar7;
+    local_60 = dVar8;
+    dVar7 = pdVar5[-0xc];
+    dVar8 = pdVar5[-0xb];
+  } while( true );
+}
+
